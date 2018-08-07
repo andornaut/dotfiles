@@ -1,0 +1,73 @@
+#!/bin/bash
+
+cd $(cd "$(dirname "$0")" && pwd)/
+source ./helpers
+
+header Screens
+
+xrandr_output="$(xrandr)"
+
+is_connected() {
+	local screen="$1"
+
+	echo "${xrandr_output}"|grep -P -qe "^\s*${screen}[-\w]* connected"
+	return $?
+}
+
+if [[ "$(echo "${xrandr_output}"|grep eDP-1 -A 1|grep "*+"|cut -dx -f1|tr -d '[:space:]')" -gt 1920 ]]; then
+    ok 'High resolution screen. Scaling DPI of eDP-1'
+    scale=" --scale-from 1920x1080"
+else
+    scale=" --auto"
+fi
+
+if is_connected DP-0 ; then
+    ok 'Desktop: 1 screen'
+    xrandr --output DP-0 --auto --pos 0x0 --primary
+    bspc wm --reorder-monitors DP-0
+    bspc monitor ^1 --reset-desktops 1 2 3 4 5
+elif is_connected DP-1-2 ; then
+    ok 'Laptop: 3 screens'
+    xrandr \
+        --output DP-1-1 --auto --rotate left \
+        --output DP-1-2 --auto --rotate normal --right-of DP-1-1 --primary \
+        --output eDP-1 ${scale} --below DP-1-2
+    bspc wm --reorder-monitors DP-1-1 DP-1-2 eDP-1
+    bspc monitor ^1 --reset-desktops 1
+    bspc monitor ^2 --reset-desktops 2 3 4
+    bspc monitor ^3 --reset-desktops 5
+elif is_connected eDP && ( is_connected DP-2 || is_connected HDMI-1 ) ; then
+    ok 'Laptop: 2 screens'
+    xrandr -r 60 --dpi 96
+    xrandr --output eDP-1 ${scale}
+
+    # One of these two will succeed.
+    if xrandr --output DP-2 --mode 3440x1440 --primary --above eDP-1 ; then
+        bspc wm --reorder-monitors DP-2 eDP-1
+    else
+        xrandr --output HDMI-1 --mode 3440x1440 --primary --above eDP-1
+        bspc wm --reorder-monitors HDMI-1 eDP-1
+    fi
+    bspc monitor ^1 --reset-desktops 1 2 3 4
+    bspc monitor ^2 --reset-desktops 5
+elif is_connected eDP ; then
+    ok 'Laptop: 1 screen'
+    xrandr --output eDP-1 --auto --pos 0x0 --primary ${scale}
+    bspc wm --reorder-monitors eDP-1
+    bspc monitor ^1 --reset-desktops 1 2 3 4 5
+else
+    warn 'Unsupported monitor configuration'
+fi
+
+xset dpms 600 1200 1800
+ok 'Configured display power management'
+
+xsetroot -solid '#2e2255'
+ok 'Set background colour'
+
+# Set wallpaper with: feh --xinerama-index 0 --bg-fill ${file}
+if [[ -e ~/.fehbg ]]; then
+    ~/.fehbg \
+        && ok 'Set wallpaper' \
+        || warn 'Error setting wallpaper'
+fi

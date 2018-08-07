@@ -1,0 +1,29 @@
+#!/bin/bash
+
+devices="$(xinput list --name-only|grep -i touchpad)"
+
+if [[ -z "${devices}" ]]; then
+    echo "Could not find a TouchPad" >&2
+    exit 1
+fi
+
+function toggleDevices {
+    local IFS=$'\n'
+    local deviceArray=($1)
+	local isEnabled="$(xinput list-props "${deviceArray[0]}"|grep 'Device Enabled'|awk '{print $4}')"
+    local device, i
+
+    for (( i=0; i<${#deviceArray[@]}; i++ )) ; do
+		device="${deviceArray[$i]}"
+		if [[ "${isEnabled}" == "0" ]]; then
+			notify-send 'Touchpad On'
+			xinput enable "${device}"
+		else
+			notify-send 'Touchpad OFF'
+			xinput disable "${device}"
+		fi
+    done
+}
+
+toggleDevices "${devices}"
+

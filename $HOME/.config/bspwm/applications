@@ -1,0 +1,100 @@
+#!/bin/bash
+
+cd $(cd "$(dirname "$0")" && pwd)/
+source ./helpers
+
+header Applications
+
+_run_bg() {
+	local niceness=$1
+	shift
+	local command=$1
+
+    if ! type "${command}" >/dev/null 2>&1; then 
+        warn "${command} doesn't exist. Skipping."
+	elif pgrep -x "$(basename "${command}")" >/dev/null 2>&1 ; then
+        warn "${command} is already Started. Skipping."
+    else
+        nice -n ${niceness} "$@" >/dev/null 2>&1 &
+		ok "Started: ${command}" 
+    fi  
+}
+
+nice_bg() {
+	_run_bg 19 "$@"
+}
+
+run_bg() {
+	_run_bg 0 "$@"
+}
+
+wait_wid() {
+    # `xdo id -m -a ${1}` would also work, but there's no way to set a timeout.
+	local wm_name="${1}"
+    local i=0
+	local wid
+    while [[ "${i}" -lt 10 ]] && ! wid="$(xdo id -a "${wm_name}")"; do
+		let i=i+1
+        sleep 0.05
+    done
+	echo ${wid}
+}
+
+
+# Kill all tray applets so that they're adopted by the new instance of trayer
+# when they're restarted below
+pkill insync
+#pkill nm-applet
+pkill '^trayer$' 2>/dev/null
+
+# Always restart bbs to make testing changes easier
+pkill bbs 2>/dev/null
+# Always sigkill redshift, b/c it can otherwise take a few seconds to stop,
+# which can cause it to be skipped when this script is run manually
+pkill -9 redshift
+
+# Fix sub-shells inheriting wrong CWD
+cd
+run_bg sxhkd
+cd - >/dev/null
+
+nice_bg bbs
+nice_bg redshift
+# Disable touchpad while typing to avoid unwanted keypresses.
+nice_bg syndaemon -i 0.25 -d
+# Lock screen after a period of inactivity
+nice_bg xautolock -secure -time 10 -locker 'gnome-screensaver-command --lock'
+nice_bg xclip
+# How to set bg color: https://bbs.archlinux.org/viewtopic.php?id=134955
+nice_bg trayer \
+        --align right \
+        --alpha 0 \
+        --distance 390 \
+        --distancefrom right \
+        --edge top \
+        --expand true \
+        --height 28 \
+        --heighttype request \
+        --padding 10 \
+        --SetDockType true \
+        --tint 0x668880 \
+        --transparent true \
+        --widthtype request
+
+# Adjust z-order so that fullscreen windows are always above of lemonbar and
+# trayer ("panel" is trayer's wm_name)
+bar_wid=$(wait_wid bbs-lemonbar)
+trayer_wid=$(wait_wid panel)
+xdo lower "${bar_wid}"
+xdo above -t "${bar_wid}" "${trayer_wid}" 
+
+# Start tray applets after trayer has started 
+nice_bg insync start
+#nice_bg nm-applet
+#nice_bg redshift-gtk
+
+# When lemonbar starts, it sets the top_padding of all monitors to its height.
+# Wait until after lemonbar finishes starting to reset the top_padding of other monitors.
+# The following commands can fail when there are fewer than 3 monitors
+bspc config -m ^2 top_padding 0 >/dev/null 2>&1
+bspc config -m ^3 top_padding 0 >/dev/null 2>&1

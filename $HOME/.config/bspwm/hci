@@ -1,0 +1,16 @@
+#!/bin/bash
+
+cd $(cd "$(dirname "$0")" && pwd)/
+source ./helpers
+
+header HCI
+
+device='Logitech Unifying Device. Wireless PID:101a'
+if xinput|grep -q "${device}"; then
+    xinput --set-prop "${device}" 'Device Accel Velocity Scaling' 1 &
+    ok 'Disabled mouse acceleration'
+fi
+
+xsetroot -cursor_name left_ptr &
+ok 'Set pointer'
+~/.local/bin/capstoesc

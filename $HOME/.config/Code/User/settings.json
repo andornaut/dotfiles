@@ -1,0 +1,21 @@
+// Place your settings in this file to overwrite the default settings
+{
+  "editor.cursorBlinking": "solid",
+  "editor.folding": false,
+  "editor.formatOnSave": true,
+  "editor.minimap.enabled": false,
+  "editor.tabSize": 2,
+  "explorer.confirmDelete": true,
+  "explorer.confirmDragAndDrop": false,
+  "files.autoSave": "onWindowChange",
+  "go.inferGopath": true,
+  "keyboard.dispatch": "keyCode",
+  "telemetry.enableCrashReporter": true,
+  "telemetry.enableTelemetry": false,
+  "window.zoomLevel": 1,
+  "workbench.activityBar.visible": false,
+  "workbench.colorTheme": "Solarized Light",
+  "workbench.startupEditor": "newUntitledFile",
+  "zenMode.fullScreen": true,
+  "extensions.ignoreRecommendations": false
+}

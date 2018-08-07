@@ -1,0 +1,85 @@
+export EDITOR=vim
+export GOG_DEFAULT_REPOSITORY_PATH=${HOME}/.local/share/gog/andornaut
+export GOPATH=${HOME}/workspace/go
+export HISTSIZE=5000
+export PATH=${PATH}:${HOME}/workspace/bin:/usr/local/go/bin:${GOPATH}/bin:${HOME}/.local/bin:${HOME}/.local/lib/npm/bin
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+# https://github.com/pypa/pipenv/issues/259
+export PIPENV_VENV_IN_PROJECT=1
+
+# https://wiki.archlinux.org/index.php/Java#Tips_and_tricks
+# Disabled because it causes problems with Saucelabs tests: the env var value appears in test output.
+#export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\W\$ '
+fi
+
+http-tunnel() {
+    [[ "$#" -gt 1 && "$#" -lt 5 ]] || { echo 'Usage: http-jump jumpHost targetHost [remotePort] [localPort]' >&2 ; return; }
+    local jumpHost=$1
+    local targetHost=$2
+    local remotePort=${3-80}
+    local localPort=${4-1111}
+    local protocol="$([[ ${remotePort} == "80" ]] && echo http || echo https)"
+    echo "Make sure that 'AllowTCPForwarding yes' is set in ${jumpHost}:/etc/ssh/sshd_config"
+    ssh -vL ${localPort}:${targetHost}:${remotePort} -Nf ${jumpHost} && google-chrome ${protocol}://localhost:${localPort}
+}
+
+mktempvenv() {
+    pushd $(mktemp -d)
+    virtualenv -q .
+    source bin/activate
+    pip install -qU pip
+}
+
+p() { 
+    local root="${HOME}/workspace"
+    if [[ "${1}" == '--go' || "${1}" == '-g' ]]; then
+        root="${GOPATH-"${root}/go"}/src/github.com/*/"
+        shift
+    fi
+    if [[ $# -ne 1 ]]; then 
+        echo 'Usage: w [--go] workspace-directory'; 
+        return 1
+    fi
+    local name=$1
+    cd "$(find ${root} -maxdepth 1 -iname "${name}*"|sort|head -n1)"
+    echo $(pwd) 
+    if [[ -d .git ]]; then
+        echo "git: $(gitcurrentbranch)"
+    fi
+    if [[ -d .hg ]]; then 
+        echo "hg: $(hg branch)"
+    fi
+    deactivate 2>/dev/null
+    if [[ -d .venv ]]; then
+        source .venv/bin/activate 2>/dev/null || true
+    else
+        workon $(basename $(pwd)) 2>/dev/null || true
+    fi
+}
+
+pw() {
+    [[ -n "${PW_SECRET_DIR}" ]] || { echo '$PW_SECRET_DIR must be set' >&2 ; return 1; }
+    [[ -n "$1" ]] || { echo 'Usage: pw pattern [subDirGlob]' >&2 ; return 1; }
+
+    local fileName="${PW_SECRET_FILENAME-passwords.txt}"
+    local pattern=$1
+    local subDirGlob=${2-${PW_DEFAULT_SUB_DIR}}
+    if [[ -n "${subDirGlob}" ]]; then
+        subDirGlob=${subDirGlob}*/
+    fi
+    # Expand glob
+    local inputFiles=( ${PW_SECRET_DIR}/${subDirGlob}${fileName} )
+    inputFiles=${inputFiles[@]}
+
+    echo -e "Searching: ${inputFiles}\n"
+
+    # Setting RS to the empty string makes awk treat blank lines as the record separator
+    # Use grep to colorize
+    awk "/${pattern}/" RS= ${inputFiles} \
+        | grep --color --extended-regexp "${pattern}|$"
+}

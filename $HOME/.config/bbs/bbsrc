@@ -1,0 +1,41 @@
+#!/bin/bash
+
+focused_border_color="$(bspc config focused_border_color)"
+normal_border_color="$(bspc config normal_border_color)"
+color_occupied_fg=#44f0f0
+text_color=#550066
+
+COLOR_DEFAULT_BG=${normal_border_color}
+COLOR_DEFAULT_FG=${text_color}
+COLOR_FREE_BG=${COLOR_DEFAULT_BG}
+COLOR_FREE_FG=${COLOR_DEFAULT_FG}
+COLOR_OCCUPIED_BG=${COLOR_DEFAULT_BG}
+COLOR_OCCUPIED_FG=${color_occupied_fg}
+COLOR_URGENT_BG=${COLOR_DEFAULT_BG}
+COLOR_URGENT_FG=${COLOR_DEFAULT_FG}
+COLOR_FOCUSED_FREE_BG=${focused_border_color}
+COLOR_FOCUSED_FREE_FG=${COLOR_DEFAULT_FG}
+COLOR_FOCUSED_OCCUPIED_BG=${focused_border_color}
+COLOR_FOCUSED_OCCUPIED_FG=${COLOR_OCCUPIED_FG}
+COLOR_FOCUSED_URGENT_BG=${focused_border_color}
+COLOR_SYS_BG=${COLOR_DEFAULT_BG}
+COLOR_SYS_FG=${COLOR_DEFAULT_FG}
+COLOR_TITLE_BG=${COLOR_DEFAULT_BG}
+COLOR_TITLE_FG=${COLOR_SYS_FG}
+# See http://fontawesome.io/cheatsheet/
+ICON_BATTERY_DISCHARGING_0=' ' # http://fontawesome.io/icon/battery-empty/
+ICON_BATTERY_DISCHARGING_25=' ' # http://fontawesome.io/icon/battery-quarter/
+ICON_BATTERY_DISCHARGING_50=' ' # http://fontawesome.io/icon/battery-half/
+ICON_BATTERY_DISCHARGING_75=' ' # http://fontawesome.io/icon/battery-three-quarters/
+ICON_BATTERY_DISCHARGING_100=' ' # http://fontawesome.io/icon/battery-full/
+ICON_BATTERY_PLUGGED_IN=' ' # http://fontawesome.io/icon/bolt/
+ICON_VOLUME=''
+ICON_VOLUME_DOWN='  ' # http://fontawesome.io/icon/volume-down/
+ICON_VOLUME_UP='  ' # http://fontawesome.io/icon/volume-up/
+ICON_WIFI=' ' # http://fontawesome.io/icon/wifi/
+
+# -a sets the number of clickable areas to the number of switch-desktop buttons plus 5 (3 for volume, 1 for wifi, 1 spare)
+# -g displays lemonbar in the top-left monitor
+LEMONBAR_EXTRA_ARGS="-f FontAwesome-12 -f DejaVuSans-10 \
+    -a $(($(bspc query --desktops|wc -l)+5)) \
+    -g $(xrandr|awk '$0 ~ /connected.*\+0\+0/ {print $3; exit}'|cut -dx -f1)x28+0+0"
