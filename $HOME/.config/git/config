@@ -1,5 +1,3 @@
-[include]
-	path = config.local
 [apply]
 	whitespace = fix
 [alias]
@@ -62,3 +60,5 @@
 [user]
 	name = andornaut
 	email = andornaut@users.noreply.github.com
+[include]
+	path = config.local
