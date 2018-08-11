@@ -15,7 +15,8 @@ rofi.location: 1
 rofi.m: 0
 rofi.fixed-num-lines: false
 rofi.padding: 10
-rofi.run-command: /bin/bash -i -c '{cmd}'
+rofi.run-command: /bin/bash --noediting --noprofile -i -c '{cmd}'
+#rofi.run-command: /bin/bash -i -c '{cmd}'
 rofi.run-list-command: source ~/.config/rofi/aliases
 rofi.separator-style: none
 rofi.terminal: urxvt
