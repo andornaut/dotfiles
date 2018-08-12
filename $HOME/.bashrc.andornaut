@@ -1,5 +1,5 @@
 export EDITOR=vim
-export GOG_DEFAULT_REPOSITORY_PATH=${HOME}/.local/share/gog/andornaut
+export GOG_DEFAULT_REPOSITORY_NAME=andornaut
 export GOPATH=${HOME}/workspace/go
 export HISTSIZE=5000
 export PATH=${PATH}:${HOME}/workspace/bin:/usr/local/go/bin:${GOPATH}/bin:${HOME}/.local/bin:${HOME}/.local/lib/npm/bin
