@@ -83,3 +83,5 @@ pw() {
     awk "/${pattern}/" RS= ${inputFiles} \
         | grep --color --extended-regexp "${pattern}|$"
 }
+
+source <(cache-command --basedir /tmp/cache-command -- kubectl completion bash)
