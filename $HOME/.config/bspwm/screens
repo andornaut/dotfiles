@@ -22,11 +22,11 @@ else
 fi
 
 if is_connected DP-0 ; then
-    ok 'Desktop: 1 screen'
+    ok 'Desktop: 1 screen (ultrawide)'
     xrandr --output DP-0 --auto --pos 0x0 --primary
     bspc wm --reorder-monitors DP-0
     bspc monitor ^1 --reset-desktops 1 2 3 4 5
-elif is_connected DP-1-2 ; then
+elif is_connected DP-1-1 ; then
     ok 'Laptop: 3 screens'
     xrandr \
         --output DP-1-1 --auto --rotate left \
@@ -36,8 +36,16 @@ elif is_connected DP-1-2 ; then
     bspc monitor ^1 --reset-desktops 1
     bspc monitor ^2 --reset-desktops 2 3 4
     bspc monitor ^3 --reset-desktops 5
-elif is_connected eDP && ( is_connected DP-2 || is_connected HDMI-1 ) ; then
+elif is_connected DP-1-2 ; then
     ok 'Laptop: 2 screens'
+    xrandr \
+        --output DP-1-2 --auto --rotate normal --primary \
+        --output eDP-1 ${scale} --below DP-1-2
+    bspc wm --reorder-monitors DP-1-2 eDP-1
+    bspc monitor ^1 --reset-desktops 1 2 3 4
+    bspc monitor ^2 --reset-desktops 5
+elif is_connected eDP && ( is_connected DP-2 || is_connected HDMI-1 ) ; then
+    ok 'Laptop: 2 screens (ultrawide)'
     xrandr -r 60 --dpi 96
     xrandr --output eDP-1 ${scale}
 
