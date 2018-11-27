@@ -7,6 +7,7 @@ alias gitresethistory='git status && d=$(mktemp) && mv .git/config ${d} && rm -r
 alias gogapplyall='for r in $(gog repository list); do gog git -r ${r} pull && gog apply -r ${r}; done'
 alias halt="sudo halt -p"
 alias lsm="ls -al|awk '{k=0;s=0;for(i=0;i<=8;i++){;k+=((substr(\$1,i+2,1)~/[rwxst]/)*2^(8-i));};j=4;for(i=4;i<=10;i+=3){;s+=((substr(\$1,i,1)~/[stST]/)*j);j/=2;};if(k){;printf(\"%0o%0o \",s,k);};print;}'"
+#alias npm='/home/andornaut/.local/lib/npm/bin/npm'
 alias pipenvdeactivate='[[ "${PIPENV_ACTIVE}" -ne 1 ]] && echo "pipenv is not active" || { echo "pipenv is active. Exiting shell..." >&2 ; exit ; }'
 alias r='ranger'
 alias reboot="sudo reboot"
