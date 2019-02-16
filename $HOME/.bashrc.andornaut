@@ -86,4 +86,6 @@ pw() {
         | grep --color --extended-regexp "${pattern}|$"
 }
 
-source <(cache-command --basedir /tmp/cache-command -- kubectl completion bash)
+if which kubectl >/dev/null; then
+    source <(cache-command --basedir /tmp/cache-command -- kubectl completion bash)
+fi
