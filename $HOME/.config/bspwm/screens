@@ -28,14 +28,21 @@ if is_connected DP-0 ; then
     bspc monitor ^1 --reset-desktops 1 2 3 4 5
 elif is_connected DP-1-1 ; then
     ok 'Laptop: 3 screens'
-    xrandr \
-        --output DP-1-1 --auto --rotate left \
-        --output DP-1-2 --auto --rotate normal --right-of DP-1-1 --primary \
-        --output eDP-1 ${scale} --below DP-1-2
-    bspc wm --reorder-monitors DP-1-1 DP-1-2 eDP-1
+    # BI
+    left=DP-1-2
+    top=DP-1-1
+    # LCR
+    #left=DP-1-1
+    #top=DP-1-2
+    bottom=eDP-1
+    xrandr --output ${left} --auto --rotate left
+    xrandr --output ${top} --auto --rotate normal --right-of ${left} --primary
+    xrandr --output ${bottom} ${scale} --below ${top}
+    bspc wm --reorder-monitors ${left} ${top} ${bottom}
     bspc monitor ^1 --reset-desktops 1
     bspc monitor ^2 --reset-desktops 2 3 4
     bspc monitor ^3 --reset-desktops 5
+    bspc wm --reorder-monitors ${left} ${top} ${bottom}
 elif is_connected DP-1-2 ; then
     ok 'Laptop: 2 screens'
     xrandr \
