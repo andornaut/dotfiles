@@ -27,7 +27,7 @@ http-tunnel() {
     echo "Make sure that 'AllowTCPForwarding yes' is set in ${jumpHost}:/etc/ssh/sshd_config"
 
     ( sleep 3 ; google-chrome ${protocol}://localhost:${localPort} ;) &
-    ssh -vL ${localPort}:${targetHost}:${remotePort} -N ${jumpHost} 
+    exec ssh -vL ${localPort}:${targetHost}:${remotePort} -Nf ${jumpHost} 
 }
 
 mktempvenv() {
