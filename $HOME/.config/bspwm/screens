@@ -21,10 +21,10 @@ else
     scale=" --auto"
 fi
 
-if is_connected DP-0 ; then
+if is_connected DisplayPort-0; then
     ok 'Desktop: 1 screen (ultrawide)'
-    xrandr --output DP-0 --auto --pos 0x0 --primary
-    bspc wm --reorder-monitors DP-0
+    xrandr --output DisplayPort-0 --auto --pos 0x0 --primary
+    bspc wm --reorder-monitors DisplayPort-0
     bspc monitor ^1 --reset-desktops 1 2 3 4 5
 elif is_connected DP-1-1 ; then
     ok 'Laptop: 3 screens'
