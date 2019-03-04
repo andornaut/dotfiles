@@ -18,14 +18,16 @@ else
 fi
 
 http-tunnel() {
-    [[ "$#" -gt 1 && "$#" -lt 5 ]] || { echo 'Usage: http-jump jumpHost targetHost [remotePort] [localPort]' >&2 ; return; }
+    [[ "$#" -gt 1 && "$#" -lt 5 ]] || { echo 'Usage: http-tunnel jumpHost targetHost [remotePort] [localPort]' >&2 ; return; }
     local jumpHost=$1
     local targetHost=$2
     local remotePort=${3-80}
     local localPort=${4-1111}
     local protocol="$([[ ${remotePort} == "80" ]] && echo http || echo https)"
     echo "Make sure that 'AllowTCPForwarding yes' is set in ${jumpHost}:/etc/ssh/sshd_config"
-    ssh -vL ${localPort}:${targetHost}:${remotePort} -Nf ${jumpHost} && google-chrome ${protocol}://localhost:${localPort}
+
+    ( sleep 3 ; google-chrome ${protocol}://localhost:${localPort} ;) &
+    ssh -vL ${localPort}:${targetHost}:${remotePort} -Nf ${jumpHost} 
 }
 
 mktempvenv() {
@@ -84,4 +86,6 @@ pw() {
         | grep --color --extended-regexp "${pattern}|$"
 }
 
-source <(cache-command --basedir /tmp/cache-command -- kubectl completion bash)
+if which kubectl >/dev/null; then
+    source <(cache-command --basedir /tmp/cache-command -- kubectl completion bash)
+fi
