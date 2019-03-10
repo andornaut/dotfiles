@@ -74,7 +74,9 @@ else
     warn 'Unsupported monitor configuration'
 fi
 
+xset s 300 300 # Screensaver
 xset dpms 600 1200 1800
+xset +dpms
 ok 'Configured display power management'
 
 xsetroot -solid '#2e2255'

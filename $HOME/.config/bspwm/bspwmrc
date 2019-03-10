@@ -38,7 +38,8 @@ bspc config top_padding 0
 bspc config window_gap 0
 
 # Use `xprop | grep WM_CLASS`
-bspc rule -a CrossOver state=floating
+#bspc rule -a CrossOver state=floating
+bspc rule -a origin.exe state=floating
 ok 'Configured BSPWM'
 
 xrdb -merge ~/.Xresources
