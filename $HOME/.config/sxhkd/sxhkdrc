@@ -8,7 +8,7 @@ super + ctrl + Escape
 	#gnome-screensaver-command -l && sleep 4 && xset dpms force suspend
 
 # Turn primary monitor on / off (EXPERIMENTAL)
-super + alt + Escape
+super + ctrl + alt + Escape
 	bash -c 'xrandr --output $(xrandr|awk '"'"'/ connected primary/ \{ print $1; if ($0~"primary [^(]") \{print "--off"\} else \{ print " --auto"\}\}'"'"')'
 	#gnome-screensaver-command -l && xset dpms force suspend
 
