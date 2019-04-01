@@ -40,6 +40,7 @@ bspc config window_gap 0
 # Use `xprop | grep WM_CLASS`
 #bspc rule -a CrossOver state=floating
 bspc rule -a origin.exe state=floating
+bspc rule -a libreoffice state=tiled
 ok 'Configured BSPWM'
 
 xrdb -merge ~/.Xresources
