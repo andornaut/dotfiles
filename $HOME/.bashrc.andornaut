@@ -2,6 +2,8 @@ export EDITOR=vim
 export GOG_DEFAULT_REPOSITORY_NAME=andornaut
 export GOPATH=${HOME}/workspace/go
 export HISTSIZE=5000
+# Prevent overly large UI in java 11: https://bugs.launchpad.net/ubuntu/+source/openjdk-lts/+bug/1765914
+export J2D_UISCALE=1
 export PATH=${PATH}:${HOME}/workspace/bin:/usr/local/go/bin:${GOPATH}/bin:${HOME}/.local/bin:${HOME}/.local/lib/npm/bin
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # https://github.com/pypa/pipenv/issues/259
