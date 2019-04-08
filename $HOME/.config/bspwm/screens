@@ -26,15 +26,25 @@ if is_connected DisplayPort-0; then
     xrandr --output DisplayPort-0 --auto --pos 0x0 --primary
     bspc wm --reorder-monitors DisplayPort-0
     bspc monitor ^1 --reset-desktops 1 2 3 4 5
-elif is_connected DP-1-1 ; then
+elif is_connected DP1-1 ; then
+    # Switch from Intel DRI3 to DRI2 to workaround a bug where the screens will not wake from `xset s activate`
+    # https://bbs.archlinux.org/viewtopic.php?id=215930
+    # https://wiki.archlinux.org/index.php/intel_graphics#DRI3_issues
+    # /etc/X11/xorg.conf.d/20-intel.conf
+    # Section "Device"
+    #   Identifier  "Intel Graphics"
+    #   Driver      "intel"
+    #   Option      "DRI" "2"
+    # EndSection
+
     ok 'Laptop: 3 screens'
     # BI
-    left=DP-1-2
-    top=DP-1-1
+    left=DP1-2
+    top=DP1-1
     # LCR
     #left=DP-1-1
     #top=DP-1-2
-    bottom=eDP-1
+    bottom=eDP1
     xrandr --output ${left} --auto --rotate left
     xrandr --output ${top} --auto --rotate normal --right-of ${left} --primary
     xrandr --output ${bottom} ${scale} --below ${top}
