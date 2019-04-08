@@ -77,7 +77,7 @@ elif is_connected eDP && ( is_connected DP-2 || is_connected HDMI-1 ) ; then
     bspc monitor ^2 --reset-desktops 5
 elif is_connected eDP ; then
     ok 'Laptop: 1 screen'
-    xrandr --output eDP-1 --auto --pos 0x0 --primary ${scale}
+    xrandr --output eDP1 --auto --pos 0x0 --primary ${scale}
     bspc wm --reorder-monitors eDP-1
     bspc monitor ^1 --reset-desktops 1 2 3 4 5
 else
