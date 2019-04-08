@@ -14,8 +14,8 @@ is_connected() {
 	return $?
 }
 
-if [[ "$(echo "${xrandr_output}"|grep eDP-1 -A 1|grep "*+"|cut -dx -f1|tr -d '[:space:]')" -gt 1920 ]]; then
-    ok 'High resolution screen. Scaling DPI of eDP-1'
+if [[ "$(echo "${xrandr_output}"|grep eDP1 -A 1|grep "*+"|cut -dx -f1|tr -d '[:space:]')" -gt 1920 ]]; then
+    ok 'High resolution screen. Scaling DPI of eDP1'
     scale=" --scale-from 1920x1080"
 else
     scale=" --auto"
