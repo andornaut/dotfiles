@@ -5,7 +5,6 @@
 # Toggle screensaver
 super + ctrl + Escape
 	gnome-screensaver-command -l
-	#gnome-screensaver-command -l && sleep 4 && xset dpms force suspend
 
 # Turn primary monitor on / off (EXPERIMENTAL)
 super + ctrl + alt + Escape
