@@ -18,5 +18,7 @@
   "workbench.startupEditor": "newUntitledFile",
   "zenMode.fullScreen": true,
   "extensions.ignoreRecommendations": false,
-  "search.smartCase": true
+  "search.smartCase": true,
+  "go.useLanguageServer": true,
+  "workbench.statusBar.feedback.visible": false
 }

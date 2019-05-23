@@ -1,3 +1,4 @@
+Xft.dpi: 96
 ! URxvt.font: xft:DejaVuSansMono:Medium:size=14
 ! URxvt.font: xft:Inconsolata:Medium:size=14
 URxvt.font: xft:SourceCodePro:Medium:size=14
