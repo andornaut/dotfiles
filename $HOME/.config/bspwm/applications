@@ -90,7 +90,7 @@ xdo above -t "${bar_wid}" "${trayer_wid}"
 
 # Start tray applets after trayer has started 
 nice_bg insync start
-nice_bg /System/Applications/komorebi
+#nice_bg /System/Applications/komorebi
 #nice_bg nm-applet
 #nice_bg redshift-gtk
 
