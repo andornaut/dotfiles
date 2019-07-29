@@ -51,6 +51,8 @@ pkill '^trayer$' 2>/dev/null
 pkill bbs 2>/dev/null
 # Always sigkill redshift, b/c it can otherwise take a few seconds to stop,
 # which can cause it to be skipped when this script is run manually
+pkill -9 redshift-gtk
+# reshift-gtk launches a separate 'redshift' process
 pkill -9 redshift
 
 # Fix sub-shells inheriting wrong CWD
@@ -59,7 +61,7 @@ run_bg sxhkd
 cd - >/dev/null
 
 nice_bg bbs
-nice_bg redshift
+nice_bg redshift-gtk
 # Disable touchpad while typing to avoid unwanted keypresses.
 nice_bg syndaemon -i 0.25 -d
 # Lock screen after a period of inactivity
