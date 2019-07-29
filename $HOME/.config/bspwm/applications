@@ -79,7 +79,7 @@ nice_bg trayer \
         --heighttype request \
         --padding 10 \
         --SetDockType true \
-        --tint 0x668880 \
+        --tint 0x44f0f0 \
         --transparent true \
         --widthtype request
 
@@ -92,7 +92,7 @@ xdo above -t "${bar_wid}" "${trayer_wid}"
 
 # Start tray applets after trayer has started 
 nice_bg insync start
-nice_bg /System/Applications/komorebi
+#nice_bg /System/Applications/komorebi
 #nice_bg nm-applet
 #nice_bg redshift-gtk
 
