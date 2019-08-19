@@ -14,8 +14,9 @@ is_connected() {
 	return $?
 }
 
-if [[ "$(echo "${xrandr_output}"|grep eDP1 -A 1|grep "*+"|cut -dx -f1|tr -d '[:space:]')" -gt 1920 ]]; then
-    ok 'High resolution screen. Scaling DPI of eDP1'
+laptopResolution="$(echo "${xrandr_output}"|grep eDP1 -A 1|grep "*+"|cut -dx -f1|tr -d '[:space:]')"
+if [[ ${laptopResolution} -gt 1920 ]]; then
+    ok "High resolution screen. Scaling eDP1 from ${laptopResolution}x to 1920x"
     scale=" --scale-from 1920x1080"
 else
     scale=" --auto"
@@ -78,6 +79,7 @@ elif is_connected eDP && ( is_connected DP-2 || is_connected HDMI-1 ) ; then
 elif is_connected eDP ; then
     ok 'Laptop: 1 screen'
     xrandr --output eDP1 --auto --pos 0x0 --primary ${scale}
+    xrandr --output eDP1 --auto --pos 0x0 --primary --scale-from 1920x1080
     bspc wm --reorder-monitors eDP-1
     bspc monitor ^1 --reset-desktops 1 2 3 4 5
 else
