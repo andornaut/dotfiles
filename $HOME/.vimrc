@@ -26,12 +26,18 @@ set smarttab
 set expandtab
 "set textwidth=79
 
+"Ignore case while searching
 set ignorecase
+set smartcase
 
-"set hlsearch
+"Hightlight matched text while searching
+set incsearch
 
 "python-mode
 let g:pymode_folding = 0
+"Disable netrw
+let g:loaded_netrw       = 1
+let g:loaded_netrwPlugin = 1
 
 "yaml files
 autocmd FileType json setlocal ts=2 sts=2 sw=2 expandtab
@@ -39,3 +45,4 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 "Always show the status line
 set laststatus=2
+

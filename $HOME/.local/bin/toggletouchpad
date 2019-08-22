@@ -1,6 +1,6 @@
 #!/bin/bash
 
-devices="$(xinput list --name-only|grep -i touchpad)"
+devices="$(xinput list --name-only|grep -i Synaptics)"
 
 if [[ -z "${devices}" ]]; then
     echo "Could not find a TouchPad" >&2

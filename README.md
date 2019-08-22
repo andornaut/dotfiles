@@ -14,7 +14,9 @@ gog repository add andornaut https://github.com/andornaut/dotfiles.git
 gog apply
 
 echo 'for f in ${HOME}/.bashrc.*; do
-    source ${f}
+    if [[ ! $f =~ \.swp$ ]]; then
+        source ${f}
+    fi
 done' >> ${HOME}/.bashrc
 ```
 
