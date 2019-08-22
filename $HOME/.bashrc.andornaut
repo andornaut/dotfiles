@@ -4,22 +4,17 @@ export GOPATH=${HOME}/workspace/go
 export HISTSIZE=5000
 # Prevent overly large UI in java 11: https://bugs.launchpad.net/ubuntu/+source/openjdk-lts/+bug/1765914
 export J2D_UISCALE=1
-export PATH=${PATH}:${HOME}/workspace/bin:/usr/local/go/bin:${GOPATH}/bin:${HOME}/.local/bin:${HOME}/.local/lib/npm/bin
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH=${PATH}:/usr/local/go/bin:${GOPATH}/bin:${HOME}/.local/bin:${HOME}/.local/lib/npm/bin
 # https://github.com/pypa/pipenv/issues/259
 export PIPENV_VENV_IN_PROJECT=1
 
 # https://wiki.archlinux.org/index.php/Java#Tips_and_tricks
 # Disabled because it causes problems with Saucelabs tests: the env var value appears in test output.
 #export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
+PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
 
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\W\$ '
-fi
-
-http-tunnel() {
+httptunnel() {
     [[ "$#" -gt 1 && "$#" -lt 5 ]] || { echo 'Usage: http-tunnel jumpHost targetHost [remotePort] [localPort]' >&2 ; return; }
     local jumpHost=$1
     local targetHost=$2

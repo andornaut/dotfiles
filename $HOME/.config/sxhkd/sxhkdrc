@@ -6,11 +6,6 @@
 super + ctrl + Escape
 	gnome-screensaver-command -l
 
-# Turn primary monitor on / off (EXPERIMENTAL)
-super + ctrl + alt + Escape
-	bash -c 'xrandr --output $(xrandr|awk '"'"'/ connected primary/ \{ print $1; if ($0~"primary [^(]") \{print "--off"\} else \{ print " --auto"\}\}'"'"')'
-	#gnome-screensaver-command -l && xset dpms force suspend
-
 super + p
 	~/.local/bin/toggletouchpad
 
@@ -41,10 +36,6 @@ super + alt + q
 # close and kill
 super + {_,shift + }q
 	bspc node -{c,k}
-
-# if the current node is automatic, send it to the last manual, otherwise pull the last leaf
-super + y
-	bspc query -N -n focused.automatic && bspc node -n last.!automatic || bspc node last.leaf -n focused
 
 # swap the current node and the biggest node
 super + g
