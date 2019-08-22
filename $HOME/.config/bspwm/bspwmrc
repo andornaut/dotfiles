@@ -50,5 +50,3 @@ ok 'Configured Xresources'
 ./hci
 # Must follow "bspc config ...", b/c bbs execs $(bspc config normal_border_color)
 ./applications 
-
-# test
