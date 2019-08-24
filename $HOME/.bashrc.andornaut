@@ -61,27 +61,6 @@ p() {
     fi
 }
 
-pw() {
-    [[ -n "${PW_SECRET_DIR}" ]] || { echo '$PW_SECRET_DIR must be set' >&2 ; return 1; }
-    [[ -n "$1" ]] || { echo 'Usage: pw pattern [subDirGlob]' >&2 ; return 1; }
-
-    local fileName="${PW_SECRET_FILENAME-passwords.txt}"
-    local pattern=$1
-    local subDirGlob=${2-${PW_DEFAULT_SUB_DIR}}
-    if [[ -n "${subDirGlob}" ]]; then
-        subDirGlob=${subDirGlob}*/
-    fi
-    # Expand glob
-    local inputFiles=( ${PW_SECRET_DIR}/${subDirGlob}${fileName} )
-    inputFiles=${inputFiles[@]}
-
-    echo -e "Searching: ${inputFiles}\n"
-
-    # Setting RS to the empty string makes awk treat blank lines as the record separator
-    # Use grep to colorize
-    awk "/${pattern}/" RS= ${inputFiles} \
-        | grep --color --extended-regexp "${pattern}|$"
-}
 
 if which kubectl >/dev/null; then
     source <(cache-command --basedir /tmp/cache-command -- kubectl completion bash)
