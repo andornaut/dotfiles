@@ -19,8 +19,9 @@
   "zenMode.fullScreen": true,
   "extensions.ignoreRecommendations": false,
   "search.smartCase": true,
-  "go.useLanguageServer": true,
   "workbench.statusBar.feedback.visible": false,
   "update.showReleaseNotes": false,
-  "explorer.openEditors.visible": 0
+  "explorer.openEditors.visible": 0,
+  "go.formatTool": "goimports",
+  "go.useLanguageServer": true
 }
