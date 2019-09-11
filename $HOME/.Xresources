@@ -6,7 +6,12 @@ URxvt.font: xft:SourceCodePro:Medium:size=14
 URxvt.iso14755 : false
 URxvt.keysym.C-C: eval:selection_to_clipboard
 URxvt.keysym.C-V: eval:paste_clipboard
-URxvt.perl-ext-common: default,eval
+!URxvt.perl-ext-common: default,eval
+!https://blog.khmersite.net/2017/12/change-the-urxvt-font-size-on-the-fly/
+!https://github.com/simmel/urxvt-resize-font/blob/master/resize-font
+URxvt.perl-ext-common: default,resize-font
+URxvt.resize-font.smaller: C-minus  
+URxvt.resize-font.bigger:  C-plus
 URxvt.saveLines: 65535
 URxvt.scrollBar: false
 URxvt.shading: 10
