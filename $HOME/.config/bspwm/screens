@@ -27,7 +27,7 @@ if is_connected DisplayPort-0; then
     xrandr --output DisplayPort-0 --auto --pos 0x0 --primary
     bspc wm --reorder-monitors DisplayPort-0
     bspc monitor ^1 --reset-desktops 1 2 3 4 5
-elif is_connected DP1-1 ; then
+elif is_connected DP1 && is_connected DP2 ; then
     # Switch from Intel DRI3 to DRI2 to workaround a bug where the screens will not wake from `xset s activate`
     # https://bbs.archlinux.org/viewtopic.php?id=215930
     # https://wiki.archlinux.org/index.php/intel_graphics#DRI3_issues
@@ -39,16 +39,13 @@ elif is_connected DP1-1 ; then
     # EndSection
 
     ok 'Laptop: 3 screens'
-    # BI
-    left=DP1-1
-    top=DP1-2
-    # LCR
-    #left=DP-1-1
-    #top=DP-1-2
+    left=DP2
+    top=DP1
     bottom=eDP1
-    xrandr --output ${left} --auto --rotate left
-    xrandr --output ${top} --auto --rotate normal --right-of ${left} --primary
-    xrandr --output ${bottom} ${scale} --below ${top}
+    xrandr \
+        --output ${left} --mode 1920x1080 --rotate left \
+        --output ${top} --mode 1920x1080 --rotate normal --right-of ${left} --primary \
+        --output ${bottom} --mode 3200x1800 ${scale} --below ${top}
     bspc wm --reorder-monitors ${left} ${top} ${bottom}
     bspc monitor ^1 --reset-desktops 1
     bspc monitor ^2 --reset-desktops 2 3 4
@@ -64,7 +61,7 @@ elif is_connected DP-1-2 ; then
     bspc monitor ^2 --reset-desktops 5
 elif is_connected eDP && ( is_connected DP-2 || is_connected HDMI-1 ) ; then
     ok 'Laptop: 2 screens (ultrawide)'
-    xrandr -r 60 --dpi 96
+    #xrandr -r 60 --dpi 96
     xrandr --output eDP-1 ${scale}
 
     # One of these two will succeed.
@@ -78,25 +75,12 @@ elif is_connected eDP && ( is_connected DP-2 || is_connected HDMI-1 ) ; then
     bspc monitor ^2 --reset-desktops 5
 elif is_connected eDP ; then
     ok 'Laptop: 1 screen'
-    xrandr --output eDP1 --auto --pos 0x0 --primary ${scale}
-    xrandr --output eDP1 --auto --pos 0x0 --primary --scale-from 1920x1080
-    bspc wm --reorder-monitors eDP-1
+    xrandr \
+        --output eDP1 --auto --pos 0x0 --primary ${scale} \
+        --output eDP1 --auto --pos 0x0 --primary --scale-from 1920x1080
+    bspc wm --reorder-monitors eDP1
     bspc monitor ^1 --reset-desktops 1 2 3 4 5
 else
     warn 'Unsupported monitor configuration'
 fi
 
-xset s 300 300 # Screensaver
-xset dpms 600 1200 1800
-xset +dpms
-ok 'Configured display power management'
-
-xsetroot -solid '#2e2255'
-ok 'Set background colour'
-
-# Set wallpaper with: feh --xinerama-index 0 --bg-fill ${file}
-if [[ -e ~/.fehbg ]]; then
-    ~/.fehbg \
-        && ok 'Set wallpaper' \
-        || warn 'Error setting wallpaper'
-fi

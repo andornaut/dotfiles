@@ -30,9 +30,9 @@ bspc config presel_feedback_color '#ee66bb'
 bspc config automatic_scheme longest_side
 bspc config border_width 10
 bspc config click_to_focus button1
-#bspc config merge_overlapping_monitors true
-#bspc config remove_disabled_monitors true
-#bspc config remove_unplugged_monitors true
+bspc config merge_overlapping_monitors true
+bspc config remove_disabled_monitors true
+bspc config remove_unplugged_monitors true
 bspc config split_ratio 0.50
 bspc config top_padding 0 
 bspc config window_gap 0
@@ -46,7 +46,31 @@ ok 'Configured BSPWM'
 xrdb -merge ~/.Xresources
 ok 'Configured Xresources'
 
+xset s 300 300 # Screensaver
+xset dpms 600 1200 1800
+xset +dpms
+ok 'Configured display power management'
+
+xsetroot -solid '#2e2255'
+ok 'Set background colour'
+
+# Set wallpaper with: feh --xinerama-index 0 --bg-fill ${file}
+if [[ -e ~/.fehbg ]]; then
+    ~/.fehbg \
+        && ok 'Set wallpaper' \
+        || warn 'Error setting wallpaper'
+fi
+
+device='Logitech Unifying Device. Wireless PID:101a'
+if xinput|grep -q "${device}"; then
+    xinput --set-prop "${device}" 'Device Accel Velocity Scaling' 1 &
+    ok 'Disabled mouse acceleration'
+fi
+
+xsetroot -cursor_name left_ptr &
+ok 'Set pointer'
+capstoesc
+
 ./screens
-./hci
 # Must follow "bspc config ...", b/c bbs execs $(bspc config normal_border_color)
 ./applications 
