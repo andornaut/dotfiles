@@ -14,6 +14,15 @@ is_connected() {
 	return $?
 }
 
+max_monitors() {
+    local number=$1
+    #for id in $(bspc query -M|tail -n+$((1+${number}))); do
+    for id in $(bspc query -M|head -n-${number}); do
+        warn Removing monitor ${id}
+        bspc monitor ${id} --remove
+    done
+}
+
 laptopResolution="$(echo "${xrandr_output}"|grep eDP1 -A 1|grep "*+"|cut -dx -f1|tr -d '[:space:]')"
 if [[ ${laptopResolution} -gt 1920 ]]; then
     ok "High resolution screen. Scaling eDP1 from ${laptopResolution}x to 1920x"
@@ -24,6 +33,7 @@ fi
 
 if is_connected DisplayPort-0; then
     ok 'Desktop: 1 screen (ultrawide)'
+    max_moitors 1
     xrandr --output DisplayPort-0 --auto --pos 0x0 --primary
     bspc wm --reorder-monitors DisplayPort-0
     bspc monitor ^1 --reset-desktops 1 2 3 4 5
@@ -39,6 +49,7 @@ elif is_connected DP1 && is_connected DP2 ; then
     # EndSection
 
     ok 'Laptop: 3 screens'
+    max_monitors 3
     left=DP2
     top=DP1
     bottom=eDP1
@@ -53,6 +64,7 @@ elif is_connected DP1 && is_connected DP2 ; then
     bspc wm --reorder-monitors ${left} ${top} ${bottom}
 elif is_connected DP-1-2 ; then
     ok 'Laptop: 2 screens'
+    max_monitors 2
     xrandr \
         --output DP-1-2 --auto --rotate normal --primary \
         --output eDP-1 ${scale} --below DP-1-2
@@ -61,6 +73,7 @@ elif is_connected DP-1-2 ; then
     bspc monitor ^2 --reset-desktops 5
 elif is_connected eDP && ( is_connected DP-2 || is_connected HDMI-1 ) ; then
     ok 'Laptop: 2 screens (ultrawide)'
+    max_monitors 2
     #xrandr -r 60 --dpi 96
     xrandr --output eDP-1 ${scale}
 
@@ -75,6 +88,7 @@ elif is_connected eDP && ( is_connected DP-2 || is_connected HDMI-1 ) ; then
     bspc monitor ^2 --reset-desktops 5
 elif is_connected eDP ; then
     ok 'Laptop: 1 screen'
+    max_monitors 1
     xrandr \
         --output eDP1 --auto --pos 0x0 --primary ${scale} \
         --output eDP1 --auto --pos 0x0 --primary --scale-from 1920x1080
