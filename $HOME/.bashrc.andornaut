@@ -17,6 +17,15 @@ export AWT_TOOLKIT=MToolkit
 PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
 PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
 
+ff() {
+    if [[ -z "${FIREFOX_DEFAULT_PROFILE}" ]]; then
+        echo 'Error: Must set var $FIREFOX_DEFAULT_PROFILE'>&2
+    else
+        echo Starting firefix with profile: ${FIREFOX_DEFAULT_PROFILE}
+        firefox -P "${FIREFOX_DEFAULT_PROFILE}"
+    fi
+}
+
 httptunnel() {
     [[ "$#" -gt 1 && "$#" -lt 5 ]] || { echo 'Usage: http-tunnel jumpHost targetHost [remotePort] [localPort]' >&2 ; return; }
     local jumpHost=$1
@@ -63,7 +72,6 @@ p() {
         workon $(basename $(pwd)) 2>/dev/null || true
     fi
 }
-
 
 if which kubectl >/dev/null; then
     source <(cache-command --basedir /tmp/cache-command -- kubectl completion bash)
