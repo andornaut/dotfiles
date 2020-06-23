@@ -23,5 +23,6 @@
   "update.showReleaseNotes": false,
   "explorer.openEditors.visible": 0,
   "go.formatTool": "goimports",
-  "go.useLanguageServer": true
+  "go.useLanguageServer": true,
+  "javascript.updateImportsOnFileMove.enabled": "always"
 }
