@@ -14,7 +14,7 @@
   "go.formatTool": "goimports",
   "go.inferGopath": true,
   "go.useLanguageServer": true,
-  "javascript.updateImportsOnFileMove.enabled": "always"
+  "javascript.updateImportsOnFileMove.enabled": "always",
   "keyboard.dispatch": "keyCode",
   "search.smartCase": true,
   "telemetry.enableCrashReporter": false,
@@ -25,5 +25,5 @@
   "workbench.colorTheme": "Solarized Light",
   "workbench.startupEditor": "newUntitledFile",
   "workbench.statusBar.feedback.visible": false,
-  "zenMode.fullScreen": true,
+  "zenMode.fullScreen": true
 }
