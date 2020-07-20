@@ -8,5 +8,6 @@ for repoName in ${repoNames}; do
     ${cmd} pull 
     ${cmd} status 
     ${cmd} push 
+    gog -r ${repoName} apply
     echo
 done
