@@ -57,13 +57,10 @@ cd - >/dev/null
 
 nice_bg bbs
 # Disable touchpad while typing to avoid unwanted keypresses.
-nice_bg syndaemon -i 0.25 -d
+# nice_bg syndaemon -i 0.25 -d
 # Lock screen after a period of inactivity
 nice_bg gnome-screensaver
 nice_bg xautolock -secure -time 10 -locker 'gnome-screensaver-command --lock'
-
-#TODO I don't remember why xclip is here?
-#nice_bg xclip
 
 # How to set bg color: https://bbs.archlinux.org/viewtopic.php?id=134955
 nice_bg trayer \
