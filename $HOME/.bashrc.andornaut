@@ -72,7 +72,3 @@ p() {
         workon $(basename $(pwd)) 2>/dev/null || true
     fi
 }
-
-if which kubectl >/dev/null; then
-    source <(cache-command --basedir /tmp/cache-command -- kubectl completion bash)
-fi
