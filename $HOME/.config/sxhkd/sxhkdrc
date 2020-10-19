@@ -3,7 +3,7 @@
 #
 
 # Toggle screensaver
-super + ctrl + Escape
+super + ctrl + q
 	gnome-screensaver-command -l
 
 super + p

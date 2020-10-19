@@ -26,5 +26,6 @@
   "workbench.startupEditor": "newUntitledFile",
   "workbench.statusBar.feedback.visible": false,
   "zenMode.fullScreen": true,
-  "window.restoreWindows": "none"
+  "window.restoreWindows": "none",
+  "files.insertFinalNewline": true
 }
