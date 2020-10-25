@@ -39,21 +39,14 @@ function httptunnel() {
     ssh -vL ${localPort}:${targetHost}:${remotePort} -Nf ${jumpHost} 
 }
 
-function mktempvenv() {
-    pushd $(mktemp -d)
-    virtualenv -q .
-    source bin/activate
-    pip install -qU pip
-}
-
 function p() {
-    local root="${HOME}/workspace"
+    local root="${HOME}/src"
     if [[ "${1}" == '--go' || "${1}" == '-g' ]]; then
         root="${GOPATH-"${root}/go"}/src/github.com/*/"
         shift
     fi
     if [[ $# -ne 1 ]]; then 
-        echo 'Usage: w [--go] workspace-directory'; 
+        echo 'Usage: w [--go] src-directory';
         return 1
     fi
     local name=$1
