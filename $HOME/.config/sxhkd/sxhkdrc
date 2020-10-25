@@ -74,7 +74,7 @@ super + {_,shift + }c
 	bspc node -f {next,prev}
 
 # focus the next/previous desktop
-super + bracket{left,right}
+super + {Left,Right}
 	bspc desktop -f {prev,next}
 
 # focus the last node/desktop
@@ -124,5 +124,5 @@ super + alt + shift + {h,j,k,l}
 	bspc node {@east -r -20,@north -r +20,@south -r -20,@west -r +20}
 
 # move a floating window
-super + {Left,Down,Up,Right}
-	xdo move {-x -20,-y +20,-y -20,-x +20}
+#super + {Left,Down,Up,Right}
+#	xdo move {-x -20,-y +20,-y -20,-x +20}
