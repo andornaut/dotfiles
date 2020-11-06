@@ -10,7 +10,7 @@
   "explorer.confirmDragAndDrop": false,
   "explorer.openEditors.visible": 0,
   "extensions.ignoreRecommendations": false,
-  "files.autoSave": "onFocusChange",
+  "files.autoSave": "onWindowChange",
   "go.formatTool": "goimports",
   "go.inferGopath": true,
   "go.useLanguageServer": true,
@@ -27,5 +27,8 @@
   "workbench.statusBar.feedback.visible": false,
   "zenMode.fullScreen": true,
   "window.restoreWindows": "none",
-  "files.insertFinalNewline": true
+  "files.insertFinalNewline": true,
+  "ruby.format": "rubocop",
+  "ruby.useBundler": true,
+  "ruby.useLanguageServer": true
 }
