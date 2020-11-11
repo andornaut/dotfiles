@@ -55,6 +55,7 @@ function p() {
           continue
         fi
         cd "${projectPath}"
+        echo "${projectPath}"
         if [[ -d .git ]]; then
             echo "git: $(gitcurrentbranch)"
         fi
@@ -62,7 +63,6 @@ function p() {
         if [[ -d .venv ]]; then
             source .venv/bin/activate 2>/dev/null || true
         fi
-        echo "${projectPath}"
         break
     done
 }
