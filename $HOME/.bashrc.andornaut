@@ -50,11 +50,11 @@ function p() {
 
     for root in ${searchPaths[@]}; do
         # https://stackoverflow.com/a/4264351
-        projectPath="$(find ${root} -maxdepth 1 -mindepth 1 -iname "${globPattern}"'*' -type d -print -quit)"
+        projectPath="$(find ${root} -maxdepth 1 -mindepth 1 -iname "${globPattern}"'*' -type d -print -quit 2>/dev/null)"
         if [[ ! -d "${projectPath}" ]]; then
           continue
         fi
-        pushd "${projectPath}"
+        cd "${projectPath}"
         if [[ -d .git ]]; then
             echo "git: $(gitcurrentbranch)"
         fi
@@ -62,6 +62,7 @@ function p() {
         if [[ -d .venv ]]; then
             source .venv/bin/activate 2>/dev/null || true
         fi
+        echo "${projectPath}"
         break
     done
 }
