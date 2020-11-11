@@ -40,33 +40,30 @@ function httptunnel() {
 }
 
 function p() {
-    local root="${HOME}/src"
-    if [[ "${1}" == '--go' || "${1}" == '-g' ]]; then
-        root="${GOPATH-"${HOME}/go"}/src/github.com/*"
-        shift
-    elif [[ "${1}" == '--github' || "${1}" == '-t' ]]; then
-        root="${root}/github.com/*"
-        shift
-    fi
     if [[ $# -ne 1 ]]; then 
-        echo 'Usage: p [--go|-g,--github|-t] src-directory-prefix';
+        echo 'Usage: p directoryPrefix';
         return 1
     fi
-    local name=$1
-    cd "$(find ${root} -maxdepth 1 -mindepth 1 -iname "${name}*"|sort|head -n1)"
-    echo $(pwd) 
-    if [[ -d .git ]]; then
-        echo "git: $(gitcurrentbranch)"
-    fi
-    if [[ -d .hg ]]; then 
-        echo "hg: $(hg branch)"
-    fi
-    deactivate 2>/dev/null
-    if [[ -d .venv ]]; then
-        source .venv/bin/activate 2>/dev/null || true
-    else
-        workon $(basename $(pwd)) 2>/dev/null || true
-    fi
+
+    local globPattern=$1
+    local searchPaths=("${HOME}/src/github.com/*" "${HOME}/go/src/github.com/andornaut"  "${HOME}/src")
+
+    for root in ${searchPaths[@]}; do
+        # https://stackoverflow.com/a/4264351
+        projectPath="$(find ${root} -maxdepth 1 -mindepth 1 -iname "${globPattern}"'*' -type d -print -quit)"
+        if [[ ! -d "${projectPath}" ]]; then
+          continue
+        fi
+        pushd "${projectPath}"
+        if [[ -d .git ]]; then
+            echo "git: $(gitcurrentbranch)"
+        fi
+        deactivate 2>/dev/null
+        if [[ -d .venv ]]; then
+            source .venv/bin/activate 2>/dev/null || true
+        fi
+        break
+    done
 }
 
 if which kubectl >/dev/null; then
