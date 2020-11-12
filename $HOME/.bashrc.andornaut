@@ -50,7 +50,7 @@ function p() {
 
     for root in ${searchPaths[@]}; do
         # https://stackoverflow.com/a/4264351
-        projectPath="$(find ${root} -maxdepth 1 -mindepth 1 -iname "${globPattern}"'*' -type d -print -quit 2>/dev/null)"
+        projectPath="$(find ${root} -maxdepth 1 -mindepth 1 -iname "${globPattern}"'*' -type d 2>/dev/null|sort|awk 'NR==1{print $1}')"
         if [[ ! -d "${projectPath}" ]]; then
           continue
         fi
