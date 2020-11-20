@@ -8,10 +8,10 @@ header Screens
 xrandr_output="$(xrandr)"
 
 is_connected() {
-	local screen="$1"
+    local screen="$1"
 
-	echo "${xrandr_output}"|grep -P -qe "^\s*${screen}[-\w]* connected"
-	return $?
+    echo "${xrandr_output}"|grep -P -qe "^\s*${screen}[-\w]* connected"
+    return $?
 }
 
 max_monitors() {
@@ -34,43 +34,10 @@ fi
 if is_connected DisplayPort-0; then
     ok 'Desktop: 1 screen (ultrawide)'
     max_monitors 1
+    #xrandr --output DisplayPort-0 --mode 3840x1600 --pos 0x0 --rate 144.00 --primary
     xrandr --output DisplayPort-0 --auto --pos 0x0 --primary
     bspc wm --reorder-monitors DisplayPort-0
     bspc monitor ^1 --reset-desktops 1 2 3 4 5
-elif is_connected DP1 && is_connected DP2 ; then
-    # Switch from Intel DRI3 to DRI2 to workaround a bug where the screens will not wake from `xset s activate`
-    # https://bbs.archlinux.org/viewtopic.php?id=215930
-    # https://wiki.archlinux.org/index.php/intel_graphics#DRI3_issues
-    # /etc/X11/xorg.conf.d/20-intel.conf
-    # Section "Device"
-    #   Identifier  "Intel Graphics"
-    #   Driver      "intel"
-    #   Option      "DRI" "2"
-    # EndSection
-
-    ok 'Laptop: 3 screens'
-    max_monitors 3
-    left=DP2
-    top=DP1
-    bottom=eDP1
-    xrandr \
-        --output ${left} --mode 1920x1080 --rotate left \
-        --output ${top} --mode 1920x1080 --rotate normal --right-of ${left} --primary \
-        --output ${bottom} --mode 3200x1800 ${scale} --below ${top}
-    bspc wm --reorder-monitors ${left} ${top} ${bottom}
-    bspc monitor ^1 --reset-desktops 1
-    bspc monitor ^2 --reset-desktops 2 3 4
-    bspc monitor ^3 --reset-desktops 5
-    bspc wm --reorder-monitors ${left} ${top} ${bottom}
-elif is_connected DP-1-2 ; then
-    ok 'Laptop: 2 screens'
-    max_monitors 2
-    xrandr \
-        --output DP-1-2 --auto --rotate normal --primary \
-        --output eDP-1 ${scale} --below DP-1-2
-    bspc wm --reorder-monitors DP-1-2 eDP-1
-    bspc monitor ^1 --reset-desktops 1 2 3 4
-    bspc monitor ^2 --reset-desktops 5
 elif is_connected eDP && ( is_connected DP-2 || is_connected HDMI-1 ) ; then
     ok 'Laptop: 2 screens (ultrawide)'
     max_monitors 2
