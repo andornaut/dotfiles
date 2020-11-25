@@ -91,7 +91,7 @@ nice_bg insync start
 
 gamma=$(xrandr --verbose | awk '/Gamma/{print $2}'|tr -d '\n:.0'|tr -s '1')
 if [[ ${gamma} == 1 ]]; then
-    nice_bg redshift-gtk
+   nice_bg redshift-gtk
 else
     warn gamma is equal to 1. Skipping redshift.
 fi

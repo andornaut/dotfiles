@@ -62,3 +62,5 @@
 	email = andornaut@users.noreply.github.com
 [include]
 	path = config.local
+[pull]
+	rebase = false
