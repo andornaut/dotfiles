@@ -16,6 +16,9 @@ set number
 "Disable auto-indent"
 set noautoindent
 
+"Show column in status bar
+set ruler
+
 "Show existing tab with 4 spaces width
 set tabstop=4
 "When indenting with '>', use 4 spaces width
