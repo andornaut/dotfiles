@@ -71,3 +71,7 @@ function p() {
 if which kubectl >/dev/null; then
     source <(cache-command -e 86400 -b /tmp/cache-command -- kubectl completion bash)
 fi
+
+if [ -f "$HOME/.cargo/env" ]; then
+    source "$HOME/.cargo/env"
+fi
