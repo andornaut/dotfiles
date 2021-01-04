@@ -1,66 +1,66 @@
 [apply]
-	whitespace = fix
+    whitespace = fix
 [alias]
-	br = branch
-	ci = commit
-	co = checkout
-	df = diff
-	g = grep -I
-	lg = log -p
-	pp = !"echo 'Pull'; git pull; echo 'Push'; git push"
-	rb = rbranch
-	rv = review
-	st = status
-	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+    br = branch
+    ci = commit
+    co = checkout
+    df = diff
+    g = grep -I
+    lg = log -p
+    pp = !"echo 'Pull'; git pull; echo 'Push'; git push"
+    rb = rbranch
+    rv = review
+    st = status
+    hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 [color]
-	ui = auto
+    ui = auto
 [color "branch"]
-	current = yellow reverse
-	local = yellow
-	remote = green
+    current = yellow reverse
+    local = yellow
+    remote = green
 [color "diff"]
-	meta = yellow bold
-	frag = magenta bold
-	old = red bold
-	new = green bold
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
 [color "status"]
-	added = yellow
-	changed = green
-	untracked = cyan
+    added = yellow
+    changed = green
+    untracked = cyan
 [core]
-	autocrlf = input
-	editor = vim
-	whitespace = fix,space-before-tab,tab-in-indent,trailing-space
-	excludesfile = ~/.config/git/gitignore
-	pager = less -+F
+    autocrlf = input
+    editor = vim
+    whitespace = fix,space-before-tab,tab-in-indent,trailing-space
+    excludesfile = ~/.config/git/gitignore
+    pager = less -+F
 [merge]
-	log = true
+    log = true
 [push]
-	default = simple
+    default = simple
 [rerere]
-	enabled = 1
+    enabled = 1
 [url "git@github.com:"]
-	insteadOf = "gh:"
-	pushInsteadOf = "github:"
-	pushInsteadOf = "git://github.com/"
+    insteadOf = "gh:"
+    pushInsteadOf = "github:"
+    pushInsteadOf = "git://github.com/"
 [url "git://github.com/"]
-	insteadOf = "github:"
+    insteadOf = "github:"
 [url "git@gist.github.com:"]
-	insteadOf = "gst:"
-	pushInsteadOf = "gist:"
-	pushInsteadOf = "git://gist.github.com/"
+    insteadOf = "gst:"
+    pushInsteadOf = "gist:"
+    pushInsteadOf = "git://gist.github.com/"
 [url "git://gist.github.com/"]
-	insteadOf = "gist:"
+    insteadOf = "gist:"
 [url "git@heroku.com:"]
-	insteadOf = "heroku:"
+    insteadOf = "heroku:"
 [web]
-	browser = google-chrome
+    browser = google-chrome
 [credential]
-	helper = cache --timeout 3600
+    helper = cache --timeout 3600
 [user]
-	name = andornaut
-	email = andornaut@users.noreply.github.com
+    name = andornaut
+    email = andornaut@users.noreply.github.com
 [include]
-	path = config.local
+    path = config.local
 [pull]
-	rebase = false
+    rebase = false
