@@ -12,6 +12,7 @@
     rv = review
     st = status
     hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+    sync = !sh -c 'git checkout --detach --quiet HEAD && git fetch origin master:master && git checkout --quiet -'
 [color]
     ui = auto
 [color "branch"]
