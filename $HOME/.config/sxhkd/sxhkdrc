@@ -66,12 +66,12 @@ super + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
 
 # focus the node for the given path jump
-super + {p,b,comma,period}
-	bspc node -f @{parent,brother,first,second}
+#super + {p,b,comma,period}
+#	bspc node -f @{parent,brother,first,second}
 
 # focus the next/previous node
-super + {_,shift + }c
-	bspc node -f {next,prev}
+#super + {_,shift + }c
+#	bspc node -f {next,prev}
 
 # focus the next/previous desktop
 super + {Left,Right}
@@ -82,10 +82,10 @@ super + {grave,Tab}
 	bspc {node,desktop} -f last
 
 # focus the older or newer node in the focus history
-super + {o,i}
-	bspc wm -h off; \
-	bspc node {older,newer} -f; \
-	bspc wm -h on
+#super + {o,i}
+#	bspc wm -h off; \
+#	bspc node {older,newer} -f; \
+#	bspc wm -h on
 
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
@@ -100,8 +100,8 @@ super + ctrl + {h,j,k,l}
 	bspc node -p {west,south,north,east}
 
 # preselect the ratio
-super + ctrl + {1-9}
-	bspc node -o 0.{1-9}
+#super + ctrl + {1-9}
+#	bspc node -o 0.{1-9}
 
 # cancel the preselection for the focused node
 super + ctrl + space
@@ -124,5 +124,5 @@ super + alt + shift + {h,j,k,l}
 	bspc node {@east -r -20,@north -r +20,@south -r -20,@west -r +20}
 
 # move a floating window
-#super + {Left,Down,Up,Right}
-#	xdo move {-x -20,-y +20,-y -20,-x +20}
+super + shift + {Left,Down,Up,Right}
+	xdo move {-x -20,-y +20,-y -20,-x +20}
