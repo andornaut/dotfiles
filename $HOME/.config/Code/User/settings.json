@@ -38,5 +38,9 @@
   "workbench.preferredLightColorTheme": "Solarized Light",
   "workbench.startupEditor": "newUntitledFile",
   "workbench.statusBar.feedback.visible": false,
-  "zenMode.fullScreen": true
+  "zenMode.fullScreen": true,
+  "vim.handleKeys": {
+    "<C-f>": false,
+    "<C-r>": true
+  }
 }
