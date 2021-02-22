@@ -116,3 +116,5 @@ out/
 .venv/
 .vscode/
 .*.swo
+
+build.*/
