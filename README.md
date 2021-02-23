@@ -13,9 +13,15 @@ Personal dotfiles
 gog repository add andornaut https://github.com/andornaut/dotfiles.git
 gog apply
 
-echo 'for f in ${HOME}/.bashrc.*; do
+cat <<'EOF' >> ~/.bashrc
+if [[ $- == *i* ]]; then
+  # Only source additional customizations if the shell is interactive
+  for f in ${HOME}/.bashrc.*; do
     source ${f}
-done' >> ${HOME}/.bashrc
+  done
+fi
+EOF
+
 ```
 
 ## Colour Theme
