@@ -2,9 +2,9 @@ export EDITOR=vim
 export GOG_DEFAULT_REPOSITORY_NAME=andornaut
 export HISTSIZE=5000
 # Prevent overly large UI in java 11: https://bugs.launchpad.net/ubuntu/+source/openjdk-lts/+bug/1765914
-export J2D_UISCALE=1
+# export J2D_UISCALE=1
 export MRS_HIDE_EDITOR_INSTRUCTIONS=anyvalueistrue
-export PATH=${PATH}:${HOME}/.local/bin:${HOME}/.local/lib/npm/bin
+export PATH=${PATH}:${HOME}/bin:${HOME}/.local/bin:${HOME}/.local/lib/npm/bin
 # https://github.com/pypa/pipenv/issues/259
 export PIPENV_VENV_IN_PROJECT=1
 
