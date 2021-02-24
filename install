@@ -1,0 +1,55 @@
+#!/bin/bash
+
+set -eo pipefail
+
+commandExists() {
+  local command=$1
+  type "${command}" >/dev/null 2>&1
+}
+
+downloadLatestGitHubRelease() {
+  [[ $# -eq 2 || $# -eq 3 ]] || { echo "Usage $0 repository destinationFilename"; return; };
+  local repository=$1 # eg. andornaut/dotfiles
+  local destinationPath=$2
+  local downloadIndex=${3-1}
+  local apiUrl="https://api.github.com/repos/${repository}/releases/latest"
+  #echo $(curl -s "${apiUrl}")
+  local url=$(curl -s "${apiUrl}" | grep "browser_download_url" | sed -n -e "${downloadIndex}p"|cut -d '"' -f 4)
+  echo "Downloading ${url} to ${destinationPath}"
+  if [[ -f ${destinationPath} ]]; then
+    echo "${destinationPath} already exists. Skipping..."
+    return
+  fi
+  curl --location --silent -o ${destinationPath} "${url}"
+}
+
+installGog() {
+  mkdir -p bin
+  downloadLatestGitHubRelease andornaut/gog bin/gog 3
+  chmod +x bin/*
+}
+
+export GOG_DEFAULT_REPOSITORY_NAME=dotfiles
+export GOG_REPOSITORY_BASE_DIR=${HOME}
+export PATH=${PATH}:${HOME}/bin
+
+cd
+
+if ! commandExists gog; then
+    installGog
+fi
+
+gog apply
+
+cat <<'EOF' >> ~/.bashrc
+export GOG_DEFAULT_REPOSITORY_NAME=dotfiles
+export GOG_REPOSITORY_BASE_DIR=${HOME}
+export PATH=${PATH}:${HOME}/bin
+
+if [[ $- == *i* ]]; then
+  # Only source additional customizations if the shell is interactive
+  for f in ${HOME}/.bashrc.*; do
+    source ${f}
+  done
+fi
+EOF
