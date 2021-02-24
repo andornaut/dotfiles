@@ -66,3 +66,6 @@ EOF
 # $BASH_VERSION is unset, which causes ~/.profile to be a no-op, so we source ~/.bashrc directly
 echo 'source ~/.bashrc' >> ~/.bash_login
 sudo usermod --shell /bin/bash ${USER}
+
+# Workaround issue: The application server is started in tmux before the dotfiles have been installed
+tmux source-file ~/.tmux.conf
