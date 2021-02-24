@@ -17,4 +17,5 @@ alias serve='echo "Serving ${PWD}" && docker run --network host --volume ${PWD}:
 alias si="screen -d -R irssi irssi"
 alias sr="screen -d -R rtorrent rtorrent"
 alias til="code --new-window ${HOME}/src/github.com/andornaut/til"
+alias tmuxdev="tmux new-session -As dev"
 alias vol="pavolume -v $@"
