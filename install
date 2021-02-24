@@ -2,6 +2,11 @@
 
 set -eo pipefail
 
+if [[ -z ${SPIN} ]]; then
+    echo Must be run within a Spin environment >&2
+    exit 1
+fi
+
 commandExists() {
   local command=$1
   type "${command}" >/dev/null 2>&1
@@ -13,7 +18,6 @@ downloadLatestGitHubRelease() {
   local destinationPath=$2
   local downloadIndex=${3-1}
   local apiUrl="https://api.github.com/repos/${repository}/releases/latest"
-  #echo $(curl -s "${apiUrl}")
   local url=$(curl -s "${apiUrl}" | grep "browser_download_url" | sed -n -e "${downloadIndex}p"|cut -d '"' -f 4)
   echo "Downloading ${url} to ${destinationPath}"
   if [[ -f ${destinationPath} ]]; then
@@ -42,10 +46,6 @@ fi
 gog apply
 
 cat <<'EOF' >> ~/.bashrc
-export GOG_DEFAULT_REPOSITORY_NAME=dotfiles
-export GOG_REPOSITORY_BASE_DIR=${HOME}
-export PATH=${PATH}:${HOME}/bin
-
 if [[ $- == *i* ]]; then
   # Only source additional customizations if the shell is interactive
   for f in ${HOME}/.bashrc.*; do
@@ -53,3 +53,14 @@ if [[ $- == *i* ]]; then
   done
 fi
 EOF
+
+cat <<'EOF' >> ~/.bashrc.spin
+# Overrides vars from ~/.bashrc.andornaut
+export GOG_DEFAULT_REPOSITORY_NAME=dotfiles
+export GOG_REPOSITORY_BASE_DIR=${HOME}
+EOF
+
+# Spin installs ~/.bash_login, which prevents .profile and .bashrc from being sourced
+# $BASH_VERSION is unset, which causes ~/.profile to be a no-op, so we source ~/.bashrc directly
+echo 'source ~/.bashrc' >> ~/.bash_login
+sudo usermod --shell /bin/bash ${USER}
