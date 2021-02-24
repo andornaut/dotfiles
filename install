@@ -45,10 +45,7 @@ fi
 
 gog apply
 
-cat <<'EOF' >> ~/.gitconfig
-[include]
-  path = .config/git/config
-EOF
+echo -e "[include]\n\tpath = .config/git/config\n$(cat ~/.gitconfig)" > .gitconfig
 
 cat <<'EOF' >> ~/.bashrc
 if [[ $- == *i* ]]; then
