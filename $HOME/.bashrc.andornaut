@@ -2,20 +2,20 @@ export EDITOR=vim
 export GOG_DEFAULT_REPOSITORY_NAME=andornaut
 export GOG_DO_NOT_CREATE_BACKUPS=any-value-is-true
 export GOG_IGNORE_FILES_REGEX='^install$'
+export GOPATH="${HOME}"
 export HISTSIZE=5000
 # Prevent overly large UI in java 11: https://bugs.launchpad.net/ubuntu/+source/openjdk-lts/+bug/1765914
 # export J2D_UISCALE=1
-export MRS_HIDE_EDITOR_INSTRUCTIONS=anyvalueistrue
+export MRS_HIDE_EDITOR_INSTRUCTIONS=any-value-is-true
 export PATH=${PATH}:${HOME}/bin:${HOME}/.local/bin:${HOME}/.local/lib/npm/bin
 # https://github.com/pypa/pipenv/issues/259
 export PIPENV_VENV_IN_PROJECT=1
 
 # https://wiki.archlinux.org/index.php/Java#Tips_and_tricks
-export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Djdk.gtk.version=3'
+#export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Djdk.gtk.version=3'
 # https://wiki.archlinux.org/index.php/Java#Gray_window,_applications_not_resizing_with_WM,_menus_immediately_closing
-export _JAVA_AWT_WM_NONREPARENTING=1
-export AWT_TOOLKIT=MToolkit
-export GOPATH="${HOME}"
+#export _JAVA_AWT_WM_NONREPARENTING=1
+#export AWT_TOOLKIT=MToolkit
 
 PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
 PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
@@ -50,6 +50,7 @@ function p() {
 
     local globPattern=$1
     local searchPaths=("${HOME}/src/github.com/andornaut"  "${HOME}/src" "${HOME}/src/*/*")
+    local root
 
     for root in ${searchPaths[@]}; do
         # https://stackoverflow.com/a/4264351
@@ -74,6 +75,6 @@ if which kubectl >/dev/null; then
     source <(cache-command -e 86400 -b /tmp/cache-command -- kubectl completion bash)
 fi
 
-if [ -f "$HOME/.cargo/env" ]; then
-    source "$HOME/.cargo/env"
-fi
+#if [ -f "$HOME/.cargo/env" ]; then
+#    source "$HOME/.cargo/env"
+#fi
