@@ -1,5 +1,7 @@
 export EDITOR=vim
 export GOG_DEFAULT_REPOSITORY_NAME=andornaut
+export GOG_DO_NOT_CREATE_BACKUPS=any-value-is-true
+export GOG_IGNORE_FILES_REGEX='^install$'
 export HISTSIZE=5000
 # Prevent overly large UI in java 11: https://bugs.launchpad.net/ubuntu/+source/openjdk-lts/+bug/1765914
 # export J2D_UISCALE=1
