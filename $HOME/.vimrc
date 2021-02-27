@@ -35,6 +35,7 @@ set smartcase
 
 "Hightlight matched text while searching
 set incsearch
+set hlsearch
 
 "python-mode
 let g:pymode_folding = 0
@@ -51,7 +52,25 @@ set laststatus=2
 
 "Make insert mode more obvious
 "https://stackoverflow.com/a/6489348
-:autocmd InsertEnter,InsertLeave * set cul!
-let &t_SI = "\<esc>[5 q" " I beam cursor for insert mode
-let &t_EI = "\<esc>[2 q" " block cursor for normal mode
-let &t_SR = "\<esc>[3 q" " underline cursor for replace mode
+"let &t_SI = "\<esc>[5 q" " I beam cursor for insert mode
+"let &t_EI = "\<esc>[2 q" " block cursor for normal mode
+"let &t_SR = "\<esc>[3 q" " underline cursor for replace mode
+
+"  1 -> blinking block
+"  2 -> solid block
+"  3 -> blinking underscore
+"  4 -> solid underscore
+"  5 -> blinking vertical bar
+"  6 -> solid vertical bar
+"https://vim.fandom.com/wiki/Change_cursor_shape_in_different_modes
+"https://vi.stackexchange.com/a/14203
+if exists('$TMUX')
+  let &t_SI = "\ePtmux;\e\e[6 q\e\\"
+  let &t_EI = "\ePtmux;\e\e[2 q\e\\"
+else
+  let &t_SI = "\e[6 q"
+  let &t_EI = "\e[2 q"
+endif
+autocmd InsertEnter,InsertLeave * set cul!
+"https://vi.stackexchange.com/a/20220
+set ttimeoutlen=10
