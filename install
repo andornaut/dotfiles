@@ -3,67 +3,63 @@
 set -eo pipefail
 
 if [[ -z ${SPIN} ]]; then
-    echo Must be run within a Spin environment >&2
+    echo 'Must be run within a "Spin" environment' >&2
     exit 1
 fi
 
 commandExists() {
-  local command=$1
-  type "${command}" >/dev/null 2>&1
+    local command=$1
+    type "${command}" >/dev/null 2>&1
 }
 
 downloadLatestGitHubRelease() {
-  [[ $# -eq 2 || $# -eq 3 ]] || { echo "Usage $0 repository destinationFilename"; return; };
-  local repository=$1 # eg. andornaut/dotfiles
-  local destinationPath=$2
-  local downloadIndex=${3-1}
-  local apiUrl="https://api.github.com/repos/${repository}/releases/latest"
-  local url=$(curl -s "${apiUrl}" | grep "browser_download_url" | sed -n -e "${downloadIndex}p"|cut -d '"' -f 4)
-  echo "Downloading ${url} to ${destinationPath}"
-  if [[ -f ${destinationPath} ]]; then
-    echo "${destinationPath} already exists. Skipping..."
-    return
-  fi
-  curl --location --silent -o ${destinationPath} "${url}"
+    [[ $# -eq 2 || $# -eq 3 ]] || { echo "Usage $0 repository destinationFilename [downloadIndex]"; return; };
+    local repository=$1 # eg. andornaut/dotfiles
+    local destinationPath=$2
+    local downloadIndex=${3-1}
+    local apiUrl="https://api.github.com/repos/${repository}/releases/latest"
+    local url=$(curl -s "${apiUrl}" | grep "browser_download_url" | sed -n -e "${downloadIndex}p"|cut -d '"' -f 4)
+    echo "Downloading ${url} to ${destinationPath}"
+    if [[ -f ${destinationPath} ]]; then
+        echo "${destinationPath} already exists. Skipping..."
+        return
+    fi
+    curl --location --silent -o "${destinationPath}" "${url}"
 }
 
-installGog() {
-  mkdir -p bin
-  downloadLatestGitHubRelease andornaut/gog bin/gog 3
-  chmod +x bin/*
+applyGog() {
+    if ! commandExists gog; then
+        mkdir -p ~/bin
+        downloadLatestGitHubRelease andornaut/gog ~/bin/gog 3
+        chmod +x ~/bin/*
+    fi
+    export GOG_DEFAULT_REPOSITORY_NAME=dotfiles
+    export GOG_IGNORE_FILES_REGEX='^install$'
+    export GOG_HOME=${HOME}
+    ~/bin/gog apply
 }
 
-export GOG_DEFAULT_REPOSITORY_NAME=dotfiles
-export GOG_REPOSITORY_BASE_DIR=${HOME}
-export PATH=${PATH}:${HOME}/bin
-
-cd
-
-if ! commandExists gog; then
-    installGog
-fi
-
-gog apply
-
-echo -e "[include]\n\tpath = .config/git/config\n$(cat ~/.gitconfig)" > .gitconfig
+applyGog
 
 cat <<'EOF' >> ~/.bashrc
 if [[ $- == *i* ]]; then
-  # Only source additional customizations if the shell is interactive
-  for f in ${HOME}/.bashrc.*; do
-    source ${f}
-  done
+    # Only source additional customizations if the shell is interactive
+    for f in ${HOME}/.bashrc.*; do
+        source ${f}
+    done
 fi
 EOF
 
 cat <<'EOF' >> ~/.bashrc.spin
 # Overrides vars from ~/.bashrc.andornaut
 export GOG_DEFAULT_REPOSITORY_NAME=dotfiles
-export GOG_REPOSITORY_BASE_DIR=${HOME}
+export GOG_HOME=${HOME}
 EOF
 
+echo -e "[include]\n\tpath = .config/git/config\n$(cat ~/.gitconfig)" > ~/.gitconfig
+
 # Spin installs ~/.bash_login, which prevents .profile and .bashrc from being sourced
-# $BASH_VERSION is unset, which causes ~/.profile to be a no-op, so we source ~/.bashrc directly
+# $BASH_VERSION is unset, which causes ~/.profile to be a no-op, so source ~/.bashrc directly
 echo 'source ~/.bashrc' >> ~/.bash_login
 sudo usermod --shell /bin/bash ${USER}
 
