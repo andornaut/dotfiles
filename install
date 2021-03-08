@@ -2,6 +2,8 @@
 
 set -eo pipefail
 
+exec > >(tee -a /tmp/install.log) 2>&1
+
 if [[ -z ${SPIN} ]]; then
     echo 'Must be run within a "Spin" environment' >&2
     exit 1
@@ -39,29 +41,99 @@ applyGog() {
     ~/bin/gog apply
 }
 
-applyGog
-
-cat <<'EOF' >> ~/.bashrc
-if [[ $- == *i* ]]; then
-    # Only source additional customizations if the shell is interactive
+includeCustomConfigs() {
+    echo -e "[include]\n\tpath = .config/git/config\n$(cat ~/.gitconfig)" > ~/.gitconfig
+    # Spin installs ~/.bash_login, which prevents .profile and .bashrc from being sourced
+    # $BASH_VERSION is unset, which causes ~/.profile to be a no-op, so source ~/.bashrc directly
+    echo 'source ~/.bashrc' >> ~/.bash_login
     for f in ${HOME}/.bashrc.*; do
         source ${f}
     done
-fi
+    cat <<-'EOF' >> ~/.bashrc
+    if [[ $- == *i* ]]; then
+        # Only source additional customizations if the shell is interactive
+        for f in ${HOME}/.bashrc.*; do
+            source ${f}
+        done
+    fi
 EOF
+}
 
-cat <<'EOF' >> ~/.bashrc.spin
-# Overrides vars from ~/.bashrc.andornaut
-export GOG_DEFAULT_REPOSITORY_NAME=dotfiles
-export GOG_HOME=${HOME}
+patchProjector() {
+    local patchPath="$(mktemp)"
+    cat <<-'EOF' > "${patchPath}"
+diff --git a/dialogs.py b/dialogs.py
+index 171f5be..a3eb155 100644
+--- a/dialogs.py
++++ b/dialogs.py
+@@ -117,6 +117,14 @@ def select_ide_kind() -> Optional[IDEKind]:
+     return select_from_list(kinds, lambda it: it.name, 'Choose IDE type or 0 to exit')
+
+
++def select_ide_kind_by_pattern(pattern: str) -> Optional[IDEKind]:
++    """Select an IDE kind that matches the given pattern or interactively select one otherwise"""
++    pattern_kind = pattern.lower().split(' ')[0]
++    kinds = [k for k in IDEKind
++             if k != IDEKind.Unknown and k.name.lower().startswith(pattern_kind)]
++    return kinds[0] if len(kinds) == 1 else select_ide_kind()
++
++
+ NO_EOL_DISTRIBUTIVE_LIST = ['LinuxMint']
+
+
+@@ -148,12 +156,17 @@ def find_apps(pattern: Optional[str] = None) -> None:
+
+
+ def select_app(pattern: Optional[str] = None) -> Tuple[str, Optional[Product]]:
+-    """Interactively selects app name from list of projector-compatible applications."""
+-    kind = select_ide_kind()
++    """Selects app name from list of projector-compatible applications."""
++    kind = select_ide_kind_by_pattern(pattern) if pattern else select_ide_kind()
+
+     if kind is None:
+         return RunConfig.UNKNOWN, None
+
++    if pattern:
++        apps = get_all_apps(kind, pattern)
++        if len(apps) == 1:
++            return RunConfig.NOT_TESTED, apps[0]
++
+     channel, apps = get_app_list(kind, pattern)
+
+     return channel, select_from_list(apps, lambda it: it.name,
 EOF
+    patch --directory "$(python3 -m site --user-site)/projector_installer" < "${patchPath}"
+}
 
-echo -e "[include]\n\tpath = .config/git/config\n$(cat ~/.gitconfig)" > ~/.gitconfig
+startProjector() {
+    sudo apt-get install -qq --no-install-recommends \
+        libfreetype6 \
+        libxext6 \
+        libxi6 \
+        libxrender1 \
+        libxtst6 \
+        python3-dev  \
+        python3-pip
+    pip3 install --quiet projector-installer --user
+    patchProjector >> /tmp/log 2>&1
+    # Prevent projector from prompting to agree to a license
+    # https://github.com/JetBrains/projector-installer/blob/ee878ddee0795a910b9913d62fbb305f6985247c/projector_installer/cmd.py#L64
+    # https://github.com/JetBrains/projector-installer/blob/ee878ddee0795a910b9913d62fbb305f6985247c/projector_installer/cmd.py#L25
+    mkdir -p ~/.projector/configs
+    projector ide install 'RubyMine 2020.3.2' --no-auto-run
+    tmux new -d -s projector projector run RubyMine
+}
 
-# Spin installs ~/.bash_login, which prevents .profile and .bashrc from being sourced
-# $BASH_VERSION is unset, which causes ~/.profile to be a no-op, so source ~/.bashrc directly
-echo 'source ~/.bashrc' >> ~/.bash_login
+updateTmux() {
+    # Workaround issue: The application server is started in tmux before the dotfiles have been installed
+    # Must run after `applyGog`, so that ~/.tmux.conf exists
+    # Should run before `startProjector`, so that its tmux session uses the desired settings
+    tmux source-file ~/.tmux.conf
+}
+
+
 sudo usermod --shell /bin/bash ${USER}
-
-# Workaround issue: The application server is started in tmux before the dotfiles have been installed
-tmux source-file ~/.tmux.conf
+applyGog
+includeCustomConfigs
+updateTmux
+startProjector
