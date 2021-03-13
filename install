@@ -1,8 +1,7 @@
 #!/bin/bash
+# Logs are in /var/log/spin/dotfiles.log
 
-set -eo pipefail
-
-exec > >(tee -a /tmp/install.log) 2>&1
+set -oxv pipefail
 
 if [[ -z ${SPIN} ]]; then
     echo 'Must be run within a "Spin" environment' >&2
@@ -46,13 +45,10 @@ includeCustomConfigs() {
     # Spin installs ~/.bash_login, which prevents .profile and .bashrc from being sourced
     # $BASH_VERSION is unset, which causes ~/.profile to be a no-op, so source ~/.bashrc directly
     echo 'source ~/.bashrc' >> ~/.bash_login
-    for f in ${HOME}/.bashrc.*; do
-        source ${f}
-    done
     cat <<-'EOF' >> ~/.bashrc
     if [[ $- == *i* ]]; then
         # Only source additional customizations if the shell is interactive
-        for f in ${HOME}/.bashrc.*; do
+        for f in ~/.bashrc.*; do
             source ${f}
         done
     fi
@@ -60,6 +56,7 @@ EOF
 }
 
 patchProjector() {
+    # https://github.com/JetBrains/projector-installer/pull/8
     local patchPath="$(mktemp)"
     cat <<-'EOF' > "${patchPath}"
 diff --git a/dialogs.py b/dialogs.py
@@ -106,6 +103,8 @@ EOF
 }
 
 startProjector() {
+    local ideName=${1}
+    local ideVersion=${2}
     sudo apt-get install -qq --no-install-recommends \
         libfreetype6 \
         libxext6 \
@@ -115,13 +114,12 @@ startProjector() {
         python3-dev  \
         python3-pip
     pip3 install --quiet projector-installer --user
-    patchProjector >> /tmp/log 2>&1
+    patchProjector
     # Prevent projector from prompting to agree to a license
     # https://github.com/JetBrains/projector-installer/blob/ee878ddee0795a910b9913d62fbb305f6985247c/projector_installer/cmd.py#L64
     # https://github.com/JetBrains/projector-installer/blob/ee878ddee0795a910b9913d62fbb305f6985247c/projector_installer/cmd.py#L25
     mkdir -p ~/.projector/configs
-    projector ide install 'RubyMine 2020.3.2' --no-auto-run
-    tmux new -d -s projector projector run RubyMine
+    tmux new -d -s projector ~/.local/bin/projector ide install "${ideName} ${ideVersion}"
 }
 
 updateTmux() {
@@ -136,4 +134,4 @@ sudo usermod --shell /bin/bash ${USER}
 applyGog
 includeCustomConfigs
 updateTmux
-startProjector
+startProjector RubyMine 2020.3.2
