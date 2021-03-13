@@ -71,7 +71,7 @@ index 171f5be..03fa0cc 100644
 
 -def select_ide_kind() -> Optional[IDEKind]:
 -    """Interactively selects desired IDE kind"""
-+def select_ide_kind(pattern: str) -> Optional[IDEKind]:
++def select_ide_kind(pattern: Optional[str]) -> Optional[IDEKind]:
 +    """Select an IDE kind that matches the given pattern or interactively select one otherwise"""
      kinds = [k for k in IDEKind if k != IDEKind.Unknown]
 +    if pattern:
