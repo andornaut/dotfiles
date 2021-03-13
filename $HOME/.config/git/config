@@ -2,6 +2,7 @@
     whitespace = fix
 [alias]
     br = branch
+    cb = !git rev-parse --abbrev-ref HEAD
     ci = commit
     co = checkout
     df = diff
