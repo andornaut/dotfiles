@@ -59,13 +59,13 @@ patchProjector() {
     # https://github.com/JetBrains/projector-installer/pull/8
     local patchPath="$(mktemp)"
     cat <<-'EOF' > "${patchPath}"
-:100644 100644 171f5be 7089318 M        dialogs.py
+:100644 100644 171f5be 03fa0cc M        dialogs.py
 
 diff --git a/dialogs.py b/dialogs.py
-index 171f5be..7089318 100644
+index 171f5be..03fa0cc 100644
 --- a/dialogs.py
 +++ b/dialogs.py
-@@ -111,9 +111,14 @@ def select_installed_app(pattern: Optional[str] = None) -> Optional[str]:
+@@ -111,9 +111,16 @@ def select_installed_app(pattern: Optional[str] = None) -> Optional[str]:
                              'Choose an IDE number to uninstall or 0 to exit')
 
 
@@ -79,10 +79,12 @@ index 171f5be..7089318 100644
 +        matched_kinds = [k for k in kinds if k.name.lower().startswith(pattern)]
 +        if len(matched_kinds) == 1:
 +            return matched_kinds[0]
++        if len(matched_kinds) > 1:
++            kinds = matched_kinds
      return select_from_list(kinds, lambda it: it.name, 'Choose IDE type or 0 to exit')
 
 
-@@ -137,7 +142,7 @@ def get_app_list(kind: IDEKind, pattern: Optional[str] = None) -> Tuple[str, Lis
+@@ -137,7 +144,7 @@ def get_app_list(kind: IDEKind, pattern: Optional[str] = None) -> Tuple[str, Lis
 
  def find_apps(pattern: Optional[str] = None) -> None:
      """Pretty-print projector-compatible applications, matched to given pattern."""
@@ -91,7 +93,7 @@ index 171f5be..7089318 100644
 
      if kind is None:
          print('No app kind selected, exiting...')
-@@ -148,12 +153,17 @@ def find_apps(pattern: Optional[str] = None) -> None:
+@@ -148,13 +155,18 @@ def find_apps(pattern: Optional[str] = None) -> None:
 
 
  def select_app(pattern: Optional[str] = None) -> Tuple[str, Optional[Product]]:
@@ -103,14 +105,16 @@ index 171f5be..7089318 100644
      if kind is None:
          return RunConfig.UNKNOWN, None
 
+-    channel, apps = get_app_list(kind, pattern)
 +    if pattern:
-+        apps = get_all_apps(kind, pattern)
-+        if len(apps) == 1:
-+            return RunConfig.NOT_TESTED, apps[0]
++        matched_apps = get_all_apps(kind, pattern)
++        if len(matched_apps) == 1:
++            return RunConfig.NOT_TESTED, matched_apps[0]
 +
-     channel, apps = get_app_list(kind, pattern)
++    channel, apps = get_app_list(kind)
 
      return channel, select_from_list(apps, lambda it: it.name,
+                                      'Choose IDE number to install or 0 to exit')
 EOF
     patch --directory "$(python3 -m site --user-site)/projector_installer" < "${patchPath}"
 }
