@@ -61,7 +61,7 @@ function p() {
         cd "${projectPath}"
         echo "${projectPath}"
         if [[ -d .git ]]; then
-            echo "git: $(gitcurrentbranch)"
+            echo "git: $(git cb)"
         fi
         deactivate 2>/dev/null
         if [[ -d .venv ]]; then
