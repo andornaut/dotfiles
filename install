@@ -59,33 +59,46 @@ patchProjector() {
     # https://github.com/JetBrains/projector-installer/pull/8
     local patchPath="$(mktemp)"
     cat <<-'EOF' > "${patchPath}"
+:100644 100644 171f5be 7089318 M        dialogs.py
+
 diff --git a/dialogs.py b/dialogs.py
-index 171f5be..a3eb155 100644
+index 171f5be..7089318 100644
 --- a/dialogs.py
 +++ b/dialogs.py
-@@ -117,6 +117,14 @@ def select_ide_kind() -> Optional[IDEKind]:
+@@ -111,9 +111,14 @@ def select_installed_app(pattern: Optional[str] = None) -> Optional[str]:
+                             'Choose an IDE number to uninstall or 0 to exit')
+
+
+-def select_ide_kind() -> Optional[IDEKind]:
+-    """Interactively selects desired IDE kind"""
++def select_ide_kind(pattern: str) -> Optional[IDEKind]:
++    """Select an IDE kind that matches the given pattern or interactively select one otherwise"""
+     kinds = [k for k in IDEKind if k != IDEKind.Unknown]
++    if pattern:
++        pattern = pattern.lower().split(' ')[0]
++        matched_kinds = [k for k in kinds if k.name.lower().startswith(pattern)]
++        if len(matched_kinds) == 1:
++            return matched_kinds[0]
      return select_from_list(kinds, lambda it: it.name, 'Choose IDE type or 0 to exit')
 
 
-+def select_ide_kind_by_pattern(pattern: str) -> Optional[IDEKind]:
-+    """Select an IDE kind that matches the given pattern or interactively select one otherwise"""
-+    pattern_kind = pattern.lower().split(' ')[0]
-+    kinds = [k for k in IDEKind
-+             if k != IDEKind.Unknown and k.name.lower().startswith(pattern_kind)]
-+    return kinds[0] if len(kinds) == 1 else select_ide_kind()
-+
-+
- NO_EOL_DISTRIBUTIVE_LIST = ['LinuxMint']
+@@ -137,7 +142,7 @@ def get_app_list(kind: IDEKind, pattern: Optional[str] = None) -> Tuple[str, Lis
 
+ def find_apps(pattern: Optional[str] = None) -> None:
+     """Pretty-print projector-compatible applications, matched to given pattern."""
+-    kind = select_ide_kind()
++    kind = select_ide_kind(pattern)
 
-@@ -148,12 +156,17 @@ def find_apps(pattern: Optional[str] = None) -> None:
+     if kind is None:
+         print('No app kind selected, exiting...')
+@@ -148,12 +153,17 @@ def find_apps(pattern: Optional[str] = None) -> None:
 
 
  def select_app(pattern: Optional[str] = None) -> Tuple[str, Optional[Product]]:
 -    """Interactively selects app name from list of projector-compatible applications."""
 -    kind = select_ide_kind()
 +    """Selects app name from list of projector-compatible applications."""
-+    kind = select_ide_kind_by_pattern(pattern) if pattern else select_ide_kind()
++    kind = select_ide_kind(pattern)
 
      if kind is None:
          return RunConfig.UNKNOWN, None
