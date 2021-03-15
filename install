@@ -68,6 +68,8 @@ startProjector() {
 
     pip3 install --quiet --user projector-installer
     # Install from GitHub to fix: https://github.com/JetBrains/projector-installer/pull/8
+    # Install the dialogs.py module itself to avoid this bug: https://youtrack.jetbrains.com/issue/PRJ-341
+    # pip3 install --quiet --user --upgrade git+https://github.com/JetBrains/projector-installer.git
     wget 'https://raw.githubusercontent.com/JetBrains/projector-installer/master/projector_installer/dialogs.py' \
   -O "$(python3 -m site --user-site)/projector_installer/dialogs.py"
     # Prevent projector from prompting to agree to a license
