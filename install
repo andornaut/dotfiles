@@ -40,8 +40,14 @@ applyGog() {
     ~/bin/gog apply
 }
 
-includeCustomConfigs() {
+applyCustomConfigs() {
+    # Workaround issue: The application server is started in tmux before the dotfiles have been installed
+    # This must be run after `applyGog`, so that ~/.tmux.conf exists
+    tmux source-file ~/.tmux.conf
+
+    # Update the Shopify-managed ~/.gitconfig to include user-specific customizations
     echo -e "[include]\n\tpath = .config/git/config\n$(cat ~/.gitconfig)" > ~/.gitconfig
+
     # Spin installs ~/.bash_login, which prevents .profile and .bashrc from being sourced
     # $BASH_VERSION is unset, which causes ~/.profile to be a no-op, so source ~/.bashrc directly
     echo 'source ~/.bashrc' >> ~/.bash_login
@@ -79,15 +85,7 @@ startProjector() {
     tmux new -d -s projector ~/.local/bin/projector ide install "${idePattern}"
 }
 
-updateTmux() {
-    # Workaround issue: The application server is started in tmux before the dotfiles have been installed
-    # Must run after `applyGog`, so that ~/.tmux.conf exists
-    # Should run before `startProjector`, so that its tmux session uses the desired settings
-    tmux source-file ~/.tmux.conf
-}
-
 sudo usermod --shell /bin/bash ${USER}
 applyGog
-includeCustomConfigs
-updateTmux
+applyCustomConfigs
 startProjector 'RubyMine 2020.3.2'
