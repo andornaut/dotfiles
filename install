@@ -67,11 +67,12 @@ startProjector() {
         python3-pip
 
     # Install from GitHub to fix: https://github.com/JetBrains/projector-installer/pull/8
-    local repoDir="$(mktemp -d)"
-    git clone https://github.com/JetBrains/projector-installer.git "${repoDir}"
-    pip3 install --quiet --user -r "${repoDir}/requirements.txt"
-    python3 "${repoDir}/setup.py" bundle
-    pip3 install --quiet --user "${repoDir}"
+    cd $(mktemp -d)
+    git clone https://github.com/JetBrains/projector-installer.git .
+    pip3 install --quiet --user -r requirements.txt
+    python3 setup.py bundle
+    pip3 install --quiet --user .
+    cd -
     # Prevent projector from prompting to agree to a license
     # https://github.com/JetBrains/projector-installer/blob/ee878ddee0795a910b9913d62fbb305f6985247c/projector_installer/cmd.py#L25
     mkdir -p ~/.projector/configs
