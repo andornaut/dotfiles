@@ -66,14 +66,13 @@ startProjector() {
         python3-dev  \
         python3-pip
 
-    pip3 install --quiet --user projector-installer
     # Install from GitHub to fix: https://github.com/JetBrains/projector-installer/pull/8
-    # Install the dialogs.py module itself to avoid this bug: https://youtrack.jetbrains.com/issue/PRJ-341
-    # pip3 install --quiet --user --upgrade git+https://github.com/JetBrains/projector-installer.git
-    wget 'https://raw.githubusercontent.com/JetBrains/projector-installer/master/projector_installer/dialogs.py' \
-  -O "$(python3 -m site --user-site)/projector_installer/dialogs.py"
+    local repoDir="$(mktemp -d)"
+    git clone https://github.com/JetBrains/projector-installer.git "${repoDir}"
+    pip3 install --quiet --user -r "${repoDir}/requirements.txt"
+    python3 "${repoDir}/setup.py" bundle
+    pip3 install --quiet --user "${repoDir}"
     # Prevent projector from prompting to agree to a license
-    # https://github.com/JetBrains/projector-installer/blob/ee878ddee0795a910b9913d62fbb305f6985247c/projector_installer/cmd.py#L64
     # https://github.com/JetBrains/projector-installer/blob/ee878ddee0795a910b9913d62fbb305f6985247c/projector_installer/cmd.py#L25
     mkdir -p ~/.projector/configs
     tmux new -d -s projector ~/.local/bin/projector ide install "${idePattern}"
