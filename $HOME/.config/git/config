@@ -40,7 +40,8 @@
     editor = vim
     whitespace = fix,space-before-tab,tab-in-indent,trailing-space
     excludesfile = ~/.config/git/gitignore
-    pager = less -+F
+    # https://stackoverflow.com/a/49862151
+    pager = less -FR
 [merge]
     log = true
 [pull]
