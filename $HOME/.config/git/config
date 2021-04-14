@@ -14,7 +14,7 @@
     rb = rbranch
     rv = review
     st = status
-    start = !git checkout master && git pull && git clean -d --force
+    start = !git checkout master && git pull && git clean -d --force && git status
     sync = !git checkout --detach --quiet HEAD && git fetch origin master:master && git checkout --quiet -
 [apply]
     whitespace = fix
