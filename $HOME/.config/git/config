@@ -1,5 +1,4 @@
-[apply]
-    whitespace = fix
+# https://git-scm.com/docs/git-config
 [alias]
     br = branch
     cb = !git rev-parse --abbrev-ref HEAD
@@ -7,14 +6,20 @@
     co = checkout
     df = diff
     g = grep -I
+    hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
     lg = log -p
-    pf = push --force-with-lease
     pp = !"echo 'Pull'; git pull; echo 'Push'; git push"
+    pullf = !sh -c 'git fetch origin && git reset origin/$(git branch --show-current) --hard'
+    pushf = push --force-with-lease
     rb = rbranch
     rv = review
     st = status
-    hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
-    sync = !sh -c 'git checkout --detach --quiet HEAD && git fetch origin master:master && git checkout --quiet -'
+    start = !git checkout master && git pull && git clean -d --force
+    sync = !git checkout --detach --quiet HEAD && git fetch origin master:master && git checkout --quiet -
+[apply]
+    whitespace = fix
+[branch]
+    sort = -committerdate
 [color]
     ui = auto
 [color "branch"]
@@ -38,10 +43,16 @@
     pager = less -+F
 [merge]
     log = true
+[pull]
+    ff = only
+    #rebase = interactive
 [push]
     default = simple
 [rerere]
     enabled = 1
+[user]
+    name = andornaut
+    email = andornaut@users.noreply.github.com
 [url "git@github.com:"]
     insteadOf = "gh:"
     pushInsteadOf = "github:"
@@ -58,10 +69,7 @@
     insteadOf = "heroku:"
 [web]
     browser = google-chrome
-[user]
-    name = andornaut
-    email = andornaut@users.noreply.github.com
-[include]
-    path = config.local
-[pull]
-    rebase = false
+[includeIf "gitdir/i:biniambekele/"]
+    path = config.biniambekele
+[includeIf "gitdir/i:Shopify*/"]
+    path = config.shopify
