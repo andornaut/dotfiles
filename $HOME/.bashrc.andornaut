@@ -49,14 +49,17 @@ function p() {
     fi
 
     local globPattern=$1
-    local searchPaths=("${HOME}/src/github.com/andornaut"  "${HOME}/src" "${HOME}/src/*/*")
+    local searchPaths=("${HOME}/src/github.com/andornaut"  "${HOME}/src" "${HOME}/src/*")
     local root
-
     for root in ${searchPaths[@]}; do
         # https://stackoverflow.com/a/4264351
-        projectPath="$(find ${root} -maxdepth 1 -mindepth 1 -iname "${globPattern}"'*' -type d 2>/dev/null|sort|awk 'NR==1{print $1}')"
+        if [[ "${globPattern}" =~ .*"/".* ]]; then
+            projectPath="$(find ${root} -maxdepth 2 -mindepth 1 -ipath '*'"${globPattern}"'*'|sort|awk 'NR==1{print $1}')"
+        else
+            projectPath="$(find ${root} -maxdepth 1 -mindepth 1 -iname "${globPattern}"'*'|sort|awk 'NR==1{print $1}')"
+        fi
         if [[ ! -d "${projectPath}" ]]; then
-          continue
+            continue
         fi
         cd "${projectPath}"
         echo "${projectPath}"
