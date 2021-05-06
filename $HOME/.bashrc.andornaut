@@ -49,18 +49,21 @@ function p() {
     fi
 
     local globPattern=$1
-    local searchPaths=("${HOME}/src/github.com/andornaut" "${HOME}/src" "${HOME}/src/*")
-    local findArgs='-iname '"${globPattern}"'*'
-    if [[ "${globPattern}" =~ .*"/".* ]]; then
-        findArgs='-ipath *'"${globPattern}"'*'
-    fi
-    local root
+    local searchPaths=("${HOME}/src/github.com/andornaut" "${HOME}/src/github.com/S*" "${HOME}/src")
+    local projectPath root
     for root in ${searchPaths[@]}; do
-        # https://stackoverflow.com/a/4264351
-        local projectPath="$(find ${root} -maxdepth 2 -mindepth 1 ${findArgs}|sort|awk 'NR==1{print $1}')"
+        if [[ ! -d "${root}" ]]; then
+            continue
+        fi
+        if [[ "${globPattern}" =~ .*"/".* ]]; then
+            projectPath="$(find -s "${root}" -maxdepth 2 -mindepth 1 -type d -ipath '*'${globPattern}'*'|head -n1)"
+        else
+            projectPath="$(find -s "${root}" -maxdepth 2 -mindepth 1 -type d -iname ${globPattern}'*'|head -n1)"
+        fi
         if [[ ! -d "${projectPath}" ]]; then
             continue
         fi
+
         cd "${projectPath}"
         echo "${projectPath}"
 
@@ -71,6 +74,7 @@ function p() {
 
         # Python
         if [[ -d .venv ]]; then
+            echo "python: $(python --version 2>&1)"
             deactivate 2>/dev/null
             source .venv/bin/activate 2>/dev/null || true
         fi
