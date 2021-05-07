@@ -58,7 +58,7 @@ function p() {
         if [[ "${globPattern}" =~ .*"/".* ]]; then
             projectPath="$(find "${root}" -maxdepth 2 -mindepth 1 -type d -ipath '*'${globPattern}'*'|sort|head -n1)"
         else
-            projectPath="$(find "${root}" -prune -maxdepth 1 -mindepth 1 -type d -iname ${globPattern}'*'|sort|head -n1)"
+            projectPath="$(find "${root}" -maxdepth 1 -mindepth 1 -type d -iname ${globPattern}'*'|sort|head -n1)"
         fi
         if [[ ! -d "${projectPath}" ]]; then
             continue
