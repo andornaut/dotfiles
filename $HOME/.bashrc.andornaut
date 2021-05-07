@@ -49,7 +49,7 @@ function p() {
     fi
 
     local globPattern=$1
-    local searchPaths=("${HOME}/src/github.com/andornaut" "${HOME}/src/github.com/[Ss]*" "${HOME}/src" "${H    OME}/src/*")
+    local searchPaths=("${HOME}/src/github.com/andornaut" "${HOME}/src/github.com/[Ss]*" "${HOME}/src" "${HOME}/src/*")
     local projectPath root
     for root in ${searchPaths[@]}; do
         if [[ ! -d "${root}" ]]; then
