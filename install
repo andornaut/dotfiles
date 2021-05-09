@@ -54,10 +54,9 @@ installCustomConfigs() {
     cat <<-'EOF' > ~/.bashrc
 if [[ $- == *i* ]]; then
     # Only source additional customizations if the shell is interactive
-    for f in ~/.bashrc.*; do
+    for f in ~/.bashrc.* .bash_aliaes; do
         source ${f}
     done
-    source ${HOME}/.bash_aliases
 fi
 EOF
 }
