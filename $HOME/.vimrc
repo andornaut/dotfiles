@@ -74,3 +74,7 @@ endif
 autocmd InsertEnter,InsertLeave * set cul!
 "https://vi.stackexchange.com/a/20220
 set ttimeoutlen=10
+
+" Unsets the "last search pattern" register by hitting return
+" https://stackoverflow.com/a/662914
+nnoremap <silent> <CR> :nohlsearch<CR><CR>
