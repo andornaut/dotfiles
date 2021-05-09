@@ -35,30 +35,30 @@ applyGog() {
         chmod +x ~/bin/*
     fi
     export GOG_DEFAULT_REPOSITORY_NAME=dotfiles
-    export GOG_IGNORE_FILES_REGEX='^install$'
     export GOG_HOME=${HOME}
+    export GOG_IGNORE_FILES_REGEX='^install$'
     ~/bin/gog apply
 }
 
-applyCustomConfigs() {
+installCustomConfigs() {
     # Workaround issue: The application server is started in tmux before the dotfiles have been installed
     # This must be run after `applyGog`, so that ~/.tmux.conf exists
     tmux source-file ~/.tmux.conf
 
     # Update the Shopify-managed ~/.gitconfig to include user-specific customizations
-    echo -e "[include]\n\tpath = .config/git/config\n$(cat ~/.gitconfig)" > ~/.gitconfig
+    echo -e "[include]\n\tpath = .config/git/config\n$(cat ~/.gitconfig)" >> ~/.gitconfig
 
-    # Spin installs ~/.bash_login, which prevents .profile and .bashrc from being sourced
-    # $BASH_VERSION is unset, which causes ~/.profile to be a no-op, so source ~/.bashrc directly
+    # Spin installs ~/.bash_login, which prevents .profile and .bashrc from being sourced:
+    # $BASH_VERSION is unset, which causes .profile to be a no-op, so source .bashrc in .bash_login
     echo 'source ~/.bashrc' >> ~/.bash_login
-    cat <<-'EOF' >> ~/.bashrc
-    if [[ $- == *i* ]]; then
-        # Only source additional customizations if the shell is interactive
-        for f in ~/.bashrc.*; do
-            source ${f}
-        done
-        source ${HOME}/.bash_aliases
-    fi
+    cat <<-'EOF' > ~/.bashrc
+if [[ $- == *i* ]]; then
+    # Only source additional customizations if the shell is interactive
+    for f in ~/.bashrc.*; do
+        source ${f}
+    done
+    source ${HOME}/.bash_aliases
+fi
 EOF
 }
 
@@ -82,5 +82,5 @@ startProjector() {
 
 sudo usermod --shell /bin/bash ${USER}
 applyGog
-applyCustomConfigs
+installCustomConfigs
 #startProjector 'RubyMine 2020.3.2'
