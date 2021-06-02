@@ -61,25 +61,11 @@ fi
 EOF
 }
 
-startProjector() {
-    local idePattern=${1}
-    sudo apt-get install -qq --no-install-recommends \
-        libfreetype6 \
-        libxext6 \
-        libxi6 \
-        libxrender1 \
-        libxtst6 \
-        python3-dev  \
-        python3-pip
-
-    pip3 install --quiet --user projector-installer
-    # Prevent projector from prompting to agree to a license
-    # https://github.com/JetBrains/projector-installer/blob/ee878ddee0795a910b9913d62fbb305f6985247c/projector_installer/cmd.py#L25
-    mkdir -p ~/.projector/configs
-    tmux new -d -s projector ~/.local/bin/projector ide install "${idePattern}"
+aptInstall() {
+    sudo apt-get install -qq --no-install-recommends tree
 }
 
 sudo usermod --shell /bin/bash ${USER}
 applyGog
 installCustomConfigs
-#startProjector 'RubyMine 2020.3.2'
+aptInstall
