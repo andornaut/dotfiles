@@ -48,7 +48,7 @@
     ff = only
     #rebase = interactive
 [push]
-    default = simple
+    default = current
 [rerere]
     enabled = 1
 [user]
