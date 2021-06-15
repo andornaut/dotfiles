@@ -1,0 +1,75 @@
+env:
+    TERM: xterm-256color
+live_reload: true
+font:
+  normal:
+    family: SourceCodePro
+    style: Regular
+  size: 14.0
+
+# https://github.com/alacritty/alacritty/wiki/Color-schemes
+schemes:
+  solarized_dark: &solarized_dark
+    primary:
+      background: '#002b36' # base03
+      foreground: '#839496' # base0
+    cursor:
+      text:   '#002b36' # base03
+      cursor: '#839496' # base0
+    normal:
+      black:   '#073642' # base02
+      red:     '#dc322f' # red
+      green:   '#859900' # green
+      yellow:  '#b58900' # yellow
+      blue:    '#268bd2' # blue
+      magenta: '#d33682' # magenta
+      cyan:    '#2aa198' # cyan
+      white:   '#eee8d5' # base2
+    bright:
+      black:   '#002b36' # base03
+      red:     '#cb4b16' # orange
+      green:   '#586e75' # base01
+      yellow:  '#657b83' # base00
+      blue:    '#839496' # base0
+      magenta: '#6c71c4' # violet
+      cyan:    '#93a1a1' # base1
+      white:   '#fdf6e3' # base3
+  solarized_light: &solarized_light
+    primary:
+      background: '#fdf6e3' # base3
+      foreground: '#657b83' # base00
+    cursor:
+      text:   '#fdf6e3' # base3
+      cursor: '#657b83' # base00
+    normal:
+      black:   '#073642' # base02
+      red:     '#dc322f' # red
+      green:   '#859900' # green
+      yellow:  '#b58900' # yellow
+      blue:    '#268bd2' # blue
+      magenta: '#d33682' # magenta
+      cyan:    '#2aa198' # cyan
+      white:   '#eee8d5' # base2
+    bright:
+      black:   '#002b36' # base03
+      red:     '#cb4b16' # orange
+      green:   '#586e75' # base01
+      yellow:  '#657b83' # base00
+      blue:    '#839496' # base0
+      magenta: '#6c71c4' # violet
+      cyan:    '#93a1a1' # base1
+      white:   '#fdf6e3' # base3
+
+# IBM1970 color theme
+colors:
+  <<: *solarized_dark
+  primary:
+    background: '#545040'
+  cursor:
+    cursor: '#DDD7B9'
+    text:   '#545040' # base03
+  bright:
+    black:   '#545040' # base03
+  selection:
+    background: '#006B6B'
+    text: '#DDD7B9'

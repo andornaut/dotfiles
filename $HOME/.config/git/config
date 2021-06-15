@@ -4,6 +4,7 @@
     cb = !git rev-parse --abbrev-ref HEAD
     ci = commit
     co = checkout
+    dbr = !git remote show origin | awk '/HEAD branch/ {print $NF}'
     df = diff
     g = grep -I
     hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
@@ -45,8 +46,7 @@
 [merge]
     log = true
 [pull]
-    ff = only
-    #rebase = interactive
+    rebase = true
 [push]
     default = current
 [rerere]
