@@ -2,7 +2,7 @@
 
 Personal dotfiles
 
-![screenshot](https://i.imgur.com/xE0KAg8.png)
+![ibm-dark-theme](https://github.com/andornaut/ibm1970-desktop-theme/blob/main/screenshot.png)
 
 ## Installation
 
@@ -23,22 +23,6 @@ fi
 EOF
 
 ```
-
-## Colour Theme
-
-Colour|Applications
----|---
-#ee66bb|bbs, bspwm
-#33a999|bbs, bspwm
-#44244f|Xresources
-#2e2255|rofi, Xresources
-#586e75|Xresources
-#668880|rofi, Xresources
-#839496|rofi, Xresources
-#550066|bbs, dunst, rofi
-#f60099|dunst
-#d40088|dunst, rofi
-#44f0f0|bbs, dunst, rofi
 
 ## Links
 

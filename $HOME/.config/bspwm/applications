@@ -10,14 +10,14 @@ _run_bg() {
 	shift
 	local command=$1
 
-    if ! type "${command}" >/dev/null 2>&1; then 
+    if ! type "${command}" >/dev/null 2>&1; then
         warn "${command} doesn't exist. Skipping."
 	elif pgrep -x "$(basename "${command}")" >/dev/null 2>&1 ; then
         warn "${command} is already running. Skipping."
     else
         nice -n ${niceness} "$@" >/dev/null 2>&1 &
-		ok "Started: ${command}" 
-    fi  
+		ok "Started: ${command}"
+    fi
 }
 
 nice_bg() {
@@ -74,7 +74,7 @@ nice_bg trayer \
         --heighttype request \
         --padding 10 \
         --SetDockType true \
-        --tint 0x44f0f0 \
+        --tint 0x$(bspc config active_border_color|tr -d '#') \
         --transparent true \
         --widthtype request
 
@@ -83,9 +83,9 @@ nice_bg trayer \
 bar_wid=$(wait_wid bbs-lemonbar)
 trayer_wid=$(wait_wid panel)
 xdo lower "${bar_wid}"
-xdo above -t "${bar_wid}" "${trayer_wid}" 
+xdo above -t "${bar_wid}" "${trayer_wid}"
 
-# Start tray applets after trayer has started 
+# Start tray applets after trayer has started
 nice_bg insync start
 #nice_bg /System/Applications/komorebi
 

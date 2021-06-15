@@ -10,7 +10,7 @@ super + p
 	~/.local/bin/toggletouchpad
 
 super + Return
-	urxvt
+    alacritty
 
 # "dmenu tries to grab the keyboard when it starts..."
 # https://github.com/baskerville/sxhkd/issues/59#issuecomment-374631791
