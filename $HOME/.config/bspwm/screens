@@ -23,9 +23,9 @@ max_monitors() {
     done
 }
 
-laptopResolution="$(echo "${xrandr_output}"|grep eDP1 -A 1|grep "*+"|cut -dx -f1|tr -d '[:space:]')"
+laptopResolution="$(echo "${xrandr_output}"|grep eDP-1 -A 1|grep "*+"|cut -dx -f1|tr -d '[:space:]')"
 if [[ ${laptopResolution} -gt 1920 ]]; then
-    ok "High resolution screen. Scaling eDP1 from ${laptopResolution}x to 1920x"
+    ok "High resolution screen. Scaling eDP-1 from ${laptopResolution}x to 1920x"
     scale=" --scale-from 1920x1080"
 else
     scale=" --auto"
@@ -57,9 +57,9 @@ elif is_connected eDP ; then
     ok 'Laptop: 1 screen'
     max_monitors 1
     xrandr \
-        --output eDP1 --auto --pos 0x0 --primary ${scale} \
-        --output eDP1 --auto --pos 0x0 --primary --scale-from 1920x1080
-    bspc wm --reorder-monitors eDP1
+        --output eDP-1 --auto --pos 0x0 --primary ${scale} \
+        --output eDP-1 --auto --pos 0x0 --primary --scale-from 1920x1080
+    bspc wm --reorder-monitors eDP-1
     bspc monitor ^1 --reset-desktops 1 2 3 4 5
 else
     warn 'Unsupported monitor configuration'
