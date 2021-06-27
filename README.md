@@ -29,3 +29,4 @@ EOF
 * [ansible-workstation](https://github.com/andornaut/ansible-workstation)
 * [bbs](https://github.com/andornaut/bbs)
 * [gog](https://github.com/andornaut/gog)
+* [ibm1970-desktop-theme](https://github.com/andornaut/ibm1970-desktop-theme)
