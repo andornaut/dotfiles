@@ -19,7 +19,9 @@ function runCached() {
     fi
 }
 
-export PATH=${PATH}:$(runCached npm config get prefix)/bin
+if which npm >/dev/null; then
+    export PATH=${PATH}:$(runCached npm config --silent get prefix)/bin
+fi
 
 function ff() {
     if [[ -z "${FIREFOX_DEFAULT_PROFILE}" ]]; then
