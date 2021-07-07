@@ -35,7 +35,7 @@ if is_connected DisplayPort-0; then
     ok 'Desktop: 1 screen (ultrawide)'
     max_monitors 1
     #xrandr --output DisplayPort-0 --mode 3840x1600 --pos 0x0 --rate 144.00 --primary
-    xrandr --output DisplayPort-0 --auto --pos 0x0 --primary
+    xrandr --output DisplayPort-0 --mode 3440x1440 --pos 0x0 --primary --rate 144
     bspc wm --reorder-monitors DisplayPort-0
     bspc monitor ^1 --reset-desktops 1 2 3 4 5
 elif is_connected eDP && ( is_connected DP-2 || is_connected HDMI-1 ) ; then
@@ -45,10 +45,10 @@ elif is_connected eDP && ( is_connected DP-2 || is_connected HDMI-1 ) ; then
     xrandr --output eDP-1 ${scale}
 
     # One of these two will succeed.
-    if xrandr --output DP-2 --mode 3440x1440 --primary --above eDP-1 ; then
+    if xrandr --output DP-2 --mode 3440x1440 --primary --rate 144 --above eDP-1 ; then
         bspc wm --reorder-monitors DP-2 eDP-1
     else
-        xrandr --output HDMI-1 --mode 3440x1440 --primary --above eDP-1
+        xrandr --output HDMI-1 --mode 3440x1440 --primary --rate 144 --above eDP-1
         bspc wm --reorder-monitors HDMI-1 eDP-1
     fi
     bspc monitor ^1 --reset-desktops 1 2 3 4
