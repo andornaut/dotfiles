@@ -20,7 +20,7 @@ function runCached() {
 }
 
 if which npm >/dev/null; then
-    export PATH=${PATH}:$(runCached npm config --silent get prefix)/bin
+    export PATH=${PATH}:$(runCached npm config --no-update-notifier --silent get prefix)/bin
 fi
 
 function ff() {
