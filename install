@@ -41,7 +41,7 @@ applyGog() {
 }
 
 installCustomConfigs() {
-    # Workaround issue: The application server is started in tmux before the dotfiles have been installed
+    # Workaround issue: The application server is started tmux before the dotfiles have been installed
     # This must be run after `applyGog`, so that ~/.tmux.conf exists
     tmux source-file ~/.tmux.conf
 
