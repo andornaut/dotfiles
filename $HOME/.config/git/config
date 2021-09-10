@@ -4,7 +4,7 @@
     cb = !git rev-parse --abbrev-ref HEAD
     ci = commit
     co = checkout
-    dbr = !git remote show origin | awk '/HEAD branch/ {print $NF}'
+    dbr = !bash -c 'set -o pipefail && git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null|cut -d / -f 4-||git remote show origin 2>/dev/null|awk \"/HEAD branch/ {print \\$NF}\"||echo main'
     df = diff
     g = grep -I
     hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
@@ -12,11 +12,9 @@
     pp = !"echo 'Pull'; git pull; echo 'Push'; git push"
     pullf = !sh -c 'git fetch origin && git reset origin/$(git branch --show-current) --hard'
     pushf = push --force-with-lease
-    rb = rbranch
-    rv = review
-    st = status
-    start = !git checkout master && git pull && git clean -d --force && git status
-    sync = !git checkout --detach --quiet HEAD && git fetch origin master:master && git checkout --quiet -
+    resethistory = !git status && d=$(mktemp) && mv .git/config ${d} && rm -rf .git/ && git init && mv ${d} .git/config && git add . && git commit -m 'Initial import' && git status && git push --force
+    start = !git checkout $(git dbr) && git pull && git clean -d --force && git status
+    sync = !git checkout --detach --quiet HEAD && git fetch origin $(git dbr):$(git dbr) && git checkout --quiet -
 [apply]
     whitespace = fix
 [branch]
@@ -43,6 +41,8 @@
     excludesfile = ~/.config/git/gitignore
     # https://stackoverflow.com/a/49862151
     pager = less -FR
+[init]
+	defaultBranch = main
 [merge]
     log = true
 [pull]
