@@ -52,7 +52,7 @@ ok 'Configured BSPWM'
 xrdb -merge ~/.Xresources
 ok 'Configured Xresources'
 
-xset s 600 600 # Screensaver
+xset s 600 1200 # Screensaver
 xset dpms 1200 1500 1800
 xset +dpms
 ok 'Configured display power management'
