@@ -25,11 +25,12 @@ fi
 
 function ff() {
     if [[ -z "${FIREFOX_DEFAULT_PROFILE}" ]]; then
-        echo 'Error: Must set var $FIREFOX_DEFAULT_PROFILE'>&2
-    else
-        echo Starting firefix with profile: ${FIREFOX_DEFAULT_PROFILE}
-        firefox -P "${FIREFOX_DEFAULT_PROFILE}"
+        echo 'Error: Environment variable $FIREFOX_DEFAULT_PROFILE is required'>&2
+        return
     fi
+    local profile="${1-${FIREFOX_DEFAULT_PROFILE}}"
+    echo Starting firefix with profile: ${profile}
+    firefox -P "${profile}"
 }
 
 function httptunnel() {
