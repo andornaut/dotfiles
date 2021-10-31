@@ -9,11 +9,11 @@ let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 set termguicolors
 
-highlight CursorLine guibg=#444030
+highlight CursorLine guibg=#393626
 set cursorline
 
-highlight CursorLineNR cterm=NONE guibg=#444030 guifg=#DDD7B9
-highlight LineNr guibg=#777755 guifg=#545040
+highlight CursorLineNR cterm=NONE guibg=#464333 guifg=#DDD7B9
+highlight LineNr guibg=#777755 guifg=#464333
 set number
 
 highlight Visual guibg=#DDD7B9 guifg=#006B6B
