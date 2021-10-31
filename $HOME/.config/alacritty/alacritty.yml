@@ -64,12 +64,12 @@ schemes:
 colors:
   <<: *solarized_dark
   primary:
-    background: '#545040'
+    background: '#464333'
   cursor:
     cursor: '#DDD7B9'
-    text:   '#545040' # base03
+    text:   '#464333' # base03
   bright:
-    black:   '#545040' # base03
+    black:   '#464333' # base03
   selection:
     background: '#006B6B'
     text: '#DDD7B9'
