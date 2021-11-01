@@ -247,7 +247,7 @@
     #foreground = "#f60099"
     # IBM1970
     background = "#393626"
-    foreground = "#33A999"
+    foreground = "#33a999"
     frame_color = "#393626"
 
 [urgency_normal]
@@ -260,7 +260,7 @@
     #foreground = "#f60099"
     # IBM1970
     background = "#393626"
-    foreground = "#33A999"
+    foreground = "#33a999"
     frame_color = "#393626"
 
 [urgency_critical]
@@ -272,9 +272,9 @@
     #background = "#d40088"
     #foreground = "#44f0f0"
     # IBM1970
-    background = "#33A999"
-    foreground = "#393626"
-    frame_color = "#33A999"
+    background = "#33a999"
+    foreground = "#464333"
+    frame_color = "#33a999"
 
 # Every section that isn't one of the above is interpreted as a rules to
 # override settings for certain messages.

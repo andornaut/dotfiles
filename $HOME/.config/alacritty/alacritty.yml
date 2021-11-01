@@ -66,10 +66,10 @@ colors:
   primary:
     background: '#464333'
   cursor:
-    cursor: '#DDD7B9'
+    cursor: '#dddccc'
     text:   '#464333' # base03
   bright:
     black:   '#464333' # base03
   selection:
     background: '#006B6B'
-    text: '#DDD7B9'
+    text: '#dddccc'
