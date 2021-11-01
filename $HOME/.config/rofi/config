@@ -37,6 +37,6 @@ rofi.color-enabled: true
 
 ! IBM1970
 rofi.color-window: #393626, #464333, #393626
-rofi.color-normal: #464333, #DDD7B9, #777755, #33A999, #DDD7B9
-rofi.color-active: #464333, #DDD7B9, #777755, #33A999, #DDD7B9
-rofi.color-urgent: #464333, #DDD7B9, #777755, #33A999, #DDD7B9
+rofi.color-normal: #464333, #DDD7B9, #7c7755, #33A999, #DDD7B9
+rofi.color-active: #464333, #DDD7B9, #7c7755, #33A999, #DDD7B9
+rofi.color-urgent: #464333, #DDD7B9, #7c7755, #33A999, #DDD7B9
