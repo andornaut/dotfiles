@@ -42,8 +42,9 @@ applyGog() {
 
 installCustomConfigs() {
     # Workaround issue: The application server is started tmux before the dotfiles have been installed
+    # n.b. isospin doesn't start tmux by default, so this is n/a
     # This must be run after `applyGog`, so that ~/.tmux.conf exists
-    tmux source-file ~/.tmux.conf
+    tmux source-file ~/.tmux.conf || true
 
     # Update the Shopify-managed ~/.gitconfig to include user-specific customizations
     echo -e "[include]\n\tpath = .config/git/config\n$(cat ~/.gitconfig)" >> ~/.gitconfig
