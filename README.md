@@ -16,8 +16,10 @@ gog apply
 cat <<'EOF' >> ~/.bashrc
 if [[ $- == *i* ]]; then
   # Only source additional customizations if the shell is interactive
-  for f in ${HOME}/.bashrc.*; do
-    source ${f}
+  for f in ${HOME}/.bashrc.* ${HOME}/.bash_aliases; do
+    if [[ ${f} != *.swp ]]; then
+        source ${f}
+    fi
   done
 fi
 EOF
