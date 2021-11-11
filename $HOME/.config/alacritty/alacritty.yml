@@ -3,9 +3,9 @@ env:
 live_reload: true
 font:
   normal:
-    family: SourceCodePro
+    family: Source Code Pro
     style: Regular
-  size: 14.0
+  size: 18.0
 
 # https://github.com/alacritty/alacritty/wiki/Color-schemes
 schemes:
