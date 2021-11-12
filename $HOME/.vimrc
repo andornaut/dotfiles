@@ -10,6 +10,8 @@ let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
 "Ensure that termguicolors are supported:
 "$ vim --version|grep termguicolors
 set termguicolors
+
+"Theme: IBM1970
 "https://www.ditig.com/256-colors-cheat-sheet
 "30: Turquoise4: #008787
 "58: Orange4: #5f5f00
