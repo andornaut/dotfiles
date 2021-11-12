@@ -13,7 +13,7 @@
     pullf = !sh -c 'git fetch origin && git reset origin/$(git branch --show-current) --hard'
     pushf = push --force-with-lease
     resethistory = !git status && d=$(mktemp) && dbr=$(git dbr) && mv .git/config ${d} && rm -rf .git/ && git init && mv ${d} .git/config && git add . && git commit -m 'Initial import' && git branch -m ${dbr} && git branch --unset-upstream 2>/dev/null || true && git status && git push --force && git branch --set-upstream-to=origin/${dbr} ${dbr}
-    start = !git checkout $(git dbr) && git push && git pull && git clean -d --force && git status
+    start = !git checkout -q $(git dbr) && git push -q && git pull -q && git clean -qd --force && git status
     sync = !git checkout --detach --quiet HEAD && git fetch origin $(git dbr):$(git dbr) && git checkout --quiet -
 [apply]
     whitespace = fix
