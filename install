@@ -1,5 +1,6 @@
 #!/bin/bash
-# Logs are in /var/log/spin/dotfiles.log
+# Legacy logs are in /var/log/spin/dotfiles.log
+# Isospin logs are in `journalctl -u dotfiles`
 
 set -eo pipefail
 
@@ -18,13 +19,13 @@ downloadLatestGitHubRelease() {
     local repository=$1 # eg. andornaut/dotfiles
     local destinationPath=$2
     local downloadIndex=${3-1}
-    local apiUrl="https://api.github.com/repos/${repository}/releases/latest"
-    local url=$(curl -s "${apiUrl}" | grep "browser_download_url" | sed -n -e "${downloadIndex}p"|cut -d '"' -f 4)
-    echo "Downloading ${url} to ${destinationPath}"
     if [[ -f ${destinationPath} ]]; then
         echo "${destinationPath} already exists. Skipping..."
         return
     fi
+    local apiUrl="https://api.github.com/repos/${repository}/releases/latest"
+    local url=$(curl -s "${apiUrl}" | grep "browser_download_url" | sed -n -e "${downloadIndex}p"|cut -d '"' -f 4)
+    echo "Downloading ${url} to ${destinationPath}"
     curl --location --silent -o "${destinationPath}" "${url}"
 }
 
@@ -52,11 +53,14 @@ installCustomConfigs() {
     # Spin installs ~/.bash_login, which prevents .profile and .bashrc from being sourced:
     # $BASH_VERSION is unset, which causes .profile to be a no-op, so source .bashrc in .bash_login
     echo 'source ~/.bashrc' >> ~/.bash_login
+
     cat <<-'EOF' > ~/.bashrc
 if [[ $- == *i* ]]; then
     # Only source additional customizations if the shell is interactive
     for f in ~/.bashrc.* ~/.bash_aliases; do
-        source ${f}
+        if [[ ${f} != *.swp ]]; then
+            source ${f}
+        fi
     done
 fi
 EOF
@@ -67,6 +71,6 @@ aptInstall() {
 }
 
 sudo usermod --shell /bin/bash ${USER}
+aptInstall &
 applyGog
 installCustomConfigs
-aptInstall
