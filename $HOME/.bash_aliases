@@ -16,4 +16,5 @@ alias til='code --new-window ~/src/github.com/andornaut/til'
 alias t='tmux attach || tmuxdefault'
 alias tmuxdefault='tmux new-session -As default -n main'
 alias tmuxrtorrent='tmux new-session -As rtorrent -n rtorrent rtorrent'
+alias todo='code --new-window ~/todo.md'
 alias vol="pavolume -v $@"
