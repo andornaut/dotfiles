@@ -3,17 +3,14 @@
 cd $(cd "$(dirname "$0")" && pwd)/
 source ./helpers
 
+header Workarounds
+
 # Export dbus env vars
 if [[ -z "${DBUS_SESSION_BUS_ADDRESS}" ]]; then
     eval `dbus-launch --sh-syntax --exit-with-session`
     ok "D-Bus per-session daemon address is: ${DBUS_SESSION_BUS_ADDRESS}"
 fi
 
-# https://wiki.archlinux.org/index.php/GNOME/Keyring
-eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
-export SSH_AUTH_SOCK
-ok 'Exported gnome-keyring and SSH env vars'
-
 # Workaround for: https://github.com/baskerville/bspwm/issues/52
 wmname LG3D
-ok 'Set wmname'
+ok Set wmname

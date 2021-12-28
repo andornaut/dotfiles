@@ -42,3 +42,4 @@ LEMONBAR_EXTRA_ARGS="-f FontAwesome-12 -f DejaVuSans-10 \
     -a $(($(bspc query --desktops|wc -l)+5)) \
     -g $(xrandr|awk '$0 ~ /connected.*\+0\+0/ {gsub("(primary|x.*)", "");print $3; exit}')x28+0+0"
 ed_fg=#999977
+SHOW_WIFI=false

@@ -5,7 +5,7 @@ source ./helpers
 
 header Applications
 
-_run_bg() {
+run_bg() {
 	local niceness=$1
 	shift
 	local command=$1
@@ -21,11 +21,7 @@ _run_bg() {
 }
 
 nice_bg() {
-	_run_bg 19 "$@"
-}
-
-run_bg() {
-	_run_bg 0 "$@"
+	run_bg 19 $@
 }
 
 wait_wid() {
@@ -40,30 +36,20 @@ wait_wid() {
 	echo ${wid}
 }
 
-# Kill tray applets so that they're adopted by the new instance of trayer
-# when they're restarted below. This won't work with redshift-gtk, though,
-# because we don't attempt to restart if monitor gamma is not set to 1.
-pkill insync
-pkill '^trayer$' 2>/dev/null
+kill_() {
+    for name in $@; do
+        if pkill --exact "${name}" >/dev/null; then
+            ok "Killed ${name}"
+        else
+            warn "Error killing ${name}"
+        fi
+    done
+}
 
-# Always restart bbs to make testing changes easier
-pkill bbs 2>/dev/null
-
-# Fix sub-shells inheriting wrong CWD
-cd
-run_bg sxhkd
-cd - >/dev/null
-
-nice_bg bbs
-# Disable touchpad while typing to avoid unwanted keypresses.
-# nice_bg syndaemon -i 0.25 -d
-# Lock screen after a period of inactivity
-nice_bg gnome-screensaver
-nice_bg xautolock -secure -time 10 -locker 'gnome-screensaver-command --lock'
-
-# GeoClue is used by some applications for location services on Ubuntu >=21.10,
-# such as redshift
-nice_bg /usr/libexec/geoclue-2.0/demos/agent
+# Kill tray applets so that they're adopted by the new instance of trayer when
+# they're restarted below. Kill processes in the reverse order than they were
+# started in 
+kill_ insync redshift-gtk trayer bbs
 
 # How to set bg color: https://bbs.archlinux.org/viewtopic.php?id=134955
 nice_bg trayer \
@@ -81,27 +67,23 @@ nice_bg trayer \
         --transparent true \
         --widthtype request
 
+# Start tray applets after trayer has started
+# https://www.mankier.com/1/dex-autostart
+nice_bg dex -a -e bspwm
+
+# Avoid error: Failed to query the window tree, and
+# allow time for trayer to render
+sleep 1
+
+# When lemonbar starts, it sets the top_padding of all monitors to its height.
+# Wait until after lemonbar finishes starting to reset the top_padding of other monitors.
+# The following commands can fail when there are fewer than 3 monitors
+#bspc config -m ^2 top_padding 0 >/dev/null 2>&1
+#bspc config -m ^3 top_padding 0 >/dev/null 2>&1
+
 # Adjust z-order so that fullscreen windows are always above lemonbar and
 # trayer ("panel" is trayer's wm_name)
 bar_wid=$(wait_wid bbs-lemonbar)
 trayer_wid=$(wait_wid panel)
 xdo lower "${bar_wid}"
 xdo above -t "${bar_wid}" "${trayer_wid}"
-
-# Start tray applets after trayer has started
-nice_bg insync start
-#nice_bg /System/Applications/komorebi
-
-gamma=$(xrandr --verbose | awk '/Gamma/{print $2}'|tr -d '\n:.0'|tr -s '1')
-if [[ ${gamma} == 1 ]]; then
-   nice_bg redshift-gtk
-else
-    warn gamma is equal to 1. Skipping redshift.
-fi
-
-# When lemonbar starts, it sets the top_padding of all monitors to its height.
-# Wait until after lemonbar finishes starting to reset the top_padding of other monitors.
-# The following commands can fail when there are fewer than 3 monitors
-sleep 1
-bspc config -m ^2 top_padding 0 >/dev/null 2>&1
-bspc config -m ^3 top_padding 0 >/dev/null 2>&1

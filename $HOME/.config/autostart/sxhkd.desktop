@@ -1,0 +1,6 @@
+[Desktop Entry]
+Exec=bash -c 'cd $HOME && /usr/local/bin/sxhkd'
+TryExec=/usr/local/bin/sxhkd
+Name=sxhkd
+Comment=Simple X hotkey daemon
+Type=Application
