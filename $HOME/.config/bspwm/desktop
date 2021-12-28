@@ -35,5 +35,3 @@ fi
 
 xsetroot -cursor_name left_ptr &
 ok Set pointer
-
-#capstoesc
