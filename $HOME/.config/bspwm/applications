@@ -40,7 +40,6 @@ wait_wid() {
 	echo ${wid}
 }
 
-
 # Kill tray applets so that they're adopted by the new instance of trayer
 # when they're restarted below. This won't work with redshift-gtk, though,
 # because we don't attempt to restart if monitor gamma is not set to 1.
@@ -61,6 +60,10 @@ nice_bg bbs
 # Lock screen after a period of inactivity
 nice_bg gnome-screensaver
 nice_bg xautolock -secure -time 10 -locker 'gnome-screensaver-command --lock'
+
+# GeoClue is used by some applications for location services on Ubuntu >=21.10,
+# such as redshift
+nice_bg /usr/libexec/geoclue-2.0/demos/agent
 
 # How to set bg color: https://bbs.archlinux.org/viewtopic.php?id=134955
 nice_bg trayer \
