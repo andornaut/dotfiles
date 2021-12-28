@@ -1,0 +1,7 @@
+# Created by `dex -c ...`
+[Desktop Entry]
+Exec=/usr/bin/gnome-screensaver
+TryExec=/usr/bin/gnome-screensaver
+Name=gnome-screensaver
+Comment=screen saver and locker
+Type=Application

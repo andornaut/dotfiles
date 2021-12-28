@@ -4,10 +4,7 @@ cd $(cd "$(dirname "$0")" && pwd)/
 # Defines helper functions
 source ./helpers
 
-header 'Configuring desktop environment'
-
-# Exports env vars, so should be source near the top
-source ./workarounds
+header BSPWM
 
 # Dark
 #bspc config active_border_color '#333333'
@@ -47,39 +44,11 @@ bspc config window_gap 0
 #bspc rule -a CrossOver state=floating
 bspc rule -a origin.exe state=floating
 bspc rule -a libreoffice state=tiled
-ok 'Configured BSPWM'
+ok Configured BSPWM
 
-xrdb -merge ~/.Xresources
-ok 'Configured Xresources'
-
-xset s 600 1200 # Screensaver
-xset dpms 1200 1500 1800
-xset +dpms
-ok 'Configured display power management'
-
-# Outrun
-#xsetroot -solid '#2e2255'
-# IBM
-xsetroot -solid '#584631'
-ok 'Set background colour'
-
-# Set wallpaper with: feh --xinerama-index 0 --bg-fill ${file}
-if [[ -e ~/.fehbg ]]; then
-    ~/.fehbg \
-        && ok 'Set wallpaper' \
-        || warn 'Error setting wallpaper'
-fi
-
-device='Logitech Unifying Device. Wireless PID:101a'
-if xinput|grep -q "${device}"; then
-    xinput --set-prop "${device}" 'Device Accel Velocity Scaling' 1 &
-    ok 'Disabled mouse acceleration'
-fi
-
-xsetroot -cursor_name left_ptr &
-ok 'Set pointer'
-capstoesc
-
+# Should precede ./applications
+./workarounds
 ./screens
-# Must follow "bspc config ...", b/c bbs execs $(bspc config normal_border_color)
+./desktop
+# Must follow "bspc config ...", because it executes $(bspc config normal_border_color)
 ./applications
