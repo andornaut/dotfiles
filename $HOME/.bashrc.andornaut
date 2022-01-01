@@ -73,7 +73,11 @@ function p() {
 
         # Git
         if [[ -d .git ]]; then
-            echo "git: $(git cb)"
+            local branch
+            if ! branch=$(git cb 2>/dev/null); then
+                branch=$(git dbr)
+            fi
+            echo "git: ${branch}"
         fi
 
         # Python
