@@ -41,6 +41,10 @@ super + {_,shift + }q
 super + g
 	bspc node -s biggest.local
 
+# balance all window sizes
+super + b
+    bspc node any --balance
+
 #
 # state/flags
 #
