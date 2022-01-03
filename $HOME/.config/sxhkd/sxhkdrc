@@ -43,7 +43,7 @@ super + g
 
 # balance all window sizes
 super + b
-    bspc node any --balance
+    bspc node @/ --balance
 
 #
 # state/flags
