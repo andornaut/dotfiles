@@ -15,6 +15,6 @@ alias serve='echo "Serving ${PWD}" && docker run --network host --volume ${PWD}:
 alias til='code --new-window ~/src/github.com/andornaut/til'
 alias t='tmux attach || tmuxdefault'
 alias tmuxdefault='tmux new-session -As default -n main -c ~/'
-alias tmuxrtorrent='tmux new-session -As rtorrent -n rtorrent rtorrent -c ~/'
+alias tmuxrtorrent='tmux new-session -As rtorrent -n rtorrent -c ~/ rtorrent'
 alias todo='code --new-window ~/todo.md'
 alias vol="pavolume -v $@"
