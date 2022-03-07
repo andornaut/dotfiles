@@ -7,6 +7,7 @@ alias gogstart='for r in $(gog repository list); do gog -r ${r} git start >/dev/
 alias halt='sudo halt -p'
 alias koff='keylight --host keylight --off'
 alias kon='keylight --host keylight --on'
+alias o='xdg-open "$@"'
 alias pipenvdeactivate='[[ "${PIPENV_ACTIVE}" -ne 1 ]] && echo "pipenv is not active" || { echo "pipenv is active. Exiting shell..." >&2 ; exit ; }'
 alias reboot='sudo reboot'
 alias resetx='~/.config/bspwm/bspwmrc'
