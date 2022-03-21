@@ -42,7 +42,7 @@ function httptunnel() {
     local protocol="$([[ ${remotePort} == "80" ]] && echo http || echo https)"
     echo "Make sure that 'AllowTCPForwarding yes' is set in ${jumpHost}:/etc/ssh/sshd_config"
 
-    ( sleep 3 ; google-chrome ${protocol}://localhost:${localPort} ;) &
+    ( sleep 3 ; xdg-open ${protocol}://localhost:${localPort} ;) &
     ssh -vL ${localPort}:${targetHost}:${remotePort} -Nf ${jumpHost} 
 }
 
