@@ -13,7 +13,8 @@ function runCached {
     if which cache-command >/dev/null; then
         cache-command -e 86400 -b /tmp/cache-command -- ${command}
     else
-        ${command}
+        # Use `eval` to avoid a "command not found" error when using zsh
+        eval ${command}
     fi
 }
 
