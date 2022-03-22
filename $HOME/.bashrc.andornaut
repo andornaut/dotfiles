@@ -7,10 +7,8 @@ export HISTSIZE=5000
 export MRS_HIDE_EDITOR_INSTRUCTIONS=any-value-is-true
 export PATH=${PATH}:${HOME}/bin:${HOME}/.local/bin
 export PIPENV_VENV_IN_PROJECT=1
-PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
-PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
 
-function runCached() {
+function runCached {
     local command=$@
     if which cache-command >/dev/null; then
         cache-command -e 86400 -b /tmp/cache-command -- ${command}
@@ -19,11 +17,8 @@ function runCached() {
     fi
 }
 
-if which npm >/dev/null; then
-    export PATH=${PATH}:$(runCached npm config --no-update-notifier --silent get prefix)/bin
-fi
 
-function ff() {
+function ff {
     if [[ -z "${FIREFOX_DEFAULT_PROFILE}" ]]; then
         echo 'Error: Environment variable $FIREFOX_DEFAULT_PROFILE is required'>&2
         return
@@ -33,7 +28,7 @@ function ff() {
     firefox -P "${profile}"
 }
 
-function httptunnel() {
+function httptunnel {
     [[ "$#" -gt 1 && "$#" -lt 5 ]] || { echo 'Usage: http-tunnel jumpHost targetHost [remotePort] [localPort]' >&2 ; return; }
     local jumpHost=$1
     local targetHost=$2
@@ -46,7 +41,7 @@ function httptunnel() {
     ssh -vL ${localPort}:${targetHost}:${remotePort} -Nf ${jumpHost} 
 }
 
-function p() {
+function p {
     if [[ $# -ne 1 ]]; then 
         echo 'Usage: p directoryPrefix';
         return 1
@@ -90,9 +85,21 @@ function p() {
     done
 }
 
+if [[ -n ${BASH} ]]; then
+    # This breaks in VS Code on spin, because the shell is zsh
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+fi
+
 # Kubernetes
-if which kubectl >/dev/null; then
+if which kubectl >/dev/null && [[ -n ${BASH} ]]; then
+    # This breaks in VS Code on spin, because the shell is zsh, which is incompatible with this bash completion
     source <(runCached kubectl completion bash)
+fi
+
+# Node / NPM
+if which npm >/dev/null; then
+    export PATH=${PATH}:$(runCached npm config --no-update-notifier --silent get prefix)/bin
 fi
 
 # Rust
