@@ -54,7 +54,7 @@ kill_ insync trayer
 nice_bg trayer \
         --align right \
         --alpha 0 \
-        --distance 390 \
+        --distance 464 \
         --distancefrom right \
         --edge top \
         --expand true \
