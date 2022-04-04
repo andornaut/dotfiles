@@ -1,0 +1,56 @@
+(defpoll datetime :interval '5s' "date '+%a %d, %H:%M'")
+(deflisten title "xtitle -sf '%s\\n'")
+(deflisten volume "pavolume -sf '%s'")
+(deflisten desktops 'bin/desktops')
+
+(defvar active_color "#9c9977")
+(defvar focused_color "#7c7755")
+(defvar normal_color "#ccc8b0")
+
+(defwidget desktops []
+  (literal :content desktops))
+
+(defwidget left_section []
+  (box :class "left-section section" :halign "start"
+    (desktops)))
+
+(defwidget center_section []
+  (label :class "center-section section" :text title ))
+
+(defwidget battery []
+  (box :class "battery widget" :space-evenly false :visible {EWW_BATTERY != ""}
+    (label :class "battery__label label icon" :text "")
+    {EWW_BATTERY == "" ? "" : "${EWW_BATTERY.total_avg}%"}))
+
+(defwidget temperature []
+  (box :class "temperature widget" :space-evenly false
+    (label :class "temperature__label label icon" :text "")
+    {round(EWW_TEMPS.CPU == 0 ? EWW_TEMPS.CPUTIN : EWW_TEMPS.CPU, 0)}
+    "°C"))
+
+(defwidget volume []
+  (box :class "volume widget" :space-evenly false
+    (button :class "volume__button-down icon" :onclick "pavolume -v -5" "")
+    (button :class "volume__button-up icon" :onclick "pavolume -v +5" "")
+    (button :class "volume__button-toggle" :onclick "pavolume -m toggle"
+      {volume == "---" ?  "(muted)" : "${volume}%"})))
+
+(defwidget datetime []
+  (box :class "datetime widget" :space-evenly false
+    (label :class "datetime__label label icon" :text "")
+    datetime))
+
+(defwidget right_section []
+  (box :class "right-section section" :halign "end" :space-evenly false
+    (volume)
+    (battery)
+    (temperature)
+    (datetime)))
+
+(defwindow topbar :monitor 0 :reserve (struts :distance "30px" :side "top") :geometry (geometry :anchor "top center"
+                                                 :height "30px"
+                                                 :width "100%")
+  (centerbox :style "background: ${normal_color}"
+    (left_section)
+    (center_section)
+    (right_section)))

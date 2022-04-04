@@ -31,7 +31,7 @@ wait_wid() {
 	local wid
     while [[ "${i}" -lt 10 ]] && ! wid="$(xdo id -a "${wm_name}")"; do
 		let i=i+1
-        sleep 0.05
+        sleep 0.2
     done
 	echo ${wid}
 }
@@ -46,11 +46,10 @@ kill_() {
     done
 }
 
-# Kill tray applets so that they're adopted by the new instance of trayer when
-# they're restarted below. Kill processes in the reverse order than they were
+# Kill tray applets (insync), so that they're adopted by the new instance of Trayer
+# when they're restarted below. Kill processes in the reverse order than they were
 # started in 
-kill_ insync redshift-gtk trayer bbs
-
+kill_ insync trayer
 # How to set bg color: https://bbs.archlinux.org/viewtopic.php?id=134955
 nice_bg trayer \
         --align right \
@@ -67,23 +66,19 @@ nice_bg trayer \
         --transparent true \
         --widthtype request
 
-# Start tray applets after trayer has started
+# Start tray applets after Trayer has started
 # https://www.mankier.com/1/dex-autostart
 nice_bg dex -a -e bspwm
 
-# Avoid error: Failed to query the window tree, and
-# allow time for trayer to render
+# Avoid error: Failed to query the window tree, and give Trayer
+# time to render, so that its window id can be retrieved
 sleep 1
 
-# When lemonbar starts, it sets the top_padding of all monitors to its height.
-# Wait until after lemonbar finishes starting to reset the top_padding of other monitors.
-# The following commands can fail when there are fewer than 3 monitors
-#bspc config -m ^2 top_padding 0 >/dev/null 2>&1
-#bspc config -m ^3 top_padding 0 >/dev/null 2>&1
+# TODO: only necessary when running `resetx` manually
+bspc config -m ^1 top_padding 30 >/dev/null 2>&1
 
-# Adjust z-order so that fullscreen windows are always above lemonbar and
-# trayer ("panel" is trayer's wm_name)
-bar_wid=$(wait_wid bbs-lemonbar)
-trayer_wid=$(wait_wid panel)
+# Adjust z-order so that fullscreen windows are always above the bar
+bar_wid=$(wait_wid 'Eww - topbar')
 xdo lower "${bar_wid}"
+trayer_wid=$(wait_wid panel)
 xdo above -t "${bar_wid}" "${trayer_wid}"
