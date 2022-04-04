@@ -1,0 +1,49 @@
+#!/bin/bash
+
+function desktops {
+    local focused=$(bspc query -D -d focused --names)
+    local occupied=$(bspc query -D -d .occupied --names)
+    local urgent=$(bspc query -D -d .urgent --names)
+    local names=(1 2 3 4 5)
+    local buttonClass="desktops__button"
+
+    echo -n '(box :class "desktops widget" :vexpand true'
+
+    for name in ${names[@]}; do
+        #icon=""
+        focusedClass=""
+        occupiedClass=""
+        urgentClass=""
+
+        for line in ${occupied}; do
+            if [[ "${line}" = "${name}" ]]; then
+                occupiedClass="${buttonClass}--occupied"
+                #icon="◼️"
+            fi
+        done
+
+        for line in "${focused}"; do
+            if [[ "${line}" = "${name}" ]]; then
+                focusedClass="${buttonClass}--focused"
+                #icon=""
+            fi
+        done
+        for line in ${urgent}; do
+            if [[ "${line}" = "${name}" ]]; then
+                urgentClass="${buttonClass}--urgent"
+            fi
+        done
+        echo -n " (button :onclick \"bspc desktop -f ${name}\" \
+            :class \"${buttonClass} ${focusedClass} ${occupiedClass} ${urgentClass} button\")"
+            #\"${icon}\")"
+    done
+
+    echo ')'
+}
+
+desktops
+
+# `desktop node_transfer`` missed changes to urgent status; use `report` to get these too.
+bspc subscribe report | while read -r _ ; do
+    desktops
+done

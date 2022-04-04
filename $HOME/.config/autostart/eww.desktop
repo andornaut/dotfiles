@@ -1,0 +1,6 @@
+[Desktop Entry]
+Exec=/usr/local/bin/eww open topbar
+TryExec=/usr/local/bin/eww
+Name=eww
+Comment=Render a Linux desktop bar
+Type=Application
