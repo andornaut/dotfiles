@@ -1,8 +1,8 @@
 background "#ccc8b0"
-geometry 1x1+8+1080
+#geometry 1x1+12+1080
 grow_gravity S
 icon_gravity N
-icon_size 32
-#kludges force_icons_size,use_icons_hints
+icon_size 24
+kludges force_icons_size
 skip_taskbar true
 vertical true

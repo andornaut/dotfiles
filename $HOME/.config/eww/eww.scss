@@ -36,56 +36,46 @@ button:hover {
 }
 
 .leftbar {
+    .battery__label {
+        padding-bottom: 5px;
+    }
+
+    .datetime__label {
+        padding-bottom: 5px;
+    }
+
     .datetime__date,
     .datetime__time {
         font-size: 14px;
     }
+
     .datetime__time {
         padding-top: 5px;
     }
 
-    .datetime__label {
-        padding-bottom: 10px;
-    }
-
     .desktops__button {
-        border-top: 1px solid #7c7755;
-        border-left: 1px solid #7c7755;
+        border-bottom: 1px solid #7c7755;
         border-right: 1px solid #7c7755;
         min-height: 35px;
     }
 
-    .desktops__button:last-child {
-        border-bottom: 1px solid #7c7755;
-    }
-
     .temperature__label {
-        padding-bottom: 10px;
+        padding-bottom: 5px;
     }
 
     .volume__label {
         padding-bottom: 5px;
-        padding-top: 10px;
     }
 
     .volume .button {
-        padding-bottom: 10px;
-        padding-top: 10px;
-    }
-
-    .widget {
-        padding: 10px 0;
-    }
-
-    .widget.volume {
-        padding: 0;
+        padding: 5px 0;
     }
 
     .bottom-section .widget {
         border-top: 1px solid #7c7755;
         border-right: 1px solid #7c7755;
+        padding: 10px 0;
     }
-
 }
 
 .topbar {
