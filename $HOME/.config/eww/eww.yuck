@@ -1,56 +1,81 @@
-(defpoll datetime :interval '5s' "date '+%a %d, %H:%M'")
+(defpoll datetime :interval "5s" "date '+%a %d, %H:%M'")
+(defpoll date :interval "1m" "date '+%a %d'")
+(defpoll time :interval "5s" "date '+%H:%M'")
 (deflisten title "xtitle -sf '%s\\n'")
 (deflisten volume "pavolume -sf '%s'")
-(deflisten desktops 'bin/desktops')
+
+;TODO remove either _h or _v desktop variants
+(deflisten desktops_h 'bin/desktops :orientation \'"h"\'')
+(deflisten desktops_v 'bin/desktops :orientation \'"v"\'')
 
 (defvar active_color "#9c9977")
 (defvar focused_color "#7c7755")
 (defvar normal_color "#ccc8b0")
 
-(defwidget desktops []
-  (literal :content desktops))
+;TODO handle charging: 
+(defwidget battery [orientation]
+  (box :class "battery widget" :halign "fill" :orientation orientation :space-evenly false :visible {EWW_BATTERY != ""}
+    (label :class "battery__label label icon" :halign "center" :text
+      {EWW_BATTERY.total_avg >= 90
+        ? ""
+        : EWW_BATTERY.total_avg >= 75
+          ? ""
+          : EWW_BATTERY.total_avg >= 50
+            ? ""
+            : EWW_BATTERY.total_avg >= 25
+              ? ""
+              : ""}
+      :tooltip "Battery")
+    {EWW_BATTERY == "" ? "--" : "${EWW_BATTERY.total_avg}%"}))
 
-(defwidget left_section []
-  (box :class "left-section section" :halign "start"
-    (desktops)))
+(defwidget datetime_h []
+  (box :class "datetime widget" :space-evenly false
+    (label :class "datetime__label label icon" :text "" :tooltip "Date")
+    datetime))
 
-(defwidget center_section []
-  (label :class "center-section section" :text title ))
+(defwidget datetime_v []
+  (box :class "datetime widget" :halign "fill" :orientation "v" :space-evenly false
+    (label :class "datetime__label label icon" :text "" :tooltip "Date")
+    (label :class "datetime__date" :text date)
+    (label :class "datetime__time" :text time)))
 
-(defwidget battery []
-  (box :class "battery widget" :space-evenly false :visible {EWW_BATTERY != ""}
-    (label :class "battery__label label icon" :text "")
-    {EWW_BATTERY == "" ? "" : "${EWW_BATTERY.total_avg}%"}))
+(defwidget desktops [orientation]
+  ; Use eventbox to set cursor. See: https://github.com/elkowar/eww/issues/251
+  (eventbox :cursor "pointer"
+    (literal :content {orientation == "h" ? desktops_h : desktops_v})))
 
-(defwidget temperature []
+(defwidget temperature_h []
   (box :class "temperature widget" :space-evenly false
-    (label :class "temperature__label label icon" :text "")
+    (label :class "temperature__label label icon" :text "" :tooltip "CPU Temperature")
     {round(EWW_TEMPS.CPU == 0 ? EWW_TEMPS.CPUTIN : EWW_TEMPS.CPU, 0)}
     "°C"))
 
-(defwidget volume []
-  (box :class "volume widget" :space-evenly false
-    (button :class "volume__button-down icon" :onclick "pavolume -v -5" "")
-    (button :class "volume__button-up icon" :onclick "pavolume -v +5" "")
-    (button :class "volume__button-toggle" :onclick "pavolume -m toggle"
-      {volume == "---" ?  "(muted)" : "${volume}%"})))
+(defwidget temperature_v []
+  (box :class "temperature widget" :halign "fill" :orientation "v" :space-evenly false
+    (label :class "temperature__label label icon" :text "" :tooltip "CPU Temperature")
+    (box :halign "center" :space-evenly false
+      {round(EWW_TEMPS.CPU == 0 ? EWW_TEMPS.CPUTIN : EWW_TEMPS.CPU, 0)}
+        "°C")))
 
-(defwidget datetime []
-  (box :class "datetime widget" :space-evenly false
-    (label :class "datetime__label label icon" :text "")
-    datetime))
+(defwidget volume_h []
+  ; Use eventbox to set cursor. See: https://github.com/elkowar/eww/issues/251
+  (eventbox :cursor "pointer"
+    (box :class "volume widget" :halign "fill" :space-evenly false
+      (button :class "volume__button-down button icon" :onclick "pavolume -v -5" :tooltip "Decrease volume" "")
+      (button :class "volume__button-up button icon" :onclick "pavolume -v +5" :tooltip "Increase volume" "")
+      (button :class "volume__button-toggle button" :onclick "pavolume -m toggle" :tooltip "Toggle mute volume"
+        {volume == "---" ? "(muted)" : "${volume}%"}))))
 
-(defwidget right_section []
-  (box :class "right-section section" :halign "end" :space-evenly false
-    (volume)
-    (battery)
-    (temperature)
-    (datetime)))
+(defwidget volume_v []
+  (box :class "volume widget" :orientation "v" :space-evenly false
+    (label :class "volume__label label icon" :text "" :tooltip "Volume")
+    ; Use eventbox to set cursor. See: https://github.com/elkowar/eww/issues/251
+    (eventbox :cursor "pointer"
+      (box :class "volume__buttons" :orientation "v" :space-evenly false
+        (button :class "volume__button-toggle button" :onclick "pavolume -m toggle" :tooltip "Toggle mute volume"
+          {volume == "---" ? "mute" : "${volume}%"})
+        (button :class "volume__button-up button icon" :onclick "pavolume -v +5" :tooltip "Increase volume" "")
+        (button :class "volume__button-down button icon" :onclick "pavolume -v -5" :tooltip "Decrease volume" "")))))
 
-(defwindow topbar :monitor 0 :reserve (struts :distance "30px" :side "top") :geometry (geometry :anchor "top center"
-                                                 :height "30px"
-                                                 :width "100%")
-  (centerbox :style "background: ${normal_color}"
-    (left_section)
-    (center_section)
-    (right_section)))
+(include "leftbar.yuck")
+;(include "topbar.yuck")

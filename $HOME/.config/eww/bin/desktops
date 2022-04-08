@@ -1,49 +1,41 @@
 #!/bin/bash
 
+boxAttributes="$@"
+buttonClass="desktops__button"
+names=(1 2 3 4 5)
+queryCmd="bspc query --names -D -d"
+
+function modifierClass() {
+    local array=$1
+    local modifier=$2
+    local name=$3
+
+    for line in ${array}; do
+        if [[ "${line}" = "${name}" ]]; then
+            echo "${buttonClass}--${modifier}"
+        fi
+    done
+}
+
 function desktops {
-    local focused=$(bspc query -D -d focused --names)
-    local occupied=$(bspc query -D -d .occupied --names)
-    local urgent=$(bspc query -D -d .urgent --names)
-    local names=(1 2 3 4 5)
-    local buttonClass="desktops__button"
+    local focused=$(${queryCmd} focused)
+    local occupied=$(${queryCmd} .occupied)
+    local urgent=$(${queryCmd} .urgent)
 
-    echo -n '(box :class "desktops widget" :vexpand true'
-
+    echo -n "(box :class 'desktops widget' ${boxAttributes}"
     for name in ${names[@]}; do
-        #icon=""
-        focusedClass=""
-        occupiedClass=""
-        urgentClass=""
-
-        for line in ${occupied}; do
-            if [[ "${line}" = "${name}" ]]; then
-                occupiedClass="${buttonClass}--occupied"
-                #icon="◼️"
-            fi
-        done
-
-        for line in "${focused}"; do
-            if [[ "${line}" = "${name}" ]]; then
-                focusedClass="${buttonClass}--focused"
-                #icon=""
-            fi
-        done
-        for line in ${urgent}; do
-            if [[ "${line}" = "${name}" ]]; then
-                urgentClass="${buttonClass}--urgent"
-            fi
-        done
+        focusedClass="$(modifierClass ${focused} focused ${name})"
+        occupiedClass="$(modifierClass ${occupied} occupied ${name})"
+        urgentClass="$(modifierClass ${urgent} urgent ${name})"
         echo -n " (button :onclick \"bspc desktop -f ${name}\" \
             :class \"${buttonClass} ${focusedClass} ${occupiedClass} ${urgentClass} button\")"
-            #\"${icon}\")"
     done
-
     echo ')'
 }
 
 desktops
 
-# `desktop node_transfer`` missed changes to urgent status; use `report` to get these too.
+# `desktop node_transfer`` misses changes to urgent status; use `report` to get these too.
 bspc subscribe report | while read -r _ ; do
     desktops
 done

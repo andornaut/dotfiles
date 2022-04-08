@@ -1,12 +1,12 @@
 window {
     color: #464333;
-    font-family: "DejaVu Sans", "Open Sans", sans-serif;
+    font-family: "DejaVu Sans Condensed", "Open Sans", sans-serif;
     font-size: 16px;
 }
 
 button {
-    color: inherit;
-    border-radius: 0;
+    all: unset;
+    min-height: 20px;
 }
 
 button:hover {
@@ -17,29 +17,8 @@ button:hover {
     font-family: FontAwesome;
 }
 
-.label {
-    margin-right: 5px
-}
-
-.widget {
-    border-left: 1px solid #7c7755;
-    padding: 0 10px;
-}
-
-.widget:first-child {
-    border: 0 none;
-}
-
-.desktops {
-    padding: 0;
-}
-
 .desktops__button {
-    background: inherit;
-    border: 0 none;
-    border-right: 1px solid #7c7755;
     color: #9c9977;
-    padding: 2px 5px;
 }
 
 .desktops__button--occupied {
@@ -56,10 +35,75 @@ button:hover {
     background: #33a999;
 }
 
-.volume__button-down,
-.volume__button-up,
-.volume__button-toggle {
-    background: 0 none;
-    border: none;
-    padding: 0 3px;
+.leftbar {
+    .datetime__date,
+    .datetime__time {
+        font-size: 14px;
+    }
+    .datetime__time {
+        padding-top: 5px;
+    }
+
+    .datetime__label {
+        padding-bottom: 10px;
+    }
+
+    .desktops__button {
+        border-top: 1px solid #7c7755;
+        border-left: 1px solid #7c7755;
+        border-right: 1px solid #7c7755;
+        min-height: 35px;
+    }
+
+    .desktops__button:last-child {
+        border-bottom: 1px solid #7c7755;
+    }
+
+    .temperature__label {
+        padding-bottom: 10px;
+    }
+
+    .volume__label {
+        padding-bottom: 5px;
+        padding-top: 10px;
+    }
+
+    .volume .button {
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+
+    .widget {
+        padding: 10px 0;
+    }
+
+    .widget.volume {
+        padding: 0;
+    }
+
+    .bottom-section .widget {
+        border-top: 1px solid #7c7755;
+        border-right: 1px solid #7c7755;
+    }
+
+}
+
+.topbar {
+    .desktops__button {
+        border-right: 1px solid #7c7755;
+        padding: 2px 5px;
+    }
+
+    .label {
+        margin-right: 5px
+    }
+
+    .volume .button {
+        padding: 0 3px;
+    }
+
+    .left-section .widget {
+        border-left: 1px solid #7c7755;
+        padding: 0 10px;
+    }
 }
