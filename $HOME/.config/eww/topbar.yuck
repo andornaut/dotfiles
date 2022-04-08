@@ -1,0 +1,24 @@
+(defwidget left_section []
+  (box :class "left-section section" :halign "start"
+    (desktops :orientation "h")))
+
+(defwidget center_section []
+  (label :class "center-section section" :text title ))
+
+(defwidget right_section []
+  (box :class "right-section section" :halign "end" :space-evenly false
+    (volume_h)
+    (battery :orientation "h")
+    (temperature_h)
+    (datetime_h)))
+
+(defwindow topbar :monitor 0
+                  :reserve (struts :distance "30px" :side "top")
+                  :geometry (geometry :anchor "top center"
+                                      :height "30px"
+                                      :width "100%")
+                  :stacking "bg"
+  (centerbox :style "background: ${normal_color}"
+    (left_section)
+    (center_section)
+    (right_section)))

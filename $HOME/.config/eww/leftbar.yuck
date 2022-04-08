@@ -1,0 +1,20 @@
+(defwidget top_section []
+  (box :class "top-section section" :halign "fill"
+    (desktops :orientation "v")))
+
+(defwidget bottom_section []
+  (box :class "bottom-section section" :halign "fill" :orientation "v" :space-evenly false :valign "end"
+    (volume_v)
+    (battery :orientation "v")
+    (temperature_v)
+    (datetime_v)))
+
+(defwindow leftbar :monitor 0
+                   :reserve (struts :distance "48px" :side "left")
+                   :geometry (geometry :anchor "top left"
+                                       :width "48px"
+                                       :height "100%")
+                   :stacking "bg"
+  (box :orientation "v" :halign "fill" :style "background: ${normal_color}"
+    (top_section)
+    (bottom_section)))

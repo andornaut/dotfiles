@@ -48,23 +48,8 @@ kill_() {
 
 # Kill tray applets (insync), so that they're adopted by the new instance of Trayer
 # when they're restarted below. Kill processes in the reverse order than they were
-# started in 
-kill_ insync trayer
-# How to set bg color: https://bbs.archlinux.org/viewtopic.php?id=134955
-nice_bg trayer \
-        --align right \
-        --alpha 0 \
-        --distance 464 \
-        --distancefrom right \
-        --edge top \
-        --expand true \
-        --height 28 \
-        --heighttype request \
-        --padding 10 \
-        --SetDockType true \
-        --tint 0x$(bspc config active_border_color|tr -d '#') \
-        --transparent true \
-        --widthtype request
+# started in
+kill_ insync stalonetray
 
 # Start tray applets after Trayer has started
 # https://www.mankier.com/1/dex-autostart
@@ -74,11 +59,11 @@ nice_bg dex -a -e bspwm
 # time to render, so that its window id can be retrieved
 sleep 1
 
-# TODO: only necessary when running `resetx` manually
-bspc config -m ^1 top_padding 30 >/dev/null 2>&1
+# TODO: only necessary when running `xreset` manually
+bspc config -m ^1 left_padding 48 >/dev/null 2>&1
 
 # Adjust z-order so that fullscreen windows are always above the bar
-bar_wid=$(wait_wid 'Eww - topbar')
+bar_wid=$(wait_wid 'Eww - leftbar')
 xdo lower "${bar_wid}"
-trayer_wid=$(wait_wid panel)
+trayer_wid=$(wait_wid stalonetray)
 xdo above -t "${bar_wid}" "${trayer_wid}"
