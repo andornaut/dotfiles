@@ -1,6 +1,6 @@
 window {
     color: #464333;
-    font-family: "DejaVu Sans Condensed", "Open Sans", sans-serif;
+    font-family: "DejaVu Sans Condensed", "DejaVu Sans Mono", sans-serif;
     font-size: 16px;
 }
 
@@ -40,8 +40,10 @@ button:hover {
         padding-bottom: 5px;
     }
 
-    .datetime__label {
-        padding-bottom: 5px;
+    .datetime__label,
+    .temperature__label {
+        padding-bottom: 10px;
+        padding-top: 5px;
     }
 
     .datetime__date,
@@ -49,8 +51,8 @@ button:hover {
         font-size: 14px;
     }
 
-    .datetime__time {
-        padding-top: 5px;
+    .datetime__date {
+        padding-bottom: 5px;
     }
 
     .desktops__button {
@@ -59,14 +61,7 @@ button:hover {
         min-height: 35px;
     }
 
-    .temperature__label {
-        padding-bottom: 5px;
-    }
-
-    .volume__label {
-        padding-bottom: 5px;
-    }
-
+    .system .button,
     .volume .button {
         padding: 5px 0;
     }
