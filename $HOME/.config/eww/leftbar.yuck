@@ -1,14 +1,58 @@
-(defwidget top_section []
-  (box :class "top-section section" :halign "fill"
-    (desktops :orientation "v")))
+(defpoll date :interval "1m" "date '+%a %d'")
+(defpoll time :interval "5s" "date '+%H:%M'")
+
+; Widgets ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defwidget datetime_v []
+  (eventbox :onhover "eww open calendar_v; eww update reveal_calendar=true"
+            :onhoverlost "eww update reveal_calendar=false; eww close calendar_v"
+    (box :class "datetime widget" :orientation "v" :space-evenly false
+      (label :class "datetime__label label icon" :text "" :tooltip "Date")
+      (label :class "datetime__date" :text date)
+      (label :class "datetime__time" :text time))))
+
+(defvar reveal_volume false)
+
+(defwidget volume_v []
+  (eventbox :onhover "eww update reveal_volume=true" :onhoverlost "eww update reveal_volume=false"
+    (box :class "volume widget" :orientation "v" :space-evenly false
+      (revealer :duration "250ms" :reveal reveal_volume :transition "slideup"
+        ; Use eventbox to set cursor. See: https://github.com/elkowar/eww/issues/251
+        (eventbox :cursor "pointer"
+          (box :class "volume__buttons" :orientation "v" :space-evenly false
+            (button :class "volume__button-up button icon" :onclick "pavolume -v +5" :tooltip "Increase volume" "")
+            (button :class "volume__button-down button icon" :onclick "pavolume -v -5" :tooltip "Decrease volume" ""))))
+      (eventbox :cursor "pointer"
+        (button :class "volume__button-toggle button icon" :onclick "pavolume -m toggle" :tooltip "Toggle muting" ""))
+      (label :class "volume__label label" :tooltip "Volume" :text
+        {volume == "---" ? "mute" : "${volume}%"}))))
+
+; Sections ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defwidget bottom_section []
   (box :class "bottom-section section" :halign "fill" :orientation "v" :space-evenly false :valign "end"
     (volume_v)
     (battery :orientation "v")
-    (temperature_v)
+    (temperature :orientation "v")
     (datetime_v)
-    (system)))
+    (system :orientation "v")))
+
+(defwidget top_section []
+  (box :class "top-section section" :halign "fill"
+    (desktops :orientation "v")))
+
+; Windows ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defvar reveal_calendar false)
+
+(defwindow calendar_v :monitor 0
+                   :geometry (geometry :anchor "bottom left"
+                                       :width "100px"
+                                       :height "100px"
+                                       :x "48px")
+                   :stacking "fg"
+  (revealer :duration "250ms" :reveal reveal_calendar :transition "slideright"
+    (calendar :class "calendar widget" :style "background: ${normal_color}; border-color: ${focused_color}")))
 
 (defwindow leftbar :monitor 0
                    :reserve (struts :distance "48px" :side "left")

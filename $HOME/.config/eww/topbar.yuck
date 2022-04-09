@@ -1,16 +1,41 @@
-(defwidget left_section []
-  (box :class "left-section section" :halign "start"
-    (desktops :orientation "h")))
+(deflisten title "xtitle -sf '%s\\n'")
+
+(defpoll datetime :interval "5s" "date '+%a %d, %H:%M'")
+
+; Widgets ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defwidget datetime_h []
+  (box :class "datetime widget" :space-evenly false
+    (label :class "datetime__label label icon" :text "" :tooltip "Date")
+    datetime))
+
+(defwidget volume_h []
+  ; Use eventbox to set cursor. See: https://github.com/elkowar/eww/issues/251
+  (eventbox :cursor "pointer"
+    (box :class "volume widget" :halign "fill" :space-evenly false
+      (button :class "volume__button-down button icon" :onclick "pavolume -v -5" :tooltip "Decrease volume" "")
+      (button :class "volume__button-up button icon" :onclick "pavolume -v +5" :tooltip "Increase volume" "")
+      (button :class "volume__button-toggle button" :onclick "pavolume -m toggle" :tooltip "Toggle mute volume"
+        {volume == "---" ? "(muted)" : "${volume}%"}))))
+
+; Sections ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defwidget center_section []
   (label :class "center-section section" :text title ))
+
+(defwidget left_section []
+  (box :class "left-section section" :halign "start"
+    (desktops :orientation "h")))
 
 (defwidget right_section []
   (box :class "right-section section" :halign "end" :space-evenly false
     (volume_h)
     (battery :orientation "h")
-    (temperature_h)
-    (datetime_h)))
+    (temperature :orientation "h")
+    (datetime_h)
+    (system :orientation "h")))
+
+; Windows ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defwindow topbar :monitor 0
                   :reserve (struts :distance "30px" :side "top")
