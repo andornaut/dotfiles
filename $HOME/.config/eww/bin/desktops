@@ -1,41 +1,42 @@
 #!/bin/bash
+set -eu -o pipefail
 
 boxAttributes="$@"
 buttonClass="desktops__button"
 names=(1 2 3 4 5)
 queryCmd="bspc query --names -D -d"
 
-function modifierClass() {
-    local array=$1
-    local modifier=$2
-    local name=$3
-
+function isModified() {
+    local name=$1
+    local array=$2
     for line in ${array}; do
         if [[ "${line}" = "${name}" ]]; then
-            echo "${buttonClass}--${modifier}"
+            return 0
         fi
     done
+    return 1
 }
 
-function desktops {
-    local focused=$(${queryCmd} focused)
-    local occupied=$(${queryCmd} .occupied)
-    local urgent=$(${queryCmd} .urgent)
-
-    echo -n "(box :class 'desktops widget' ${boxAttributes}"
+function buttons {
+    local focused="$(${queryCmd} focused)"
+    local occupied="$(${queryCmd} .occupied)"
+    local urgent="$(${queryCmd} .urgent)"
     for name in ${names[@]}; do
-        focusedClass="$(modifierClass ${focused} focused ${name})"
-        occupiedClass="$(modifierClass ${occupied} occupied ${name})"
-        urgentClass="$(modifierClass ${urgent} urgent ${name})"
-        echo -n " (button :onclick \"bspc desktop -f ${name}\" \
-            :class \"${buttonClass} ${focusedClass} ${occupiedClass} ${urgentClass} button\")"
+        classes="${buttonClass} button"
+        if isModified ${name} "${focused}"; then
+            classes+=" ${buttonClass}--focused"
+        fi
+        if isModified ${name} "${occupied}"; then
+            classes+=" ${buttonClass}--occupied"
+        fi
+        if isModified ${name} "${urgent}"; then
+            classes+=" ${buttonClass}--urgent"
+        fi
+        echo -n "(button :onclick \"bspc desktop -f ${name}\" :class \"${classes}\")"
     done
-    echo ')'
 }
-
-desktops
 
 # `desktop node_transfer`` misses changes to urgent status; use `report` to get these too.
-bspc subscribe report | while read -r _ ; do
-    desktops
+bspc subscribe report | while read -r ; do
+    echo "(box :class 'desktops widget' ${boxAttributes} $(buttons))"
 done
