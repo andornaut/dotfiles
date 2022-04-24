@@ -12,11 +12,8 @@ super + p
 super + Return
     alacritty
 
-# "dmenu tries to grab the keyboard when it starts..."
-# https://github.com/baskerville/sxhkd/issues/59#issuecomment-374631791
-# -monitor displays rofi in the top-left monitor
 super + space
-	rofi -monitor "$(xrandr|awk '$0 ~ /connected.*\+0\+0/ \{print $1; exit\}')" -show run
+	rofi -show drun
 
 # make sxhkd reload its configuration files:
 super + Escape
