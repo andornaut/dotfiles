@@ -1,0 +1,37 @@
+// https://github.com/davatorium/rofi/blob/next/themes/gruvbox-dark-hard.rasi
+@theme "gruvbox-dark"
+
+* {
+  border-color:   #7c7755;
+  scrollbar: false;
+
+  background:     #393626;
+  background:     #464333;
+  foreground:     #dddccc;
+
+  alternate-normal-background:  #393626;
+  selected-normal-background:   #33A999;
+
+  active-background:          #006B6B;
+  active-foreground:          @foreground;
+  selected-active-background: #33A999;
+  selected-active-foreground: @foreground;
+}
+
+window {
+  border: 10px;
+  padding: 0;
+}
+
+mainbox {
+    border:  0;
+    padding: 20px;
+}
+
+listview {
+	lines: 5;
+}
+
+element {
+  padding: 5px;
+}
