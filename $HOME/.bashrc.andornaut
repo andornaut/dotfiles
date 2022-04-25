@@ -78,7 +78,7 @@ function p {
 
         # Python
         if [[ -d .venv ]]; then
-            echo "python: $(python --version 2>&1)"
+            echo "python: $(python3 --version 2>&1)"
             deactivate 2>/dev/null
             source .venv/bin/activate 2>/dev/null || true
         fi
