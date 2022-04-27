@@ -1,6 +1,7 @@
 configuration {
-	display-drun: ">_";
-	display-run: "$_";
+	display-drun: "⌘ ";
+	display-run: "$ ";
+    display-window: "🗔 ";
 	kb-mode-next: "Shift+Right,Tab,Control+Tab";
 	kb-mode-previous: "Shift+Left,Shift+Tab,Control+Shift+Tab";
 	kb-row-tab: "";
