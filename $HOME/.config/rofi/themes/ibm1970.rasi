@@ -5,7 +5,6 @@
   border-color:   #7c7755;
   scrollbar: false;
 
-  background:     #393626;
   background:     #464333;
   foreground:     #dddccc;
 
@@ -19,19 +18,31 @@
 }
 
 window {
-  border: 10px;
+  border:  10px;
   padding: 0;
 }
 
 mainbox {
     border:  0;
-    padding: 20px;
+    padding: 0;
 }
 
 listview {
-	lines: 5;
+    border:    0;
+	lines:     5;
+    scrollbar: true;
+}
+
+scrollbar {
+    handle-width: 10px;
+    padding:      0 5px;
+}
+
+inputbar {
+    children: [prompt, entry];
+    padding:  20px;
 }
 
 element {
-  padding: 5px;
+    padding: 20px;
 }
