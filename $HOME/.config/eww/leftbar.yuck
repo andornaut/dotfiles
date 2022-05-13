@@ -54,8 +54,9 @@
   (revealer :duration "250ms" :reveal reveal_calendar :transition "slideright"
     (calendar :class "calendar widget" :style "background: ${normal_color}; border-color: ${focused_color}")))
 
+; Reserve 1 extra pixel to create a gap
 (defwindow leftbar :monitor 0
-                   :reserve (struts :distance "48px" :side "left")
+                   :reserve (struts :distance "49px" :side "left")
                    :geometry (geometry :anchor "top left"
                                        :width "48px"
                                        :height "100%")
