@@ -1,7 +1,8 @@
 configuration {
+
 	display-drun: "⌘ ";
 	display-run: "$ ";
-    display-window: "🗔 ";
+    display-window: " ";
 	kb-mode-next: "Shift+Right,Tab,Control+Tab";
 	kb-mode-previous: "Shift+Left,Shift+Tab,Control+Shift+Tab";
 	kb-row-tab: "";
