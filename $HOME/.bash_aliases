@@ -1,5 +1,5 @@
 alias allstop="pkill -f 'play .*whitenoise'"
-alias apt-upgrade='sudo apt-get -y update && sudo apt-get -y dist-upgrade'
+alias upgrade='sudo apt-get -y update && sudo apt-get -y dist-upgrade; command -v flatpak >/dev/null 2>&1 && sudo flatpak --noninteractive --system upgrade && flatpak --noninteractive --user upgrade'
 alias bc='bc -l'
 alias engage='nohup play -n -c1 -t alsa synth whitenoise lowpass -1 120 lowpass -1 120 lowpass -1 120 gain +20 >/dev/null &'
 alias ff='FIREFOX_DEFAULT_PROFILE=andornaut ff'
