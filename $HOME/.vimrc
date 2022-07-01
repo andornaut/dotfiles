@@ -29,8 +29,21 @@ highlight Visual ctermbg=253 ctermfg=30 guibg=#DDD7B9 guifg=#006B6B
 set filetype=on
 filetype plugin indent on
 
-"Disable auto-indent"
+"Disable auto-indent
 set noautoindent
+
+"Disable temp files
+set nobackup
+set noswapfile
+set nowritebackup
+
+if has('persistent_undo')
+    " Persistent Undo will be disabled if this directory doesn't exist
+    set undodir=$HOME/.vim/tmp/undo
+    set undofile
+else
+    set noundofile
+endif
 
 "Show column in status bar
 set ruler

@@ -1,5 +1,4 @@
 alias allstop="pkill -f 'play .*whitenoise'"
-alias upgrade='sudo apt-get -y update && sudo apt-get -y dist-upgrade; command -v flatpak >/dev/null 2>&1 && sudo flatpak --noninteractive --system upgrade && flatpak --noninteractive --user upgrade'
 alias bc='bc -l'
 alias engage='nohup play -n -c1 -t alsa synth whitenoise lowpass -1 120 lowpass -1 120 lowpass -1 120 gain +20 >/dev/null &'
 alias ff='FIREFOX_DEFAULT_PROFILE=andornaut ff'
@@ -17,5 +16,6 @@ alias t='tmux attach || tmuxdefault'
 alias tmuxdefault='tmux new-session -As default -n main -c ~/'
 alias tmuxrtorrent='tmux new-session -As rtorrent -n rtorrent -c ~/ rtorrent'
 alias todo='code --new-window ~/todo.md'
+alias upgrade='sudo apt-get -y update && sudo apt-get -y dist-upgrade && sudo apt-get autoremove --purge -qq; command -v flatpak >/dev/null 2>&1 && sudo flatpak --noninteractive --system upgrade && flatpak --noninteractive --user upgrade'
 alias vol="pavolume -v $@"
 alias xreset='~/.config/bspwm/bspwmrc'
