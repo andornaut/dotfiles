@@ -46,16 +46,16 @@ kill_() {
     done
 }
 
-# Kill tray applets (insync), so that they're adopted by the new instance of Trayer
+# Kill tray applets (insync), so that they're adopted by the new instance of Stalonetray
 # when they're restarted below. Kill processes in the reverse order than they were
 # started in
 kill_ insync stalonetray
 
-# Start tray applets after Trayer has started
+# Start tray applets after Stalonetray has started
 # https://www.mankier.com/1/dex-autostart
 nice_bg dex -a -e bspwm
 
-# Avoid error: Failed to query the window tree, and give Trayer
+# Avoid error: Failed to query the window tree, and give Stalonetray
 # time to render, so that its window id can be retrieved
 sleep 1
 
@@ -65,5 +65,5 @@ bspc config -m ^1 left_padding 48 >/dev/null 2>&1
 # Adjust z-order so that fullscreen windows are always above the bar
 bar_wid=$(wait_wid 'Eww - leftbar')
 xdo lower "${bar_wid}"
-trayer_wid=$(wait_wid stalonetray)
-xdo above -t "${bar_wid}" "${trayer_wid}"
+stalonetray_wid=$(wait_wid stalonetray)
+xdo above -t "${bar_wid}" "${stalonetray_wid}"
