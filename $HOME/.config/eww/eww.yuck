@@ -52,7 +52,7 @@
   (box :class "temperature widget" :halign "fill" :orientation orientation :space-evenly false
     (label :class "temperature__label label icon" :text "" :tooltip "CPU Temperature")
     (box :halign "center" :space-evenly false
-      {round(EWW_TEMPS.CPU == 0 ? EWW_TEMPS.CPUTIN : EWW_TEMPS.CPU, 0)}
+      {round(EWW_TEMPS.CPU == 0 ? EWW_TEMPS.COMPOSITE : EWW_TEMPS.CPU, 0)}
         "°C")))
 
 (include "leftbar.yuck")

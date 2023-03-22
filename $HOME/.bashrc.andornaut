@@ -76,6 +76,10 @@ function p {
             echo "git: ${branch}"
         fi
 
+        # JavaScript
+        if [[ -n $NVM_DIR && -d $NVM_DIR && -f .nvmrc ]]; then
+            nvm use
+        fi
         # Python
         if [[ -d .venv ]]; then
             echo "python: $(python3 --version 2>&1)"

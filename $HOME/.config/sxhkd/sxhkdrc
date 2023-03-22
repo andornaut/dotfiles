@@ -22,6 +22,9 @@ super + Escape
 alt + Tab
 	rofi -show window
 
+ctrl + space
+    dunstctl close
+
 #
 # bspwm hotkeys
 #
