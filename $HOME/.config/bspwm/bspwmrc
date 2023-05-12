@@ -33,6 +33,7 @@ bspc config presel_feedback_color "$(bspc config active_border_color)"
 bspc config automatic_scheme longest_side
 bspc config border_width 10
 bspc config click_to_focus button1
+bspc config honor_size_hints floating
 #bspc config merge_overlapping_monitors true
 bspc config remove_disabled_monitors true
 bspc config remove_unplugged_monitors true
