@@ -17,11 +17,11 @@ set termguicolors
 "58: Orange4: #5f5f00
 "101: Wheat4: #87875f
 "253: Grey85: #dadada
-"highlight CursorLine ctermbg=58 guibg=#393626
-highlight CursorLine ctermbg=236 guibg=#393626
+"highlight CursorLine ctermbg=58 guibg=#373424
+highlight CursorLine ctermbg=236 guibg=#373424
 set cursorline
-highlight CursorLineNR cterm=NONE ctermbg=58 ctermfg=253 guibg=#464333 guifg=#DDD7B9
-highlight LineNr ctermbg=101 ctermfg=58 guibg=#777755 guifg=#464333
+highlight CursorLineNR cterm=NONE ctermbg=58 ctermfg=253 guibg=#423f2e guifg=#DDD7B9
+highlight LineNr ctermbg=101 ctermfg=58 guibg=#777755 guifg=#423f2e
 set number
 highlight Visual ctermbg=253 ctermfg=30 guibg=#DDD7B9 guifg=#006B6B
 
