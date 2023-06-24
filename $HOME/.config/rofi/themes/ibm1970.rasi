@@ -5,10 +5,10 @@
   border-color:   #7c7755;
   scrollbar: false;
 
-  background:     #464333;
+  background:     #423f2e;
   foreground:     #dddccc;
 
-  alternate-normal-background:  #393626;
+  alternate-normal-background:  #373424;
   selected-normal-background:   #33A999;
 
   active-background:          #006B6B;
