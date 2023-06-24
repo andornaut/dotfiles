@@ -440,9 +440,9 @@
     #background = "#550066"
     #foreground = "#f60099"
     # IBM1970
-    background = "#393626"
+    background = "#373424"
     foreground = "#33a999"
-    frame_color = "#393626"
+    frame_color = "#373424"
 
 [urgency_normal]
     timeout = 10
@@ -453,9 +453,9 @@
     #background = "#550066"
     #foreground = "#f60099"
     # IBM1970
-    background = "#393626"
+    background = "#373424"
     foreground = "#33a999"
-    frame_color = "#393626"
+    frame_color = "#373424"
 
 [urgency_critical]
     timeout = 10
@@ -467,5 +467,5 @@
     #foreground = "#44f0f0"
     # IBM1970
     background = "#33a999"
-    foreground = "#464333"
+    foreground = "#423f2e"
     frame_color = "#33a999"

@@ -16,8 +16,8 @@ ok Configured display power management
 
 # Outrun
 #xsetroot -solid '#2e2255'
-# IBM1970
-xsetroot -solid '#464333'
+# IBM1970 dark
+xsetroot -solid '#423f2e'
 ok Set background colour
 
 # Set wallpaper with: feh --xinerama-index 0 --bg-fill ${file}
