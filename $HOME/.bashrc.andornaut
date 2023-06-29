@@ -79,21 +79,24 @@ function p {
     done
 }
 
-if [[ -n ${BASH} ]]; then
-    # This breaks in VS Code on spin, because the shell is zsh
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-fi
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
+PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
 
 # Kubernetes
-if which kubectl >/dev/null && [[ -n ${BASH} ]]; then
-    # This breaks in VS Code on spin, because the shell is zsh, which is incompatible with this bash completion
+if which kubectl >/dev/null; then
     source <(runCached kubectl completion bash)
 fi
 
-# Node / NPM
+# JavaScript
+# nvm is initialized in ~/.bashrc
 if which npm >/dev/null; then
     export PATH=${PATH}:$(runCached npm config --no-update-notifier --silent get prefix)/bin
+fi
+
+# Ruby
+if [[ -f /usr/local/share/chruby/chruby.sh ]]; then
+    source /usr/local/share/chruby/chruby.sh
+    source /usr/local/share/chruby/auto.sh
 fi
 
 # Rust
