@@ -70,10 +70,8 @@ function p {
             nvm use
         fi
         # Python
-        if [[ -d .venv ]]; then
-            echo "python: $(python3 --version 2>&1)"
-            deactivate 2>/dev/null
-            source .venv/bin/activate 2>/dev/null || true
+        if pipenv --py &>/dev/null; then
+            pipenv shell
         fi
         break
     done
