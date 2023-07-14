@@ -70,7 +70,7 @@ function p {
             nvm use
         fi
         # Python
-        if pipenv --py &>/dev/null; then
+        if pipenv --venv &>/dev/null; then
             pipenv shell
         fi
         break
