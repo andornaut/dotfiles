@@ -13,11 +13,9 @@
 (defwidget battery [orientation]
   (box :class "battery widget" :halign "fill" :orientation orientation :space-evenly false :visible {EWW_BATTERY != ""}
     (label :class "battery__label label icon" :halign "center" :text
-      "${EWW_BATTERY == "" ? "" : EWW_BATTERY.BAT0.status == 'Charging' || EWW_BATTERY.BAT1.status == 'Charging'
-          ? ""
-          : ""} ${EWW_BATTERY == ""
-            ? ""
-            : EWW_BATTERY.total_avg >= 90
+      "${EWW_BATTERY.BAT0.status == 'Charging'
+          ? ""
+          : EWW_BATTERY.total_avg >= 90
               ? ""
               : EWW_BATTERY.total_avg >= 75
                 ? ""
@@ -27,7 +25,7 @@
                     ? ""
                     : ""}"
       :tooltip "Battery")
-    {EWW_BATTERY == "" ? "--" : "${round(EWW_BATTERY.total_avg, 0)}%"}))
+    {"${round(EWW_BATTERY.total_avg, 0)}%"}))
 
 (defwidget desktops [orientation]
   ; Use eventbox to set cursor. See: https://github.com/elkowar/eww/issues/251
