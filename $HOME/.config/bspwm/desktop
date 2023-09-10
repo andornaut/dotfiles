@@ -10,7 +10,7 @@ xrdb -merge ~/.Xresources
 ok Configured Xresources
 
 xset s 600 1200 # Screensaver
-xset dpms 1200 1500 1800
+xset dpms 1500 1800 2000
 xset +dpms
 ok Configured display power management
 
