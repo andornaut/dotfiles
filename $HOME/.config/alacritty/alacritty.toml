@@ -1,0 +1,44 @@
+[colors]
+#draw_bold_text_with_bright_colors = true
+
+[colors.bright]
+black = "#423f2e" # base03
+blue = "#839496" # base0
+cyan = "#93a1a1" # base1
+green = "#586e75" # base01
+magenta = "#6c71c4" # violet
+red = "#cb4b16" # orange
+white = "#fdf6e3" # base3
+yellow = "#657b83" # base00
+
+[colors.cursor]
+cursor = "#dddccc" 
+text = "#423f2e" # base03
+
+[colors.normal]
+black = "#073642" # base02
+blue = "#268bd2" # blue
+cyan = "#2aa198" # cyan
+green = "#b5bd68" # green
+magenta = "#d33682" # magenta
+red = "#dc322f" # red
+white = "#eee8d5" # base2
+yellow = "#b58900" # yellow
+
+[colors.primary]
+background = "#423f2e" 
+foreground = "#dddccc" # base0
+
+[colors.selection]
+background = "#006B6B"
+text = "#dddccc"
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 18.0
+
+[font.normal]
+family = "Source Code Pro"
+style = "Regular"
