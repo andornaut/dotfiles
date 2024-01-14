@@ -1,6 +1,4 @@
-[colors]
-#draw_bold_text_with_bright_colors = true
-
+# Docs: https://alacritty.org/config-alacritty.html
 [colors.bright]
 black = "#423f2e" # base03
 blue = "#839496" # base0
