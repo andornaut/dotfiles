@@ -92,10 +92,13 @@ if which npm >/dev/null; then
 fi
 
 # Ruby
-if [[ -f /usr/local/share/chruby/chruby.sh ]]; then
-    source /usr/local/share/chruby/chruby.sh
-    source /usr/local/share/chruby/auto.sh
-fi
+for f in /usr/local/share/chruby /opt/homebrew//Cellar/chruby/0.3.9/share/chruby; do
+    if [[ -d ${f} ]]; then
+        source ${f}/chruby.sh
+        source ${f}/auto.sh
+        break
+    fi
+done
 
 # Rust
 if [[ -f "${HOME}/.cargo/env" ]]; then

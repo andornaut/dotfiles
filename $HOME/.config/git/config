@@ -94,7 +94,7 @@
     browser = google-chrome
 [includeIf "gitdir/i:biniambekele/"]
     path = config.biniambekele
-[includeIf "gitdir/i:Shopify*/"]
-    path = config.shopify
+[includeIf "gitdir/i:wmgtech*/"]
+    path = config.wmg
 [submodule]
 	recurse = true
