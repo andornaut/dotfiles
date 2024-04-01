@@ -93,13 +93,15 @@ set laststatus=2
 "  6 -> solid vertical bar
 "https://vim.fandom.com/wiki/Change_cursor_shape_in_different_modes
 "https://vi.stackexchange.com/a/14203
-if exists('$TMUX')
-  let &t_SI = "\ePtmux;\e\e[6 q\e\\"
-  let &t_EI = "\ePtmux;\e\e[2 q\e\\"
-else
-  let &t_SI = "\e[6 q"
-  let &t_EI = "\e[2 q"
-endif
+"if exists('$TMUX')
+"  let &t_SI = "\ePtmux;\e\e[6 q\e\\"
+"  let &t_EI = "\ePtmux;\e\e[2 q\e\\"
+"else
+"  let &t_SI = "\e[6 q"
+"  let &t_EI = "\e[2 q"
+"endif
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
 autocmd InsertEnter,InsertLeave * set cul!
 "https://vi.stackexchange.com/a/20220
 set ttimeoutlen=10
