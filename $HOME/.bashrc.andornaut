@@ -70,7 +70,9 @@ function p {
             nvm use
         fi
         # Python
-        if pipenv --venv &>/dev/null; then
+        if poetry env info &>/dev/null; then
+            poetry shell
+        elif pipenv --venv &>/dev/null; then
             pipenv shell
         fi
         break
