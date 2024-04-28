@@ -53,7 +53,7 @@ kill_ insync stalonetray
 
 # Start tray applets after Stalonetray has started
 # https://www.mankier.com/1/dex-autostart
-nice_bg dex -a -e bspwm
+nice_bg dex --autostart --environment bspwm
 
 # Avoid error: Failed to query the window tree, and give Stalonetray
 # time to render, so that its window id can be retrieved
