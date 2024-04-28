@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=flameshot
+Icon=flameshot
+Exec=flatpak run --user org.flameshot.Flameshot
+Terminal=false
+Type=Application
+X-GNOME-Autostart-enabled=true
