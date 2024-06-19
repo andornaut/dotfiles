@@ -74,6 +74,8 @@ function p {
             poetry shell
         elif pipenv --venv &>/dev/null; then
             pipenv shell
+        elif [[ -d .venv ]]; then
+            source .venv/bin/activate
         fi
         break
     done
