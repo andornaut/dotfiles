@@ -72,7 +72,7 @@ function p {
         # Python
         if poetry env info &>/dev/null; then
             poetry shell
-        elif pipenv --venv &>/dev/null; then
+        elif [[ -f Pipfile ]] && pipenv --venv &>/dev/null; then
             pipenv shell
         elif [[ -d .venv ]]; then
             source .venv/bin/activate
