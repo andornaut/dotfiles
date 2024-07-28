@@ -2,6 +2,7 @@ alias allstop="pkill -f 'play .*whitenoise'"
 alias bc='bc -l'
 alias engage='nohup play -n -c1 -t alsa synth whitenoise lowpass -1 120 lowpass -1 120 lowpass -1 120 gain +20 >/dev/null &'
 alias gogstart='for r in $(gog repository list); do gog -r ${r} git start >/dev/null && gog -r ${r} apply; done'
+alias halt=poweroff
 alias koff='keylight --host keylight --off'
 alias kon='keylight --host keylight --on'
 alias o='xdg-open "$@"'
@@ -11,7 +12,7 @@ alias serve='echo "Serving ${PWD}" && docker run --network host --volume ${PWD}:
 alias til='code --new-window ~/src/github.com/andornaut/til'
 alias todo='code --new-window ~/todo.md'
 alias upgrade='sudo apt-get -y update && sudo apt-get -y dist-upgrade && sudo apt-get autoremove --purge -qq; command -v flatpak >/dev/null 2>&1 && sudo flatpak --noninteractive --system upgrade && flatpak --noninteractive --user upgrade'
-alias vol="pavolume -v $@"
+alias vol='pavolume -v $@'
 alias xreset='~/.config/bspwm/bspwmrc'
 
 # Flatpak
