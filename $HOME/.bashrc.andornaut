@@ -96,7 +96,7 @@ if which npm >/dev/null; then
 fi
 
 # Ruby
-for f in /usr/local/share/chruby /opt/homebrew//Cellar/chruby/0.3.9/share/chruby; do
+for f in /usr/local/share/chruby /opt/homebrew/Cellar/chruby/*/share/chruby; do
     if [[ -d ${f} ]]; then
         source ${f}/chruby.sh
         source ${f}/auto.sh
