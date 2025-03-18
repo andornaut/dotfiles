@@ -4,10 +4,7 @@
 
 ; Widgets ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defwidget datetime_h []
-  (box :class "datetime widget" :space-evenly false
-    (label :class "datetime__label label icon" :text "" :tooltip "Date")
-    datetime))
+
 
 (defwidget volume_h []
   ; Use eventbox to set cursor. See: https://github.com/elkowar/eww/issues/251
@@ -25,7 +22,7 @@
 
 (defwidget left_section []
   (box :class "left-section section" :halign "start"
-    (desktops :orientation "h")))
+    (bspwm-desktops :orientation "h")))
 
 (defwidget right_section []
   (box :class "right-section section" :halign "end" :space-evenly false
