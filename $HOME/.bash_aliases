@@ -24,6 +24,11 @@ alias vlc='flatpak run --user org.videolan.VLC'
 # tmux
 alias si=tmuxirssi
 alias sr=tmuxrtorrent
+
+# TODO
+# Sometimes you want a program, like tmux, dtach or similar, to persist when the parent process exits.
+# To do this, run it in a transient systemd scope:
+# systemd-run --user --scope tmux new-session
 alias t='tmux attach || tmuxdefault'
 alias tmuxdefault='tmux new-session -As default -n main -c ~/'
 alias tmuxirssi='tmux new-session -As irssi -n irssi -c ~/ irssi'

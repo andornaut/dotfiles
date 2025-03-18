@@ -1,57 +1,21 @@
 (defvar active_color "#9c9977")
 (defvar focused_color "#7c7755")
 (defvar normal_color "#ccc8b0")
+(defvar show_bspwm "$DISPLAY")
+(defvar show_niri "$WAYLAND_DISPLAY")
 
+;(deflisten bspwm-desktops `bin/bspwm-desktops :orientation \'"v"\'`)
+(deflisten niri-workspaces :initial "[]" `bin/niri-workspaces :orientation \'"v"\'`)
 (deflisten volume "pavolume -sf '%s'")
 
-;TODO remove either _h or _v desktop variants
-(deflisten desktops_h 'bin/desktops :orientation \'"h"\'')
-(deflisten desktops_v 'bin/desktops :orientation \'"v"\'')
+(defpoll date :interval "1m" "date '+%a %d'")
+(defpoll time :interval "5s" "date '+%H:%M'")
 
-; Widgets ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defwidget battery [orientation]
-  (box :class "battery widget" :halign "fill" :orientation orientation :space-evenly false :visible {EWW_BATTERY != ""}
-    (label :class "battery__label label icon" :halign "center" :text
-      "${EWW_BATTERY.BAT0.status == 'Charging'
-          ? ""
-          : EWW_BATTERY.total_avg >= 90
-              ? ""
-              : EWW_BATTERY.total_avg >= 75
-                ? ""
-                : EWW_BATTERY.total_avg >= 50
-                  ? ""
-                  : EWW_BATTERY.total_avg >= 25
-                    ? ""
-                    : ""}"
-      :tooltip "Battery")
-    {"${round(EWW_BATTERY.total_avg, 0)}%"}))
-
-(defwidget desktops [orientation]
-  ; Use eventbox to set cursor. See: https://github.com/elkowar/eww/issues/251
-  (eventbox :cursor "pointer"
-    (literal :content {orientation == "h" ? desktops_h : desktops_v})))
-
-(defvar reveal_system false)
-
-(defwidget system [orientation]
-  (eventbox :onhover "eww update reveal_system=true" :onhoverlost "eww update reveal_system=false"
-    (box :class "system widget" :orientation orientation :space-evenly false
-      (revealer :duration "250ms" :reveal reveal_system :transition "slideup"
-        ; Use eventbox to set cursor. See: https://github.com/elkowar/eww/issues/251
-        (eventbox :cursor "pointer"
-          (box :class "system__buttons" :orientation "v" :space-evenly false
-            (button :class "system__logout button icon" :onclick "gnome-screensaver-command -l" :tooltip "Lock screen" "")
-            (button :class "system__suspend button icon" :onclick "systemctl suspend" :tooltip "Suspend" ""))))
-      (eventbox :cursor "pointer"
-        (button :class "system__poweroff button icon" :onclick "systemctl poweroff" :tooltip "Poweroff" "")))))
-
-(defwidget temperature [orientation]
-  (box :class "temperature widget" :halign "fill" :orientation orientation :space-evenly false
-    (label :class "temperature__label label icon" :text "" :tooltip "CPU Temperature")
-    (box :halign "center" :space-evenly false
-      {round(EWW_TEMPS.GIGABYTE_WMI_TEMP1, 0)}
-        "°C")))
-
+(include "./widgets/battery.yuck")
+(include "./widgets/datetime.yuck")
+(include "./widgets/system.yuck")
+(include "./widgets/temperature.yuck")
+(include "./widgets/volume.yuck")
+;(include "./widgets/bspwm-desktops.yuck")
+(include "./widgets/niri-workspaces.yuck")
 (include "leftbar.yuck")
-;(include "topbar.yuck")
