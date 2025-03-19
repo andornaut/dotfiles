@@ -367,6 +367,9 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+Return { spawn "alacritty"; }
     Mod+Space { spawn "rofi" "-show" "drun"; }
+    Mod+Ctrl+Space { spawn "dunstctl" "close-all"; }
+    Mod+Ctrl+Backspace { spawn "dunstctl" "history-pop"; }
+    //Mod+Ctrl+Delete { spawn "dunstctl" "history-pop"; }
     Mod+Ctrl+Q { spawn "hyprlock"; }
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
