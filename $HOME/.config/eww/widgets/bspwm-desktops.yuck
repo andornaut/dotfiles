@@ -1,0 +1,4 @@
+(defwidget bspwm-desktops [orientation]
+  ; Use eventbox to set cursor. See: https://github.com/elkowar/eww/issues/251
+  (eventbox :cursor "pointer" :visible show_bspwm
+    (literal :content {orientation == "h" ? bspwm-desktops-h : bspwm-desktops-v})))

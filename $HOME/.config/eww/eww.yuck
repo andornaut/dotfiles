@@ -18,4 +18,5 @@
 (include "./widgets/volume.yuck")
 ;(include "./widgets/bspwm-desktops.yuck")
 (include "./widgets/niri-workspaces.yuck")
-(include "leftbar.yuck")
+
+(include "bar.yuck")
