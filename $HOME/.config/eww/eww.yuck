@@ -1,11 +1,14 @@
 (defvar active_color "#9c9977")
 (defvar focused_color "#7c7755")
 (defvar normal_color "#ccc8b0")
-(defvar show_bspwm "$DISPLAY")
-(defvar show_niri "$WAYLAND_DISPLAY")
+(defvar show_bspwm "${get_env("WAYLAND_DISPLAY") == ""}")
+(defvar show_niri "${get_env("WAYLAND_DISPLAY") != ""}")
 
-;(deflisten bspwm-desktops `bin/bspwm-desktops :orientation \'"v"\'`)
-(deflisten niri-workspaces :initial "[]" `bin/niri-workspaces :orientation \'"v"\'`)
+;(defvar bspwm-desktops-yuck "")
+(deflisten bspwm-desktops-yuck `bin/bspwm-desktops :orientation \'"v"\'`)
+;(defvar niri-workspaces-json "[]")
+(deflisten niri-workspaces-json :initial "[]" `bin/niri-workspaces :orientation \'"v"\'`)
+
 (deflisten volume "pavolume -sf '%s'")
 
 (defpoll date :interval "1m" "date '+%a %d'")
@@ -16,7 +19,7 @@
 (include "./widgets/system.yuck")
 (include "./widgets/temperature.yuck")
 (include "./widgets/volume.yuck")
-;(include "./widgets/bspwm-desktops.yuck")
+(include "./widgets/bspwm-desktops.yuck")
 (include "./widgets/niri-workspaces.yuck")
 
 (include "bar.yuck")

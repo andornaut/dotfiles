@@ -2,7 +2,7 @@
 set -eu -o pipefail
 
 boxAttributes="$@"
-buttonClass="desktops__button"
+buttonClass="desktops__desktop"
 names=(1 2 3 4 5)
 queryCmd="bspc query --names -D -d"
 
@@ -22,7 +22,7 @@ function buttons {
     local occupied="$(${queryCmd} .occupied)"
     local urgent="$(${queryCmd} .urgent)"
     for name in ${names[@]}; do
-        classes="${buttonClass} button"
+        classes="${buttonClass}"
         if isModified ${name} "${focused}"; then
             classes+=" ${buttonClass}--focused"
         fi
@@ -32,11 +32,11 @@ function buttons {
         if isModified ${name} "${urgent}"; then
             classes+=" ${buttonClass}--urgent"
         fi
-        echo -n "(button :onclick \"bspc desktop -f ${name}\" :class \"${classes}\")"
+        echo -n "(button :onclick \"bspc desktop -f ${name}\" :class \"desktops_desktop button ${classes}\" "${name}")"
     done
 }
 
 # `desktop node_transfer`` misses changes to urgent status; use `report` to get these too.
 bspc subscribe report | while read -r ; do
-    echo "(box :class 'desktops widget' ${boxAttributes} $(buttons))"
+    echo "(box :class 'desktops' ${boxAttributes} $(buttons))"
 done

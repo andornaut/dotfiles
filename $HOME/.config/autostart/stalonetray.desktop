@@ -1,7 +1,0 @@
-[Desktop Entry]
-Exec=/usr/bin/stalonetray
-#Exec=../../.local/bin/stalonetray_with_geometry
-TryExec=/usr/bin/stalonetray
-Name=stalonetray
-Comment=Stand-alone system tray
-Type=Application
