@@ -106,7 +106,7 @@ output "Dell Inc. DELL S3422DWG 4YNYS63" {
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
 layout {
     // Set gaps around windows in logical pixels.
-    gaps 0
+    gaps 20
 
     // When to center a column when changing focus, options are:
     // - "never", default behavior, focusing an off-screen column will keep at the left
@@ -250,10 +250,13 @@ layout {
     // Top and bottom struts will simply add outer gaps in addition to the area occupied by
     // layer-shell panels and regular gaps.
     struts {
-        left 49
+        left 48
         right 0
-        top 0
-        bottom 0
+
+        // Negative struts:
+        // https://github.com/YaLTeR/niri/discussions/582
+        top -10
+        bottom -10
     }
 }
 
@@ -363,9 +366,7 @@ binds {
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+Return { spawn "alacritty"; }
-    //Mod+D { spawn "fuzzel"; }
     Mod+Space { spawn "rofi" "-show" "drun"; }
-    //Super+Alt+L { spawn "swaylock"; }
     Mod+Ctrl+Q { spawn "hyprlock"; }
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
@@ -522,7 +523,7 @@ binds {
     // Mod+Ctrl+1 { move-window-to-workspace 1; }
 
     // Switches focus between the current and the previous workspace.
-    // Mod+Tab { focus-workspace-previous; }
+    Mod+Shift+Tab { focus-workspace-previous; }
     // Switches focus between the current and the previous window.
     Mod+Tab { focus-window-previous; }
 
