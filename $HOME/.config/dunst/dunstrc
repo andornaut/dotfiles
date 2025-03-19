@@ -39,7 +39,7 @@
     scale = 0
 
     # Maximum number of notification (0 means no limit)
-    notification_limit = 0
+    notification_limit = 10
 
     ### Progress bar ###
 
@@ -59,7 +59,6 @@
 
     # Set the maximum width for the progress bar
     progress_bar_max_width = 300
-
 
     # Show how many messages are currently hidden (because of
     # notification_limit).
