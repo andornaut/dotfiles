@@ -1,0 +1,18 @@
+(defvar reveal_calendar false)
+
+(defwindow calendar :monitor 0
+											:geometry (geometry :anchor "bottom left"
+																					:width "100px"
+																					:height "100px"
+																					:x "48px")
+											:stacking "fg"
+  (revealer :duration "250ms" :reveal reveal_calendar :transition "slideright"
+    (calendar :class "calendar widget" :style "background: ${normal_color}; border-color: ${focused_color}")))
+
+(defwidget datetime [orientation]
+  (eventbox :onhover "eww open calendar; eww update reveal_calendar=true"
+            :onhoverlost "eww update reveal_calendar=false; eww close calendar"
+    (box :class "datetime widget" :orientation orientation :space-evenly false
+      (label :class "datetime__label label icon" :text "" :tooltip "Date")
+      (label :class "datetime__date" :text date)
+      (label :class "datetime__time" :text time))))

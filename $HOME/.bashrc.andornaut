@@ -11,7 +11,7 @@ export SYSTEMD_EDITOR=$EDITOR
 
 # Fix vscode and cursor editor on Wayland
 # https://wiki.archlinux.org/title/Wayland#Environment_variable
-export ELECTRON_OZONE_PLATFORM_HINT=auto
+#export ELECTRON_OZONE_PLATFORM_HINT=auto
 
 function runCached {
     local command=$@

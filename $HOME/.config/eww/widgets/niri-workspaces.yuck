@@ -1,0 +1,10 @@
+
+(defwidget niri-workspaces []
+  ; Use eventbox to set cursor. See: https://github.com/elkowar/eww/issues/251
+  (eventbox :cursor "pointer" :visible show_niri
+    (box :class "desktops" :space-evenly false :orientation "v"
+      (for workspace in niri-workspaces
+        (button
+            :class "desktops__desktop button ${workspace.is_active ? "desktops__desktop--active" : ""} ${workspace.is_focused ? "desktops__desktop--focused" : ""}"
+            :onclick `niri msg action focus-workspace ${workspace.idx}`
+          {workspace.idx})))))
