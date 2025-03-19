@@ -2,7 +2,7 @@
 
 
 ; Reserve 1 extra pixel to create a gap
-(defwindow leftbar
+(defwindow bar
     :exclusive true
     :focusable "none"
     :geometry (geometry :anchor "top left"
@@ -13,8 +13,9 @@
     :stacking "fg"
   (box :orientation "v" :halign "fill" :style "background: ${normal_color}"
     (box :class "top-section section" :halign "fill" :orientation "v" :space-evenly false :valign "start"
-      ;(bspwm-desktops :orientation "v")
-      (niri-workspaces))
+      (bspwm-desktops :orientation "v")
+      (niri-workspaces)
+    )
 
     (box :class "bottom-section section" :halign "fill" :orientation "v" :space-evenly false :valign "end"
       (eventbox :cursor "pointer"

@@ -49,10 +49,8 @@ kill_() {
 # Kill tray applets (insync), so that they're adopted by the new instance of Stalonetray
 # when they're restarted below. Kill processes in the reverse order than they were
 # started in
-kill_ insync stalonetray
+kill_ insync
 
-# Start tray applets after Stalonetray has started
-# https://www.mankier.com/1/dex-autostart
 nice_bg dex --autostart --environment bspwm
 
 # Avoid error: Failed to query the window tree, and give Stalonetray
@@ -61,9 +59,3 @@ sleep 1
 
 # TODO: only necessary when running `xreset` manually
 bspc config -m ^1 left_padding 48 >/dev/null 2>&1
-
-# Adjust z-order so that fullscreen windows are always above the bar
-bar_wid=$(wait_wid 'Eww - leftbar')
-xdo lower "${bar_wid}"
-stalonetray_wid=$(wait_wid stalonetray)
-xdo above -t "${bar_wid}" "${stalonetray_wid}"
