@@ -6,7 +6,7 @@
   scrollbar: false;
 
   background:     #423f2e;
-  foreground:     #dddccc;
+  foreground:     #ccc8b0;
 
   alternate-normal-background:  #373424;
   selected-normal-background:   #33A999;
