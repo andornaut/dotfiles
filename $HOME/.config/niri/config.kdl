@@ -255,8 +255,8 @@ layout {
 
         // Negative struts:
         // https://github.com/YaLTeR/niri/discussions/582
-        top -10
-        bottom -10
+        top -20
+        bottom -20
     }
 }
 

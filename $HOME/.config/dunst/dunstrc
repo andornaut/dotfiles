@@ -1,5 +1,4 @@
 # See dunst(5) for all configuration options
-
 [global]
     ### Display ###
 
@@ -21,44 +20,67 @@
 
     ### Geometry ###
 
+    # The width of the window, excluding the frame.
     # dynamic width from 0 to 300
     # width = (0, 300)
     # constant width of 300
-    width = 500
+    width = (0, 600)
 
-    # The maximum height of a single notification, excluding the frame.
-    height = 500
+    # The height of a single notification, excluding the frame.
+    # dynamic height from 0 to 300
+    height = (0, 300)
+    # constant height of 300
+    # height = 300
+    # NOTE: Dunst from version 1.11 and older don't support dynamic height
+    #       and the given value is treated as the maximum height
 
     # Position the notification in the top right corner
     origin = top-right
 
     # Offset from the origin
-    offset = 0x0
+    # NOTE: Dunst from version 1.11 and older use this alternative notation
+    # offset = 10x50
+    #offset = (10, 50)
+    offset = (0, 0)
 
     # Scale factor. It is auto-detected if value is 0.
-    scale = 0
+    scale = 1
 
     # Maximum number of notification (0 means no limit)
     notification_limit = 10
 
     ### Progress bar ###
 
-    # Turn on the progess bar. It appears when a progress hint is passed with
+    # Turn on the progress bar. It appears when a progress hint is passed with
     # for example dunstify -h int:value:12
     progress_bar = true
 
     # Set the progress bar height. This includes the frame, so make sure
     # it's at least twice as big as the frame width.
-    progress_bar_height = 10
+    progress_bar_height = 20
 
     # Set the frame width of the progress bar
-    progress_bar_frame_width = 1
+    progress_bar_frame_width = 5
 
     # Set the minimum width for the progress bar
     progress_bar_min_width = 150
 
     # Set the maximum width for the progress bar
     progress_bar_max_width = 300
+
+    # Corner radius for the progress bar. 0 disables rounded corners.
+    progress_bar_corner_radius = 0
+
+    # Define which corners to round when drawing the progress bar. If progress_bar_corner_radius
+    # is set to 0 this option will be ignored.
+    progress_bar_corners = all
+
+    # Corner radius for the icon image.
+    icon_corner_radius = 0
+
+    # Define which corners to round when drawing the icon image. If icon_corner_radius
+    # is set to 0 this option will be ignored.
+    icon_corners = all
 
     # Show how many messages are currently hidden (because of
     # notification_limit).
@@ -73,20 +95,20 @@
     # notifications.
     # Set to 0 to disable.
     # If gap_size is greater than 0, this setting will be ignored.
-    separator_height = 2
+    separator_height = 10
 
     # Padding between text and separator.
-    padding = 20
+    padding = 15
 
     # Horizontal padding.
     horizontal_padding = 20
 
     # Padding between text and icon.
-    text_icon_padding = 0
+    text_icon_padding = 10
 
     # Defines width in pixels of frame around the notification window.
     # Set to 0 to disable.
-    frame_width = 3
+    frame_width = 10
 
     # Defines color of the frame around the notification window.
     frame_color = "#aaaaaa"
@@ -105,7 +127,12 @@
     #  * anything else will be interpreted as a X color.
     separator_color = frame
 
-    # Sort messages by urgency.
+    # Sort type.
+    # possible values are:
+    #  * id: sort by id
+    #  * urgency_ascending: sort by urgency (low then normal then critical)
+    #  * urgency_descending: sort by urgency (critical then normal then low)
+    #  * update: sort by update (most recent always at the top)
     sort = yes
 
     # Don't remove messages, if the user is idle (no mouse or keyboard input)
@@ -210,8 +237,9 @@
     # Scale larger icons down to this size, set to 0 to disable
     max_icon_size = 128
 
-    # Paths to default icons (only neccesary when not using recursive icon lookup)
-    icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
+    # Paths to default icons (only necessary when not using recursive icon lookup)
+    #icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
+    icon_path = /usr/share/icons/Adwaita/symbolic/status/:/usr/share/icons/Adwaita/symbolic/devices/
 
     ### History ###
 
@@ -233,10 +261,10 @@
     # Always run rule-defined scripts, even if the notification is suppressed
     always_run_script = true
 
-    # Define the title of the windows spawned by dunst
+    # Define the title of the windows spawned by dunst (X11 only)
     title = Dunst
 
-    # Define the class of the windows spawned by dunst
+    # Define the class of the windows spawned by dunst (X11 only)
     class = Dunst
 
     # Define the corner radius of the notification window
@@ -245,6 +273,13 @@
     # The radius will be automatically lowered if it exceeds half of the
     # notification height to avoid clipping text and/or icons.
     corner_radius = 0
+
+    # Define which corners to round when drawing the window. If the corner radius
+    # is set to 0 this option will be ignored.
+    #
+    # Comma-separated list of the corners. The accepted corner values are bottom-right,
+    # bottom-left, top-right, top-left, top, bottom, left, right or all.
+    corners = all
 
     # Ignore the dbus closeNotification message.
     # Useful to enforce the timeout set by dunst configuration. Without this
@@ -255,7 +290,7 @@
     ### Wayland ###
     # These settings are Wayland-specific. They have no effect when using X11
 
-    # Uncomment this if you want to let notications appear under fullscreen
+    # Uncomment this if you want to let notifications appear under fullscreen
     # applications (default: overlay)
     # layer = top
 
@@ -304,6 +339,32 @@
     per_monitor_dpi = false
 
 
+[urgency_low]
+    # IMPORTANT: colors have to be defined in quotation marks.
+    # Otherwise the "#" and following would be interpreted as a comment.
+    background = "#222222"
+    foreground = "#888888"
+    timeout = 10
+    # Icon for notifications with low urgency
+    #default_icon = dialog-information-symbolic
+
+[urgency_normal]
+    background = "#285577"
+    foreground = "#ffffff"
+    timeout = 10
+    override_pause_level = 30
+    # Icon for notifications with normal urgency
+    #default_icon = dialog-information-symbolic
+
+[urgency_critical]
+    background = "#900000"
+    foreground = "#ffffff"
+    frame_color = "#ff0000"
+    timeout = 0
+    override_pause_level = 60
+    # Icon for notifications with critical urgency
+    #default_icon = dialog-warning-symbolic
+
 # Every section that isn't one of the above is interpreted as a rules to
 # override settings for certain messages.
 #
@@ -338,6 +399,7 @@
 #    ellipsize
 #    alignment
 #    hide_text
+#    override_pause_level
 #
 # Shell-like globbing will get expanded.
 #
@@ -345,6 +407,10 @@
 # GLib based applications export their desktop-entry name. In comparison to the appname,
 # the desktop-entry won't get localized.
 #
+# You can also allow a notification to appear even when paused. Notification will appear whenever notification's override_pause_level >= dunst's paused level.
+# This can be used to set partial pause modes, where more urgent notifications get through, but less urgent stay paused. To do that, you can override the following in the rules:
+# override_pause_level = X
+
 # SCRIPTING
 # You can specify a script that gets run when the rule matches by
 # setting the "script" option.
@@ -431,7 +497,6 @@
 # Customizations ##############################################################
 
 [urgency_low]
-    timeout = 10
     # Solarized Light
     #background = "#e1d2aa"
     #foreground = "#333333"
@@ -439,12 +504,11 @@
     #background = "#550066"
     #foreground = "#f60099"
     # IBM1970
-    background = "#373424"
-    foreground = "#33a999"
-    frame_color = "#373424"
+    background = "#423f2e"
+    foreground = "#ccc8b0"
+    frame_color = "#7c7755"
 
 [urgency_normal]
-    timeout = 10
     # Solarized Light
     #background = "#e1d2aa"
     #foreground = "#333333"
@@ -452,12 +516,11 @@
     #background = "#550066"
     #foreground = "#f60099"
     # IBM1970
-    background = "#373424"
-    foreground = "#33a999"
-    frame_color = "#373424"
+    background = "#423f2e"
+    foreground = "#ccc8b0"
+    frame_color = "#7c7755"
 
 [urgency_critical]
-    timeout = 10
     # Default
     #background = "#ffffa3"
     #foreground = "#333333"
@@ -467,4 +530,5 @@
     # IBM1970
     background = "#33a999"
     foreground = "#423f2e"
-    frame_color = "#33a999"
+    frame_color = "#336699"
+    frame_color = "#006B6B"
