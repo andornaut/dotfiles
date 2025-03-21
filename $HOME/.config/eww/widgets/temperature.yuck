@@ -1,6 +1,19 @@
 (defwidget temperature [orientation]
-  (box :class "temperature widget" :halign "fill" :orientation orientation :space-evenly false
-    (label :class "temperature__label label icon" :text "" :tooltip "CPU Temperature")
-    (box :halign "center" :space-evenly false
+  (box
+    :class "temperature widget"
+    :halign "fill"
+    :orientation orientation
+    :space-evenly false
+    (label
+      :class "temperature__label label icon"
+      :text ""
+      :tooltip "CPU Temperature"
+    )
+    (box
+      :halign "center"
+      :space-evenly false
       {round(EWW_TEMPS.GIGABYTE_WMI_TEMP1, 0)}
-        "°C")))
+      "°C"
+    )
+  )
+)

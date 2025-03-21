@@ -1,19 +1,36 @@
-(defvar active_color "#9c9977")
-(defvar focused_color "#7c7755")
-(defvar normal_color "#ccc8b0")
+;; Display environment detection
 (defvar show_bspwm "${get_env("WAYLAND_DISPLAY") == ""}")
 (defvar show_niri "${get_env("WAYLAND_DISPLAY") != ""}")
 
-;(defvar bspwm-desktops-yuck "")
-(deflisten bspwm-desktops-yuck `bin/bspwm-desktops :orientation \'"v"\'`)
-;(defvar niri-workspaces-json "[]")
-(deflisten niri-workspaces-json :initial "[]" `bin/niri-workspaces :orientation \'"v"\'`)
+;; Workspace management
+(deflisten bspwm-desktops-yuck
+  :initial "[]"
+  `bin/bspwm-desktops :orientation \'"v"\'`
+)
 
-(deflisten volume "pavolume -sf '%s'")
+(deflisten niri-workspaces-json
+  :initial "[]"
+  `bin/niri-workspaces :orientation \'"v"\'`
+)
 
-(defpoll date :interval "1m" "date '+%a %d'")
-(defpoll time :interval "5s" "date '+%H:%M'")
+;; System monitoring
+(deflisten volume
+  :initial "0"
+  "pavolume -sf '%s'"
+)
 
+;; Time updates
+(defpoll date
+  :interval "1m"
+  "date '+%a %d'"
+)
+
+(defpoll time
+  :interval "5s"
+  "date '+%H:%M'"
+)
+
+;; Widget imports
 (include "./widgets/battery.yuck")
 (include "./widgets/datetime.yuck")
 (include "./widgets/system.yuck")
@@ -22,4 +39,5 @@
 (include "./widgets/bspwm-desktops.yuck")
 (include "./widgets/niri-workspaces.yuck")
 
+;; Bar configuration
 (include "bar.yuck")

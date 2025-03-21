@@ -1,21 +1,43 @@
+// Theme colors
+$active-color: #9c9977;
+$focused-color: #7c7755;
+$normal-color: #ccc8b0;
+$text-color: #423f2e;
+$urgent-color: #33a999;
+
+// Base styles
 window {
-    color: #423f2e;
+    color: $text-color;
     font-family: "DejaVu Sans Condensed", "DejaVu Sans Mono", sans-serif;
     font-size: 16px;
 }
 
 button {
     all: unset;
+
+    &:hover {
+        background: $focused-color;
+    }
+
+    &:active {
+        background: $active-color;
+    }
 }
 
-button:hover {
-    background: #7c7755;
-}
-
+// Common classes
 .icon {
     font-family: FontAwesome;
 }
 
+.bar {
+    background: $normal-color;
+}
+
+.revealer {
+    transition: 250ms ease-out;
+}
+
+// Widget styles
 .battery,
 .datetime,
 .temperature {
@@ -29,33 +51,39 @@ button:hover {
     padding-bottom: 10px;
 }
 
-.datetime__date,
-.datetime__time {
-    font-size: 14px;
-}
+.datetime {
+    &:hover {
+        background: $focused-color;
+    }
 
-.datetime__date {
-    padding-bottom: 5px;
+    &__date,
+    &__time {
+        font-size: 14px;
+    }
+
+    &__date {
+        padding-bottom: 5px;
+    }
 }
 
 .desktops__desktop {
-    border-bottom: 1px solid #7c7755;
+    border-bottom: 1px solid $focused-color;
     color: inherit;
     padding: 10px;
-}
 
-.desktops__desktop--occupied {
-    background: #9c9977;
-}
+    &--occupied {
+        background: $active-color;
+    }
 
-.desktops__desktop--focused {
-    /* Must be below --occupied to take precedence */
-    background: #7c7755;
-}
+    &--focused {
+        /* Must be below --occupied to take precedence */
+        background: $focused-color;
+    }
 
-.desktops__desktop--urgent {
-    /* Must be below --focused to take precedence */
-    background: #33a999;
+    &--urgent {
+        /* Must be below --focused to take precedence */
+        background: $urgent-color;
+    }
 }
 
 .system .button,
@@ -63,13 +91,21 @@ button:hover {
     padding: 15px 0;
 }
 
-/* Systray popup menus can be styled with:
- * https://github.com/elkowar/eww/issues/1244
- */
 .systray {
+    /* Systray popup menus can be styled with:
+     * https://github.com/elkowar/eww/issues/1244
+     */
     padding: 10px;
 }
 
 .bottom-section .widget {
-    border-top: 1px solid #7c7755;
+    border-top: 1px solid $focused-color;
+}
+
+// Calendar styles
+.calendar {
+    background: $normal-color;
+    border: 1px solid $focused-color;
+    border-radius: 4px;
+    padding: 8px;
 }

@@ -1,22 +1,28 @@
 (defwidget battery [orientation]
-  (box :class "battery widget"
-			:halign "fill"
-			:orientation orientation
-			:space-evenly false
-			:visible {EWW_BATTERY != ''}
-    (label :class "battery__label label icon" :halign "center" :text
-      "${EWW_BATTERY == ''
-          ? "-"
-          : EWW_BATTERY.BAT0.status == 'Charging'
-              ? ""
-              : EWW_BATTERY.total_avg >= 90
-                  ? ""
-                  : EWW_BATTERY.total_avg >= 75
-                    ? ""
-                    : EWW_BATTERY.total_avg >= 50
-                      ? ""
-                      : EWW_BATTERY.total_avg >= 25
-                        ? ""
-                        : ""}"
-      :tooltip "Battery")
-    {"${round(EWW_BATTERY?.total_avg ?: 0, 0)}%"}))
+  (box
+    :class "battery widget"
+    :halign "fill"
+    :orientation orientation
+    :space-evenly false
+    :visible {EWW_BATTERY != ''}
+    (label
+      :class "battery__label label icon"
+      :halign "center"
+      :text "${EWW_BATTERY == ''
+        ? "-"
+        : EWW_BATTERY.BAT0.status == 'Charging'
+          ? ""
+          : EWW_BATTERY.total_avg >= 90
+              ? ""
+              : EWW_BATTERY.total_avg >= 75
+                ? ""
+                : EWW_BATTERY.total_avg >= 50
+                  ? ""
+                  : EWW_BATTERY.total_avg >= 25
+                    ? ""
+                    : ""}"
+      :tooltip "Battery"
+    )
+    {"${round(EWW_BATTERY?.total_avg ?: 0, 0)}%"}
+  )
+)

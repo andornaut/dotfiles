@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -eu -o pipefail
 
 boxAttributes="$@"
@@ -37,6 +37,14 @@ function buttons {
 }
 
 # `desktop node_transfer`` misses changes to urgent status; use `report` to get these too.
-bspc subscribe report | while read -r ; do
+function main() {
+    # Initial state
     echo "(box :class 'desktops' ${boxAttributes} $(buttons))"
-done
+
+    # Watch for changes
+    bspc subscribe report | while read -r ; do
+        echo "(box :class 'desktops' ${boxAttributes} $(buttons))"
+    done
+}
+
+main

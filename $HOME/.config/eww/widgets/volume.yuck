@@ -1,15 +1,53 @@
 (defvar reveal_volume false)
 
 (defwidget volume [orientation]
-  (eventbox :onhover "eww update reveal_volume=true" :onhoverlost "eww update reveal_volume=false"
-    (box :class "volume widget" :orientation orientation :space-evenly false
-      (revealer :duration "250ms" :reveal reveal_volume :transition "slideup"
+  (eventbox
+    :onhover "eww update reveal_volume=true"
+    :onhoverlost "eww update reveal_volume=false"
+    (box
+      :class "volume widget"
+      :orientation orientation
+      :space-evenly false
+      (revealer
+        :duration "250ms"
+        :reveal reveal_volume
+        :transition "slideup"
         ; Use eventbox to set cursor. See: https://github.com/elkowar/eww/issues/251
-        (eventbox :cursor "pointer"
-          (box :class "volume__buttons" :orientation orientation :space-evenly false
-            (button :class "volume__up button icon" :onclick "pavolume -v +5" :tooltip "Increase volume" "")
-            (button :class "volume__down button icon" :onclick "pavolume -v -5" :tooltip "Decrease volume" ""))))
-      (eventbox :cursor "pointer"
-        (button :class "volume__toggle button icon" :onclick "pavolume -m toggle" :tooltip "Toggle muting" ""))
-      (label :class "volume__label label" :tooltip "Volume" :text
-        {volume == "---" ? "mute" : "${volume}%"}))))
+        (eventbox
+          :cursor "pointer"
+          (box
+            :class "volume__buttons"
+            :orientation orientation
+            :space-evenly false
+            (button
+              :class "volume__up button icon"
+              :onclick "pavolume -v +5"
+              :tooltip "Increase volume"
+              ""
+            )
+            (button
+              :class "volume__down button icon"
+              :onclick "pavolume -v -5"
+              :tooltip "Decrease volume"
+              ""
+            )
+          )
+        )
+      )
+      (eventbox
+        :cursor "pointer"
+        (button
+          :class "volume__toggle button icon"
+          :onclick "pavolume -m toggle"
+          :tooltip "Toggle muting"
+          ""
+        )
+      )
+      (label
+        :class "volume__label label"
+        :tooltip "Volume"
+        :text {volume == "---" ? "mute" : "${volume}%"}
+      )
+    )
+  )
+)
