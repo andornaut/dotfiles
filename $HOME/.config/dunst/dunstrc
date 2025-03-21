@@ -60,7 +60,7 @@
     progress_bar_height = 20
 
     # Set the frame width of the progress bar
-    progress_bar_frame_width = 5
+    progress_bar_frame_width = 1
 
     # Set the minimum width for the progress bar
     progress_bar_min_width = 150
@@ -95,7 +95,7 @@
     # notifications.
     # Set to 0 to disable.
     # If gap_size is greater than 0, this setting will be ignored.
-    separator_height = 10
+    separator_height = 1
 
     # Padding between text and separator.
     padding = 15
@@ -108,7 +108,7 @@
 
     # Defines width in pixels of frame around the notification window.
     # Set to 0 to disable.
-    frame_width = 10
+    frame_width = 1
 
     # Defines color of the frame around the notification window.
     frame_color = "#aaaaaa"
