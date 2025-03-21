@@ -1,11 +1,20 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
+set -eu -o pipefail
 
-spaces() {
-    # niri msg -j workspaces | jq -Mc '.=sort_by(.id) | if .[-1].is_focused then . else .[0:-1] end'
+# Get sorted workspace information in JSON format
+get_workspaces() {
     niri msg --json workspaces | jq -Mc '.=sort_by(.id)'
 }
 
-#spaces
-niri msg event-stream | while read -r line; do
-    spaces
-done
+# Main loop - watch for niri events and update workspace info
+main() {
+    # Initial workspace state
+    get_workspaces
+
+    # Watch for changes
+    niri msg event-stream | while read -r _; do
+        get_workspaces
+    done
+}
+
+main

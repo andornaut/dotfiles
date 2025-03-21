@@ -1,27 +1,49 @@
-
-
-
-; Reserve 1 extra pixel to create a gap
+;; Reserve 49px (bar width + 1px gap) on the left side of the screen
 (defwindow bar
-    :exclusive true
-    :focusable "none"
-    :geometry (geometry :anchor "top left"
-                        :width "48px"
-                        :height "100%")
-    :monitor 0
-    :reserve (struts :distance "49px" :side "left")
-    :stacking "fg"
-  (box :orientation "v" :halign "fill" :style "background: ${normal_color}"
-    (box :class "top-section section" :halign "fill" :orientation "v" :space-evenly false :valign "start"
+  :exclusive true
+  :focusable "none"
+  :geometry (geometry
+    :anchor "top left"
+    :width "48px"
+    :height "100%"
+  )
+  :monitor 0
+  :reserve (struts :distance "49px" :side "left")
+  :stacking "fg"
+  (box
+    :class "bar"
+    :halign "fill"
+    :orientation "v"
+
+    (box
+      :class "top-section section"
+      :halign "fill"
+      :orientation "v"
+      :space-evenly false
+      :valign "start"
       (bspwm-desktops :orientation "v")
       (niri-workspaces)
     )
 
-    (box :class "bottom-section section" :halign "fill" :orientation "v" :space-evenly false :valign "end"
-      (eventbox :cursor "pointer"
-        (systray :class "systray widget" :orientation "v" :spacing 15))
+    (box
+      :class "bottom-section section"
+      :halign "fill"
+      :orientation "v"
+      :space-evenly false
+      :valign "end"
+      (eventbox
+        :cursor "pointer"
+        (systray
+          :class "systray widget"
+          :orientation "v"
+          :spacing 15
+        )
+      )
       (volume :orientation "v")
       (battery :orientation "v")
       (temperature :orientation "v")
       (datetime :orientation "v")
-      (system :orientation "v"))))
+      (system :orientation "v")
+    )
+  )
+)

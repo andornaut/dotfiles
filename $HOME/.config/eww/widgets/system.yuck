@@ -1,14 +1,54 @@
 (defvar reveal_system false)
 
 (defwidget system [orientation]
-  (eventbox :onhover "eww update reveal_system=true" :onhoverlost "eww update reveal_system=false"
-    (box :class "system widget" :orientation orientation :space-evenly false
-      (revealer :duration "250ms" :reveal reveal_system :transition "slideup"
+  (eventbox
+    :onhover "eww update reveal_system=true"
+    :onhoverlost "eww update reveal_system=false"
+    (box
+      :class "system widget"
+      :orientation orientation
+      :space-evenly false
+      (revealer
+        :duration "250ms"
+        :reveal reveal_system
+        :transition "slideup"
         ; Use eventbox to set cursor. See: https://github.com/elkowar/eww/issues/251
-        (eventbox :cursor "pointer"
-          (box :class "system__buttons" :orientation "v" :space-evenly false
-            (button :class "system__suspend button icon" :onclick "systemctl suspend" :tooltip "Suspend" "")
-            (button :class "system__suspend button icon" :onclick "systemctl reboot" :tooltip "Reboot" "")
-            (button :class "system__poweroff button icon" :onclick "systemctl poweroff" :tooltip "Poweroff" ""))))
-      (eventbox :cursor "pointer"
-        (button :class "system__logout button icon" :onclick "loginctl lock-session" :tooltip "Lock screen" "")))))
+        (eventbox
+          :cursor "pointer"
+          (box
+            :class "system__buttons"
+            :orientation "v"
+            :space-evenly false
+            (button
+              :class "system__suspend button icon"
+              :onclick "systemctl suspend"
+              :tooltip "Suspend"
+              ""
+            )
+            (button
+              :class "system__reboot button icon"
+              :onclick "systemctl reboot"
+              :tooltip "Reboot"
+              ""
+            )
+            (button
+              :class "system__poweroff button icon"
+              :onclick "systemctl poweroff"
+              :tooltip "Poweroff"
+              ""
+            )
+          )
+        )
+      )
+      (eventbox
+        :cursor "pointer"
+        (button
+          :class "system__logout button icon"
+          :onclick "loginctl lock-screen"
+          :tooltip "Lock screen"
+          ""
+        )
+      )
+    )
+  )
+)
