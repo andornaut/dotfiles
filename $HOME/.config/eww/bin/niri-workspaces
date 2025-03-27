@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
 set -eu -o pipefail
 
+# Exit with empty array if not running in niri session
+if [[ "${XDG_SESSION_DESKTOP}" != "niri" ]]; then
+    echo "[]"
+    exit 0
+fi
+
 # Get sorted workspace information in JSON format
 get_workspaces() {
-    niri msg --json workspaces | jq -Mc '.=sort_by(.id)'
+    niri msg --json workspaces | jq -Mc 'sort_by(.idx)'
 }
 
 # Main loop - watch for niri events and update workspace info

@@ -21,7 +21,7 @@
       :orientation "v"
       :space-evenly false
       :valign "start"
-      (bspwm-desktops :orientation "v")
+      (bspwm-desktops)
       (niri-workspaces)
     )
 

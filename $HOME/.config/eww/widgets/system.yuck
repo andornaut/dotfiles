@@ -17,7 +17,7 @@
           :cursor "pointer"
           (box
             :class "system__buttons"
-            :orientation "v"
+            :orientation orientation
             :space-evenly false
             (button
               :class "system__suspend button icon"
