@@ -1,31 +1,34 @@
 # Docs: https://alacritty.org/config-alacritty.html
+
+# IBM1970 theme: https://github.com/andornaut/ibm1970-desktop-theme
+
 [colors.bright]
-black = "#002b36" # base03
-blue = "#839496" # base0
-cyan = "#93a1a1" # base1
-green = "#586e75" # base01
-magenta = "#6c71c4" # violet
-red = "#cb4b16" # orange
-white = "#fdf6e3" # base3
-yellow = "#657b83" # base00
+black = "#24201A" # color0
+blue = "#839496" # color4
+cyan = "#93a1a1" # color6
+green = "#586e75" # color2
+magenta = "#6c71c4" # color5
+red = "#cb4b16" # color1
+white = "#fdf6e3" # color7
+yellow = "#657b83" # color3
 
 [colors.cursor]
-cursor = "#dddccc" 
-text = "#423f2e" # base03
+cursor = "#dddccc" # Same as foreground
+text = "#423f2e" # Same as background
 
 [colors.normal]
-black = "#073642" # base02
-blue = "#268bd2" # blue
-cyan = "#2aa198" # cyan
-green = "#b5bd68" # green
-magenta = "#d33682" # magenta
-red = "#dc322f" # red
-white = "#eee8d5" # base2
-yellow = "#b58900" # yellow
+black = "#073642" # color8
+blue = "#268bd2" # color12
+cyan = "#2aa198" # color14
+green = "#b5bd68" # color10
+magenta = "#d33682" # color13
+red = "#dc322f" # color9
+white = "#eee8d5" # color15
+yellow = "#b58900" # color11
 
 [colors.primary]
-background = "#423f2e" 
-foreground = "#dddccc" # base0
+background = "#423f2e"
+foreground = "#dddccc"
 
 [colors.selection]
 background = "#006B6B"
