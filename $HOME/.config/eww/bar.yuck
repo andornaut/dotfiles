@@ -9,7 +9,7 @@
   )
   :monitor 0
   :reserve (struts :distance "49px" :side "left")
-  :stacking "fg"
+  :stacking "bg"
   (box
     :class "bar"
     :halign "fill"

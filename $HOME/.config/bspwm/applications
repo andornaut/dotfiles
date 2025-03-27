@@ -51,6 +51,8 @@ kill_() {
 # started in
 kill_ insync
 
+eww open bar
+
 nice_bg dex --autostart --environment bspwm
 
 # Avoid error: Failed to query the window tree, and give Stalonetray

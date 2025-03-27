@@ -1,6 +1,6 @@
 # Docs: https://alacritty.org/config-alacritty.html
 [colors.bright]
-black = "#423f2e" # base03
+black = "#002b36" # base03
 blue = "#839496" # base0
 cyan = "#93a1a1" # base1
 green = "#586e75" # base01

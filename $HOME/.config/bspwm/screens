@@ -26,9 +26,9 @@ max_monitors() {
 laptopResolution="$(echo "${xrandr_output}"|grep eDP-1 -A 1|grep "*+"|cut -dx -f1|tr -d '[:space:]')"
 if [[ ${laptopResolution} -gt 1920 ]]; then
     ok "High resolution screen. Scaling eDP-1 from ${laptopResolution}x to 1920x"
-    scale=" --scale-from 1920x1080"
+    laptopScale=" --scale-from 1920x1080"
 else
-    scale=" --auto"
+    laptopScale=" --auto"
 fi
 
 if is_connected DisplayPort-0; then
@@ -42,7 +42,7 @@ elif is_connected eDP && ( is_connected DP-2 || is_connected HDMI-1 ) ; then
     ok 'Laptop: 2 screens (ultrawide)'
     max_monitors 2
     #xrandr -r 60 --dpi 96
-    xrandr --output eDP-1 ${scale}
+    xrandr --output eDP-1 ${laptopScale}
 
     # One of these two will succeed.
     if xrandr --output DP-2 --mode 3440x1440 --primary --rate 144 --above eDP-1 ; then
@@ -57,11 +57,13 @@ elif is_connected eDP ; then
     ok 'Laptop: 1 screen'
     max_monitors 1
     xrandr \
-        --output eDP-1 --auto --pos 0x0 --primary ${scale} \
+        --output eDP-1 --auto --pos 0x0 --primary ${laptopScale} \
         --output eDP-1 --auto --pos 0x0 --primary --scale-from 1920x1080
     bspc wm --reorder-monitors eDP-1
     bspc monitor ^1 --reset-desktops 1 2 3 4 5
 else
     warn 'Unsupported monitor configuration'
+    # Default desktop configuration:
+    bspc monitor ^1 --reset-desktops 1 2 3 4 5
 fi
 
