@@ -3,51 +3,50 @@ Xft.dpi: 96
 !
 ! http://ethanschoonover.com/solarized
 
-! Common
 
-#define S_yellow        #b58900
-#define S_orange        #cb4b16
-#define S_red           #dc322f
-#define S_magenta       #d33682
-#define S_violet        #6c71c4
-#define S_blue          #268bd2
-#define S_cyan          #2aa198
-#define S_green         #859900
-
-! Dark
-
-! #define S_base03        #002b36
-! #define S_base02        #073642
-! #define S_base01        #586e75
-! #define S_base00        #657b83
-! #define S_base0         #839496
-! #define S_base1         #93a1a1
-! #define S_base2         #eee8d5
-! #define S_base3         #fdf6e3
-
-! Light
-
-!#define S_base03        #fdf6e3
-!#define S_base03        #e1d2aa
-#define S_base03        #F8F2E0
-#define S_base02        #eee8d5
-#define S_base01        #93a1a1
-#define S_base00        #839496
-! #define S_base0         #657b83
-#define S_base0         #4e585c
-#define S_base1         #586e75
-#define S_base2         #073642
-#define S_base3         #002b36
-
-! Outrun
-
-!#define S_base03        #44244f
-!#define S_base02        #2e2255
-!#define S_base01        #586e75
-!#define S_base00        #668880
-!#define S_base0         #839496
-!#define S_base1         #93a1a1
-!#define S_base2         #eee8d5
-!#define S_base3         #fdf6e3
-
+! IBM1970 theme: https://github.com/andornaut/ibm1970-desktop-theme
+! Normal colors
+! Black
+*color0:  #073642
+! Red
+*color1:  #dc322f
+! Green
+*color2:  #b5bd68
+! Yellow
+*color3:  #b58900
+! Blue
+*color4:  #268bd2
+! Magenta
+*color5:  #d33682
+! Cyan
+*color6:  #2aa198
+! White
+*color7:  #eee8d5
+! Bright colors
+! Black
+*color8:  #24201A
+! Red
+*color9:  #cb4b16
+! Green
+*color10: #586e75
+! Yellow
+*color11: #657b83
+! Blue
+*color12: #839496
+! Magenta
+*color13: #6c71c4
+! Cyan
+*color14: #93a1a1
+! White
+*color15: #fdf6e3
+! Primary
+*foreground: #dddccc
+*background: #423f2e
+*cursorColor: #dddccc
+*selectionForeground: #dddccc
+*selectionBackground: #006B6B
+*font: xft:Source\ Code\ Pro:size=18
+! Must override the built-in font for URxvt
+URxvt*font: xft:Source\ Code\ Pro:size=18
 Xcursor.size: 32
+URxvt*termName: xterm-256color
