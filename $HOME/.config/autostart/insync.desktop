@@ -6,7 +6,8 @@ GenericName=Insync
 Comment=Launch Insync
 Icon=insync
 Categories=Network;
-Exec=insync start
+# https://forums.insynchq.com/t/insync-3-9-4-fails-to-load-on-ubuntu-24-04-2-lts-addressed/36032/5
+Exec=insync start --qt-qpa-platform=xcb
 TryExec=insync
 Terminal=false
 X-GNOME-Autostart-Delay=3
