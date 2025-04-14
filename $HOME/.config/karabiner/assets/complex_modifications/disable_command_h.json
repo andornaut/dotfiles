@@ -2,7 +2,7 @@
   "title": "Prevent unintended command-h hide window (rev 2)",
   "rules": [
     {
-      "description": "Disable CMD+h hide window",
+      "description": "Prevent CMD+h from hiding windows",
       "manipulators": [
         {
           "type": "basic",
