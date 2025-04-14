@@ -1,5 +1,6 @@
 # Docs: https://alacritty.org/config-alacritty.html
 
+
 # IBM1970 theme: https://github.com/andornaut/ibm1970-desktop-theme
 
 [colors.bright]
@@ -43,3 +44,6 @@ size = 18.0
 [font.normal]
 family = "Source Code Pro"
 style = "Regular"
+
+[general]
+import = ["~/.config/alacritty/alacritty.private.toml"]
