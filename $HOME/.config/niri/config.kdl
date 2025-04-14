@@ -518,3 +518,7 @@ window-rule {
   min-height 100
   min-width 100
 }
+
+// Add rules for flowing prompts/dialogs:
+// https://github.com/HyDE-Project/HyDE/blob/master/Configs/.config/hypr/windowrules.conf
+
