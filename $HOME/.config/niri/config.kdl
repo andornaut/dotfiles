@@ -410,9 +410,9 @@ binds {
     Mod+Shift+Ctrl+Up    { move-column-to-monitor-up; }
     Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
 
-    Mod+V       { toggle-window-floating; }
-    Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+    //Mod+V { toggle-window-floating; }
     Mod+S { toggle-window-floating; }
+    Mod+Shift+V { switch-focus-between-floating-and-tiling; }
     Mod+Shift+S { switch-focus-between-floating-and-tiling; }
     Mod+F { fullscreen-window; }
     Mod+B { center-column; }

@@ -1,7 +1,10 @@
 
 ;; Display environment detection
-(defvar show_bspwm "${get_env("XDG_SESSION_DESKTOP") == "bspwm"}")
-(defvar show_niri "${get_env("XDG_SESSION_DESKTOP") == "niri"}")
+;; `lemurs` (login manager) doesn't set XDG_SESSION_DESKTOP, but does set XDG_SESSION_TYPE. ly sets both.
+;; (defvar show_bspwm "${get_env("XDG_SESSION_DESKTOP") == "bspwm"}")
+;; (defvar show_niri "${get_env("XDG_SESSION_DESKTOP") == "niri"}")
+(defvar show_bspwm "${get_env("XDG_SESSION_TYPE") == "x11"}")
+(defvar show_niri "${get_env("XDG_SESSION_TYPE") == "wayland"}")
 
 ;; Workspace management
 (deflisten bspwm-desktops-yuck
