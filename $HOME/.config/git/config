@@ -1,14 +1,15 @@
 # https://git-scm.com/docs/git-config
 [alias]
     br = branch
-    cb = !git rev-parse --abbrev-ref HEAD
+    cb = rev-parse --abbrev-ref HEAD
     ci = commit
     co = checkout
-    dbr = !bash -c 'set -o pipefail && git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null|cut -d / -f 4-||git remote show origin 2>/dev/null|awk \"/HEAD branch/ {print \\$NF}\"||echo main'
+    dbr = !git remote show origin | grep 'HEAD branch' | awk '{print $NF}'
     df = diff
     g = grep -I
     hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
     lg = log -p
+    logbr = !git log --oneline $(git merge-base HEAD origin/$(git dbr))..HEAD
     pp = !git pull && git push
     pullf = !git fetch origin && git reset origin/$(git branch --show-current) --hard
     pushf = push --force-with-lease
