@@ -3,7 +3,8 @@ export GOG_DEFAULT_REPOSITORY_NAME=andornaut
 export GOG_DO_NOT_CREATE_BACKUPS=any-value-is-true
 export GOG_IGNORE_FILES_REGEX='^install$'
 export GOPATH="${HOME}"
-export HISTSIZE=5000
+export HISTSIZE=10000
+export HISTFILESIZE=100000
 export MRS_HIDE_EDITOR_INSTRUCTIONS=any-value-is-true
 export PATH=${PATH}:${HOME}/bin:${HOME}/.local/bin
 export SYSTEMD_EDITOR=$EDITOR
@@ -70,8 +71,16 @@ function p {
             echo "git: ${branch}"
         fi
         # JavaScript
-        if [[ -n $NVM_DIR && -d $NVM_DIR && -f .nvmrc ]]; then
-            nvm use
+        if [[ -n $NVM_DIR && -d $NVM_DIR ]]; then
+            source ${NVM_DIR}/nvm.sh
+            if [[ -f ~/.nvmrc ]]; then
+                # Change default node version with:
+                #   nvm ls
+                #   nvm use stable
+                # .nvmrc will be save to your cwd, so make sure you're in ~/
+                #   nvm use $(nvm current) --save
+                nvm use
+            fi
         fi
         # Python
         if poetry env info &>/dev/null; then
