@@ -118,3 +118,6 @@ out/
 .*.swo
 
 build.*/
+
+# Claude Code
+.claude/
