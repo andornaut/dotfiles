@@ -97,8 +97,8 @@ input {
     position x=1280 y=0
 }
 
-output "Dell Inc. DELL S3422DWG 4YNYS63" {
-    mode "3440x1440@143.975"
+output "Dell Inc. AW3425DW CGBF274" {
+    mode "3440x1440@164.900"
 }
 
 // Settings that influence how windows are positioned and sized.
@@ -373,6 +373,8 @@ binds {
     Mod+Ctrl+Delete { spawn "dunstctl" "history-pop"; }
     Mod+Ctrl+Q { spawn "hyprlock"; }
 
+    F3 { toggle-overview; }
+
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument in the end.
     // Mod+T { spawn "bash" "-c" "notify-send hello && exec alacritty"; }
@@ -507,6 +509,12 @@ binds {
     Mod+Alt+WheelScrollUp        { focus-column-left; }
     Mod+Ctrl+Alt+WheelScrollDown { move-column-right; }
     Mod+Ctrl+Alt+WheelScrollUp   { move-column-left; }
+}
+
+gestures {
+    hot-corners {
+        off
+    }
 }
 
 // https://github.com/YaLTeR/niri/wiki/FAQ#how-to-hide-the-important-hotkeys-pop-up-at-the-start

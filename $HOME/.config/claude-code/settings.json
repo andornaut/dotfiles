@@ -1,0 +1,35 @@
+{
+  "autoAccept": [
+    "ansible-inventory",
+    "ansible-playbook --check",
+    "cat",
+    "docker inspect",
+    "docker logs",
+    "docker ps",
+    "git diff",
+    "git log",
+    "git status",
+    "grep",
+    "ls",
+    "ps",
+    "systemctl status"
+  ],
+  "autoUpdates": true,
+  "permissions": {
+    "allow": [
+      "Bash",
+      "Edit",
+      "Glob",
+      "Grep",
+      "LS",
+      "MultiEdit",
+      "Read",
+      "Task",
+      "WebFetch",
+      "WebSearch",
+      "Write"
+    ]
+  },
+  "theme": "dark",
+  "verbose": false
+}
