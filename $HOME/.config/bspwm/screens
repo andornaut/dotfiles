@@ -32,10 +32,10 @@ else
     laptopScale=" --auto"
 fi
 
-if is_connected DP-1; then
+if is_connected DisplayPort-0; then
     ok 'Desktop: 1 screen (ultrawide)'
     max_monitors 1
-    xrandr --output DP-1 --mode 3440x1440 --pos 0x0 --primary --rate ${refreshRate}
+    xrandr --output DisplayPort-0 --mode 3440x1440 --pos 0x0 --primary --rate ${refreshRate}
     bspc wm --reorder-monitors DisplayPort-0
     bspc monitor ^1 --reset-desktops 1 2 3 4 5
 elif is_connected eDP && ( is_connected DP-1 || is_connected HDMI-1 ) ; then

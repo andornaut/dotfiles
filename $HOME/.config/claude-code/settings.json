@@ -5,14 +5,18 @@
     "cat",
     "docker inspect",
     "docker logs",
+    "docker network inspect",
+    "docker network ls",
     "docker ps",
     "git diff",
     "git log",
     "git status",
     "grep",
+    "less",
     "ls",
     "ps",
-    "systemctl status"
+    "systemctl status",
+    "tail"
   ],
   "autoUpdates": true,
   "permissions": {
