@@ -122,3 +122,6 @@ build.*/
 # Claude Code
 CLAUDE.md
 .claude/
+
+# Gemini
+GEMINI.md
