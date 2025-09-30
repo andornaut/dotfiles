@@ -4,7 +4,8 @@ cd $(cd "$(dirname "$0")" && pwd)/
 source ./helpers
 
 header Screens
-refreshRate=165
+#refreshRate=165
+refreshRate=239.98
 
 xrandr_output="$(xrandr)"
 
