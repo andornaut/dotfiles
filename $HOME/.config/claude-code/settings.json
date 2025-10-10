@@ -6,6 +6,7 @@
     "cargo test",
     "cat",
     "cd",
+    "curl",
     "docker build",
     "docker inspect",
     "docker logs",
