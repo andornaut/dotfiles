@@ -1,7 +1,7 @@
 ;; Reserve 49px (bar width + 1px gap) on the left side of the screen
 (defwindow bar
   :exclusive true
-  :focusable "none"
+  :focusable false
   :geometry (geometry
     :anchor "top left"
     :width "48px"
