@@ -23,6 +23,6 @@
                     : ""}"
       :tooltip "Battery"
     )
-    {"${round(EWW_BATTERY?.total_avg ?: 0, 0)}%"}
+    {"${round(EWW_BATTERY == '' ? 0 : EWW_BATTERY.total_avg, 0)}%"}
   )
 )

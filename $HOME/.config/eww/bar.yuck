@@ -10,6 +10,7 @@
   :monitor 0
   :reserve (struts :distance "49px" :side "left")
   :stacking "bg"
+  :windowtype "dock"
   (box
     :class "bar"
     :halign "fill"

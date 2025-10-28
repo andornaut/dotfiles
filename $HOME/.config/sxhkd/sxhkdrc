@@ -50,8 +50,17 @@ super + b
 #
 
 # set the window state
-super + {t,shift + t,s,f}
-	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+#super + {t,shift + t,s,f}
+#	bspc node -t {tiled,pseudo_tiled,floating,monocle}
+super + {t,shift + t, s}
+    bspc node -t {tiled,pseudo_tiled, ~floating}
+#super + s
+#    bspc node -t ~floating
+# Use "monocle" as a fake fullscreen mode in order to preserve left_padding for the eww bar
+super + f
+    bspc query -T -d | grep -q '"layout":"monocle"' && \
+    bspc desktop -l tiled || \
+    bspc desktop -l monocle
 
 # set the node flags
 super + ctrl + {x,y,z}
