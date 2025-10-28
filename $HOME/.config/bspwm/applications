@@ -54,10 +54,3 @@ kill_ insync
 eww open bar
 
 nice_bg dex --autostart --environment bspwm
-
-# Avoid error: Failed to query the window tree, and give Stalonetray
-# time to render, so that its window id can be retrieved
-sleep 1
-
-# TODO: only necessary when running `xreset` manually
-bspc config -m ^1 left_padding 48 >/dev/null 2>&1
