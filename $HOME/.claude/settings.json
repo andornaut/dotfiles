@@ -50,10 +50,6 @@
       "WebSearch"
     ]
   },
-  "skipDangerousModePermissionPrompt": true,
-  "feedbackSurveyState": {
-    "lastShownTime": 1754855848942
-  },
   "hooks": {
     "SessionStart": [
       {
@@ -68,6 +64,11 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "printf '\\033[01;32m%s@%s\\033[00m:\\033[01;34m%s\\033[00m' \"$(whoami)\" \"$(hostname -s)\" \"$(pwd)\""
-  }
+    "command": "~/.claude/statusline.sh"
+  },
+  "skipDangerousModePermissionPrompt": true,
+  "feedbackSurveyState": {
+    "lastShownTime": 1754855848942
+  },
+  "model": "sonnet"
 }
