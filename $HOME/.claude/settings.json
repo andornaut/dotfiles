@@ -66,6 +66,7 @@
     "type": "command",
     "command": "~/.claude/statusline.sh"
   },
+  "spinnerTipsEnabled": false,
   "skipDangerousModePermissionPrompt": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754855848942
