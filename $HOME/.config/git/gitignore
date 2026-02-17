@@ -125,3 +125,6 @@ CLAUDE.md
 
 # Gemini
 GEMINI.md
+.gemini/
+
+AGENTS.md
