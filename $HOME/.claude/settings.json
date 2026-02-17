@@ -70,5 +70,9 @@
   "feedbackSurveyState": {
     "lastShownTime": 1754855848942
   },
-  "model": "sonnet"
+  "model": "sonnet",
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  }
 }
