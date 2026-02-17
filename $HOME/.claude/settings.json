@@ -3,6 +3,10 @@
   "env": {
     "CLAUDE_CODE_ATTRIBUTION_HEADER": "0"
   },
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
   "permissions": {
     "allow": [
       "Bash(ansible-inventory)",
@@ -22,6 +26,8 @@
       "Bash(echo:*)",
       "Bash(env)",
       "Bash(find:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
       "Bash(git diff:*)",
       "Bash(git fetch:*)",
       "Bash(git log:*)",
@@ -50,6 +56,7 @@
       "WebSearch"
     ]
   },
+  "model": "sonnet",
   "hooks": {
     "SessionStart": [
       {
@@ -62,18 +69,13 @@
       }
     ]
   },
+  "skipDangerousModePermissionPrompt": true,
+  "spinnerTipsEnabled": false,
   "statusLine": {
     "type": "command",
     "command": "~/.claude/statusline.sh"
   },
-  "spinnerTipsEnabled": false,
-  "skipDangerousModePermissionPrompt": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754855848942
-  },
-  "model": "sonnet",
-  "attribution": {
-    "commit": "",
-    "pr": ""
   }
 }

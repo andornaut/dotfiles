@@ -21,6 +21,14 @@ gog git push
 gog apply
 ```
 
+### Workflow
+
+When the user prompts "gog" (without additional context):
+1. Check status with `gog git status`
+2. Add all changes with `gog git add -A`
+3. Commit with a descriptive message based on the changes
+4. Push with `gog git push`
+
 ### Notes
 
 - Commands use the default repository (no `-r` flag needed)
@@ -29,5 +37,5 @@ gog apply
 - The repository is at `~/.local/share/gog/andornaut/` with remote `git@github.com:andornaut/dotfiles.git`
 - `settings.json` (shared config) is managed by gog; `settings.local.json` (machine-specific) is not
 - **Always use `gog git` commands** (not direct git commands) to interact with the repository
-- **Only commit and push changes when prompted** by the user
+- **Only commit and push changes when prompted** by the user (typing "gog" is a prompt to sync changes)
 - **Never add or remove files to/from gog** unless explicitly instructed by the user
