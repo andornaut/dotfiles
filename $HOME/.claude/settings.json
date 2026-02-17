@@ -5,7 +5,8 @@
   },
   "permissions": {
     "allow": [
-      "Bash(du:*)"
+      "Bash(du:*)",
+      "Bash(gog:*)"
     ]
   },
   "skipDangerousModePermissionPrompt": true,
