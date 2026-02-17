@@ -1,7 +1,9 @@
 {
+  "contextFileName": "AGENTS.md",
   "general": {
     "vimMode": false,
-    "disableAutoUpdate": false
+    "disableAutoUpdate": false,
+    "previewFeatures": true
   },
   "ide": {
     "enabled": true
