@@ -32,8 +32,8 @@ else
   COST_FMT=$(printf '%.1f' "$COST")
 fi
 
-STATS=$(printf '%s | ctx:%s%% | in:%s out:%s | $%s | +%d/-%d lines' \
+STATS=$(printf '%s | ctx:%s%% | in:%s out:%s | +%d/-%d lines | $%s' \
   "$MODEL" "$PCT" "$(fmt_tokens "$IN_TOKENS")" "$(fmt_tokens "$OUT_TOKENS")" \
-  "$COST_FMT" "$LINES_ADDED" "$LINES_REMOVED")
+  "$LINES_ADDED" "$LINES_REMOVED" "$COST_FMT")
 
 printf '%s %s' "$PS" "$STATS"
