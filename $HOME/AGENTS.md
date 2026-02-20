@@ -39,3 +39,4 @@ When the user prompts "gog" (without additional context):
 - **Always use `gog git` commands** (not direct git commands) to interact with the repository
 - **Only commit and push changes when prompted** by the user (typing "gog" is a prompt to sync changes)
 - **Never add or remove files to/from gog** unless explicitly instructed by the user
+- **NEVER modify the source code of the `gog` tool itself** (located in `src/github.com/andornaut/gog/`) unless explicitly directed to do so by the user. The prompt "gog" is strictly for syncing dotfiles.

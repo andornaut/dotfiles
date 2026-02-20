@@ -3,7 +3,8 @@
   "general": {
     "vimMode": false,
     "disableAutoUpdate": false,
-    "previewFeatures": true
+    "previewFeatures": true,
+    "enableAutoUpdate": true
   },
   "ide": {
     "enabled": true

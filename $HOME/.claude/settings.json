@@ -31,8 +31,22 @@
       "Bash(git diff:*)",
       "Bash(git fetch:*)",
       "Bash(git log:*)",
+      "Bash(git pull)",
       "Bash(git status)",
+      "Bash(go build:*)",
+      "Bash(go env:*)",
+      "Bash(go fmt:*)",
+      "Bash(go get:*)",
+      "Bash(go list:*)",
+      "Bash(go mod download)",
+      "Bash(go mod tidy)",
+      "Bash(go mod verify)",
+      "Bash(go test:*)",
+      "Bash(go version)",
+      "Bash(go vet:*)",
+      "Bash(gofmt:*)",
       "Bash(gog:*)",
+      "Bash(golangci-lint run:*)",
       "Bash(grep:*)",
       "Bash(head:*)",
       "Bash(less:*)",
@@ -53,10 +67,13 @@
       "Read",
       "Task",
       "WebFetch",
-      "WebSearch"
+      "WebSearch",
+      "Bash(git -C /home/andornaut/src/github.com/andornaut/gog log --oneline -15)",
+      "Bash(git ls-remote:*)",
+      "Bash(git push:*)",
+      "Bash(npm outdated:*)"
     ]
   },
-  "model": "sonnet",
   "hooks": {
     "SessionStart": [
       {
@@ -69,12 +86,12 @@
       }
     ]
   },
-  "skipDangerousModePermissionPrompt": true,
-  "spinnerTipsEnabled": false,
   "statusLine": {
     "type": "command",
     "command": "~/.claude/statusline.sh"
   },
+  "spinnerTipsEnabled": false,
+  "skipDangerousModePermissionPrompt": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754855848942
   }
