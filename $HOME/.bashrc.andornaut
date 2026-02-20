@@ -7,6 +7,7 @@ export HISTSIZE=10000
 export HISTFILESIZE=100000
 export MRS_HIDE_EDITOR_INSTRUCTIONS=any-value-is-true
 export PATH=${PATH}:${HOME}/bin:${HOME}/.local/bin
+export PATH=${PATH}:${GOPATH}/bin:/usr/local/go/bin
 #export PIPENV_VENV_IN_PROJECT=1
 export SYSTEMD_EDITOR=$EDITOR
 export XDG_DATA_DIRS="${XDG_DATA_DIRS}:/var/lib/flatpak/exports/share:/home/andornaut/.local/share/flatpak/exports/share"
@@ -105,9 +106,10 @@ fi
 
 # JavaScript
 # nvm is initialized in ~/.bashrc
-if which npm >/dev/null; then
-    export PATH=${PATH}:$(runCached npm config --no-update-notifier --silent get prefix)/bin
-fi
+#if which npm >/dev/null; then
+    #export PATH=${PATH}:$(runCached npm config --no-update-notifier --silent get prefix)/bin
+    #export PATH=${PATH}:$(nvm which --silent)/bin
+#fi
 
 # Ruby
 for f in /usr/local/share/chruby /opt/homebrew/Cellar/chruby/*/share/chruby; do
