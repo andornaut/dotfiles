@@ -1,5 +1,7 @@
 # Agents
 
+> **IMPORTANT FOR AGENTS:** This file should NEVER be committed to git in any repository. It is for local development guidance only. If you modify this file, do not stage or commit it.
+
 ## gog - Dotfiles Manager
 
 [gog](https://github.com/andornaut/gog) manages dotfiles by symlinking files from `~/.local/share/gog/<repository>/$HOME/` to the home directory.

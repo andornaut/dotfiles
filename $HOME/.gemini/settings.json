@@ -4,7 +4,12 @@
     "vimMode": false,
     "disableAutoUpdate": false,
     "previewFeatures": true,
-    "enableAutoUpdate": true
+    "enableAutoUpdate": true,
+    "sessionRetention": {
+      "enabled": true,
+      "maxAge": "30d",
+      "warningAcknowledged": true
+    }
   },
   "ide": {
     "enabled": true
@@ -19,5 +24,8 @@
     "hideFooter": true,
     "hideTips": true,
     "showMemoryUsage": false
+  },
+  "accessibility": {
+    "disableLoadingPhrases": true
   }
 }

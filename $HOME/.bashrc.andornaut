@@ -1,3 +1,7 @@
+# Use Claude 4.6 models when using the opusplan model alias
+export ANTHROPIC_DEFAULT_OPUS_MODEL=claude-opus-4-6
+export ANTHROPIC_DEFAULT_SONNET_MODEL=claude-sonnet-4-6
+
 export EDITOR=vim
 export GOG_DEFAULT_REPOSITORY_NAME=andornaut
 export GOG_DO_NOT_CREATE_BACKUPS=any-value-is-true
