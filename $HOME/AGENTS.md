@@ -25,7 +25,7 @@ gog apply
 
 ### Workflow
 
-When the user prompts "gog" (without additional context):
+**CRITICAL:** When the user prompts with exactly "gog" (without additional context), you MUST follow this workflow:
 1. Check status with `gog git status`
 2. Add all changes with `gog git add -A`
 3. Commit with a descriptive message based on the changes
