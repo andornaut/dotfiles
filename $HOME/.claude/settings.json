@@ -92,7 +92,10 @@
       "Bash(git tag:*)",
       "Bash(gh repo create:*)",
       "Bash(git remote add:*)",
-      "Bash(gh run watch:*)"
+      "Bash(gh run watch:*)",
+      "Bash(git -C /home/andornaut/src/github.com/andornaut/ai-maintainer status)",
+      "Bash(git -C /home/andornaut/src/github.com/andornaut/ai-maintainer diff)",
+      "Bash(git -C /home/andornaut/src/github.com/andornaut/ai-maintainer log --oneline -10)"
     ]
   },
   "model": "opusplan",

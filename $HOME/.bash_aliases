@@ -1,6 +1,7 @@
 alias allstop="pkill -f 'play .*whitenoise'"
 alias bc='bc -l'
 alias claudeyolo='claude --dangerously-skip-permissions'
+alias commit='claudeyolo -p "Run `git start` to pull changes, Git commit with a good but succint message, then Git push. Never force push"'
 alias engage='nohup play -n -c1 -t alsa synth whitenoise lowpass -1 120 lowpass -1 120 lowpass -1 120 gain +20 >/dev/null &'
 alias geminiyolo='gemini --approval-mode yolo'
 alias gogclaude='gogstart && claudeyolo -p gog'
