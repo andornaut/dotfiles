@@ -98,7 +98,7 @@
       "Bash(git -C /home/andornaut/src/github.com/andornaut/ai-maintainer log --oneline -10)"
     ]
   },
-  "model": "opusplan",
+  "model": "claude-opus-4-6",
   "hooks": {
     "SessionStart": [
       {
