@@ -47,3 +47,8 @@ style = "Regular"
 
 [general]
 import = ["~/.config/alacritty/alacritty.private.toml"]
+
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001B\r"

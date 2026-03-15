@@ -95,7 +95,8 @@
       "Bash(gh run watch:*)",
       "Bash(git -C /home/andornaut/src/github.com/andornaut/ai-maintainer status)",
       "Bash(git -C /home/andornaut/src/github.com/andornaut/ai-maintainer diff)",
-      "Bash(git -C /home/andornaut/src/github.com/andornaut/ai-maintainer log --oneline -10)"
+      "Bash(git -C /home/andornaut/src/github.com/andornaut/ai-maintainer log --oneline -10)",
+      "Bash(git start:*)"
     ]
   },
   "model": "claude-opus-4-6",
