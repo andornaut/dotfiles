@@ -8,4 +8,4 @@ Wait for explicit confirmation (e.g. "yes, do it", "go ahead", "implement that")
 
 ## Function parameter ordering
 
-In free functions, put dependencies and context parameters to the left, and the subject being operated on to the right.
+Put dependencies and context parameters to the left, and the subject being operated on to the right.
