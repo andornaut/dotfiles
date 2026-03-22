@@ -10,6 +10,10 @@ Wait for explicit confirmation (e.g. "yes, do it", "go ahead", "implement that")
 
 Put dependencies and context parameters to the left, and the subject being operated on to the right.
 
+## Writing style
+
+No emojis, emdashes, flowery language, or marketing-speak. Be concise and direct.
+
 ## Shell rules
 
 - Never run `sudo` commands. If a task requires `sudo`, prompt the user to run the command themselves instead.
@@ -21,7 +25,7 @@ Put dependencies and context parameters to the left, and the subject being opera
 - Always respect `.gitignore`. Never use `git add -f` or `--force` to bypass `.gitignore` unless explicitly instructed to do so.
 - If `git add` fails because a file is ignored, stop and inform the user rather than force-adding it.
 - When committing, also push to the remote unless there is a reason not to (e.g. no remote tracking branch, or the user says otherwise).
-- Do not automatically commit any `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md` files — these are local-only and should never be staged or committed.
+- Do not automatically commit any `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md` files - these are local-only and should never be staged or committed.
 
 ## gog - Dotfiles Manager
 
