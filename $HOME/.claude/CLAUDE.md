@@ -24,8 +24,8 @@ No emojis, emdashes, flowery language, or marketing-speak. Be concise and direct
 - Be careful not to lose local changes. Use `git stash` and other tools to preserve uncommitted work when necessary.
 - Always respect `.gitignore`. Never use `git add -f` or `--force` to bypass `.gitignore` unless explicitly instructed to do so.
 - If `git add` fails because a file is ignored, stop and inform the user rather than force-adding it.
-- When committing, also push to the remote unless there is a reason not to (e.g. no remote tracking branch, or the user says otherwise).
-- Do not automatically commit any `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md` files - these are local-only and should never be staged or committed.
+- Always push to the remote after committing unless there is a reason not to (e.g. no remote tracking branch, or the user says otherwise).
+- Do not automatically commit any `AGENTS.md`, `CLAUDE.md`, or `GEMINI.md` files — these are local-only and should never be staged or committed.
 
 ## gog - Dotfiles Manager
 
