@@ -14,6 +14,10 @@ Put dependencies and context parameters to the left, and the subject being opera
 
 No emojis, emdashes, flowery language, or marketing-speak. Be concise and direct.
 
+## Secrets
+
+- Do not read files that contain secrets (e.g. `.env`, credentials, API keys, tokens, private keys) unless the user has specifically authorized it.
+
 ## Shell rules
 
 - Never run `sudo` commands. If a task requires `sudo`, prompt the user to run the command themselves instead.
