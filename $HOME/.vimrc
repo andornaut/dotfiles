@@ -32,6 +32,10 @@ filetype plugin indent on
 "Disable auto-indent
 set noautoindent
 
+"Disable modelines for security
+"https://sources.debian.org/patches/vim/2:9.1.1230-2/debian/Document-Debian-s-decision-to-disable-modelines-by-defaul.patch/
+set nomodeline
+
 "Disable temp files
 set nobackup
 set noswapfile
