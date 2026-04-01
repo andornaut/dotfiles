@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=/usr/bin/xautolock -secure -time 60 -locker 'gnome-screensaver-command --lock'
+Exec=/usr/bin/xautolock -secure -time 20 -locker 'gnome-screensaver-command --lock'
 TryExec=/usr/bin/xautolock
 Name=xautolock
 Comment=fire up programs in case of user inactivity under X
