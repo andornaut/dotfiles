@@ -101,6 +101,27 @@ function p {
     done
 }
 
+xresize() {
+    if [[ $# -ne 1 ]]; then
+      echo "Usage: xresize WIDTHxHEIGHT | xresize WIDTH"
+      return 1
+    fi
+
+    local w="${1%%x*}"
+    local h="${1#*x}"
+    [[ "$1" != *x* ]] && h=""
+
+    echo "Click a window to resize..."
+    local wid
+    wid=$(xdotool selectwindow) || return 1
+
+    if [[ -z "$h" ]]; then
+      h=$(xdotool getwindowgeometry --shell "$wid" | grep HEIGHT | cut -d= -f2)
+    fi
+
+    xdotool windowsize "$wid" "$w" "$h"
+}
+
 PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
 PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
 
