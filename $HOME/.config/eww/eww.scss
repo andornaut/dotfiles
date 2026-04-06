@@ -5,6 +5,9 @@ $normal-color: #ccc8b0;
 $text-color: #423f2e;
 $urgent-color: #33a999;
 
+// Layout
+$spacing: 15px;
+
 // Base styles
 window {
     color: $text-color;
@@ -41,14 +44,14 @@ button {
 .battery,
 .datetime,
 .temperature {
-    padding: 10px 0;
+    padding: $spacing 0;
 }
 
 .battery__label,
 .datetime__label,
 .temperature__label,
 .volume__label {
-    padding-bottom: 10px;
+    padding-bottom: $spacing;
 }
 
 .datetime {
@@ -69,7 +72,7 @@ button {
 .desktops__desktop {
     border-bottom: 1px solid $focused-color;
     color: inherit;
-    padding: 10px;
+    padding: $spacing;
 
     &--occupied {
         background: $active-color;
@@ -88,13 +91,14 @@ button {
 
 .system .button,
 .volume .button {
-    padding: 15px 0;
+    padding: $spacing 0;
 }
 
 .systray {
     /* Systray popup menus can be styled with:
      * https://github.com/elkowar/eww/issues/1244
      */
+    padding: $spacing 0;
 
     & > * {
         min-width: 48px;
