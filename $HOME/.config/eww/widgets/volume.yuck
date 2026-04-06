@@ -38,9 +38,10 @@
         :cursor "pointer"
         (button
           :class "volume__toggle button icon"
-          :onclick "pavolume -m toggle"
+          ; Collapse the revealer after clicking mute, because it prevents onhoverlost from firing
+          :onclick "pavolume -m toggle && eww update reveal_volume=false"
           :tooltip "Toggle muting"
-          ""
+          {reveal_volume ? "" : ""}
         )
       )
       (label
