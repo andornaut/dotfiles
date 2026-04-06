@@ -96,6 +96,10 @@ button {
      * https://github.com/elkowar/eww/issues/1244
      */
     padding: 10px;
+
+    .tray-icon:hover {
+        background: $focused-color;
+    }
 }
 
 .bottom-section .widget {
