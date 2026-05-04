@@ -21,6 +21,7 @@ No emojis, emdashes, flowery language, or marketing-speak. Be concise and direct
 ## Shell rules
 
 - Never run `sudo` commands. If a task requires `sudo`, prompt the user to run the command themselves instead.
+- When presenting shell commands that span multiple lines, always use `\` for line continuation.
 
 ## Git rules
 
