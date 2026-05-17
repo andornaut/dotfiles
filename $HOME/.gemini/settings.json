@@ -1,10 +1,12 @@
 {
   "context": {
-    "fileName": ["AGENTS.md", "GEMINI.md"]
+    "fileName": [
+      "AGENTS.md",
+      "GEMINI.md"
+    ]
   },
   "general": {
     "vimMode": false,
-    "disableAutoUpdate": false,
     "previewFeatures": true,
     "enableAutoUpdate": true,
     "sessionRetention": {

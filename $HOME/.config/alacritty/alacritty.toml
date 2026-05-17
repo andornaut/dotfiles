@@ -48,6 +48,9 @@ style = "Regular"
 [general]
 import = ["~/.config/alacritty/alacritty.private.toml"]
 
+[window]
+dynamic_padding = true
+
 [[keyboard.bindings]]
 key = "Return"
 mods = "Shift"
