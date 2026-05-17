@@ -25,6 +25,7 @@ No emojis, emdashes, flowery language, or marketing-speak. Be concise and direct
 
 ## Git rules
 
+- Always commit on the default branch (e.g. `main`) unless otherwise instructed. Do not create a new branch before committing unless the user asks for it.
 - Never force push. If you need to force push, suggest the command to the user and let them run it.
 - Be careful not to lose local changes. Use `git stash` and other tools to preserve uncommitted work when necessary.
 - Always respect `.gitignore`. Never use `git add -f` or `--force` to bypass `.gitignore` unless explicitly instructed to do so.
