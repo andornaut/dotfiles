@@ -58,9 +58,10 @@ gog apply
 
 **CRITICAL:** When the user prompts with exactly "gog" (without additional context), you MUST follow this workflow:
 1. Check status with `gog git status`
-2. Add all changes with `gog git add -A`
-3. Commit with a descriptive message based on the changes
-4. Push with `gog git push`
+2. If there are no changes to commit, stop and report that there is nothing to sync. Do not proceed to the remaining steps.
+3. Add all changes with `gog git add -A`
+4. Commit with a descriptive message based on the changes
+5. Push with `gog git push`
 
 ### Notes
 
