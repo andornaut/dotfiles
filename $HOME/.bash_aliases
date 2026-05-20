@@ -1,10 +1,10 @@
+alias agyyolo='agy --dangerously-skip-permissions'
 alias allstop="pkill -f 'play .*whitenoise'"
 alias bc='bc -l'
 alias claudeyolo='claude --dangerously-skip-permissions'
 alias commit='claudeyolo -p "Run `git start` to pull changes, Git add and commit with a good but succint message, then Git push. Never force push. Never delete files."'
 alias engage='nohup play -n -c1 -t alsa synth whitenoise lowpass -1 120 lowpass -1 120 lowpass -1 120 gain +20 >/dev/null &'
 alias f='filectrl'
-alias geminiyolo='gemini --approval-mode yolo'
 alias gogclaude='gogstart && claudeyolo -p gog'
 alias gogstart='for r in $(gog repository list); do gog -r ${r} git start >/dev/null && gog -r ${r} apply; done'
 alias google-chrome-root='sudo google-chrome --no-sandbox --no-first-run --no-default-browser-check'
