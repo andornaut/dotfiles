@@ -1,0 +1,6 @@
+{
+  "$schema": "https://app.kilo.ai/tui.json",
+  "keybinds": {
+    "command_list": "alt+p"
+  }
+}
