@@ -16,7 +16,3 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-
-
-# Added by Antigravity CLI installer
-export PATH="/home/andornaut/.local/bin:$PATH"
