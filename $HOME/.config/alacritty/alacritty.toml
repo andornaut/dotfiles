@@ -55,3 +55,11 @@ dynamic_padding = true
 key = "Return"
 mods = "Shift"
 chars = "\u001B\r"
+
+[[mouse.bindings]]
+mouse = "Back"
+action = "ScrollPageUp"
+
+[[mouse.bindings]]
+mouse = "Forward"
+action = "ScrollPageDown"
