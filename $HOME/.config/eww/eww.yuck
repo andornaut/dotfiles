@@ -18,7 +18,7 @@
 ;; System monitoring
 (deflisten volume
   :initial "0"
-  "pavolume -sf '%s'"
+  "pavolume -s"
 )
 
 ;; Time updates
