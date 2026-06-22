@@ -99,3 +99,6 @@
     path = config.wmg
 [submodule]
 	recurse = true
+[diff]
+	context = 5
+	interHunkContext = 5
