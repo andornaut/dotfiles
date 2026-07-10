@@ -2,3 +2,4 @@
 *.private
 *.private.*
 $HOME/.claude/projects/
+$HOME/.claude/CLAUDE.md
