@@ -17,6 +17,14 @@
 )
 
 ;; System monitoring
+;; EWW_BATTERY reports per-battery status but no mains state, so a fully charged
+;; laptop on AC reports "Full" rather than "Charging".
+(defpoll ac_online
+  :initial "false"
+  :interval "5s"
+  `for f in /sys/class/power_supply/*; do [ "$(cat "$f/type" 2>/dev/null)" != Battery ] && [ "$(cat "$f/online" 2>/dev/null)" = 1 ] && { echo true; exit 0; }; done; echo false`
+)
+
 (deflisten volume
   :initial "0"
   "pavolume -s"
