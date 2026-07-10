@@ -2,9 +2,9 @@
 # wm independent hotkeys
 #
 
-# Toggle screensaver
+# Lock the screen
 super + ctrl + q
-	gnome-screensaver-command -l
+	xscreensaver-command --lock
 
 super + p
 	~/.local/bin/toggletouchpad

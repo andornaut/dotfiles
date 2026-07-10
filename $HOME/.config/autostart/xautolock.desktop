@@ -1,9 +1,0 @@
-# BEGIN ANSIBLE MANAGED BLOCK
-[Desktop Entry]
-# Managed by the desktop role (tasks/idle.yml). -time is in minutes.
-Exec=/usr/bin/xautolock -secure -time 20 -locker 'gnome-screensaver-command --lock'
-TryExec=/usr/bin/xautolock
-Name=xautolock
-Comment=fire up programs in case of user inactivity under X
-Type=Application
-# END ANSIBLE MANAGED BLOCK
