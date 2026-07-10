@@ -12,7 +12,7 @@
     (box
       :halign "center"
       :space-evenly false
-      {round(EWW_TEMPS.K10TEMP_TCTL, 0)}
+      {round(EWW_TEMPS.K10TEMP_TCTL ?: EWW_TEMPS.CORETEMP_PACKAGE_ID_0 ?: EWW_TEMPS.THINKPAD_CPU ?: 0, 0)}
       "°C"
     )
   )

@@ -10,7 +10,7 @@
       :halign "center"
       :text "${EWW_BATTERY == ''
         ? "-"
-        : EWW_BATTERY.BAT0.status == 'Charging'
+        : jq(EWW_BATTERY, `[.[] | objects | .status] | any(. == "Charging")`)
           ? ""
           : EWW_BATTERY.total_avg >= 90
               ? ""

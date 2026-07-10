@@ -12,6 +12,7 @@
 )
 
 (deflisten niri-workspaces-json
+  :initial "[]"
   "bin/niri-workspaces"
 )
 
