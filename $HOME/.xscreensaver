@@ -255,3 +255,22 @@ procInterrupts:	True
 xinputExtensionDev: False
 overlayStderr:	True
 
+# BEGIN ANSIBLE MANAGED BLOCK
+# Managed by the desktop role (tasks/idle.yml). Timeouts come from
+# desktop_screen_blank_minutes, desktop_screen_lock_minutes and desktop_screen_off_minutes.
+# lockTimeout is the grace period after blanking, so the session locks
+# desktop_screen_lock_minutes after it goes idle.
+mode:		blank
+timeout:	0:10:00
+lock:		True
+lockTimeout:	0:10:00
+splash:		False
+dpmsEnabled:	True
+# dpmsQuickOff powers the monitor down the moment the screen blanks, ignoring the three
+# timeouts below. It must be set, not merely left out: the block is appended to a file the
+# role does not own, so an existing True above it would otherwise stand.
+dpmsQuickOff:	False
+dpmsStandby:	1:00:00
+dpmsSuspend:	1:00:00
+dpmsOff:	1:00:00
+# END ANSIBLE MANAGED BLOCK
