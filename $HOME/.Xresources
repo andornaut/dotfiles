@@ -50,3 +50,25 @@ Xft.dpi: 96
 URxvt*font: xft:Source\ Code\ Pro:size=18
 Xcursor.size: 32
 URxvt*termName: xterm-256color
+! BEGIN ANSIBLE MANAGED BLOCK
+! Managed by the desktop role (tasks/idle.yml). Appearance of xscreensaver's unlock dialog.
+!
+! These are X resources, not xscreensaver preferences, and ~/.xscreensaver carries only the
+! latter. xscreensaver-auth is an Xt program, so it merges RESOURCE_MANAGER (what `xrdb`
+! loads) over its compiled-in app-defaults. The bspwm session script already runs
+! `xrdb -merge ~/.Xresources`, which is why they live here. `dialogTheme` is the one
+! exception: it is a preference, and idle.yml writes it to ~/.xscreensaver.
+!
+! Do not put the whole app-defaults file through xrdb; it says so itself. Individual
+! resources are fine.
+!
+! Colours and fonts come from the theme. What is removed here is everything that is not the
+! prompt: the hostname, the clock, the "New Login" button (it disappears when its command
+! does not exist) and the progress thermometer. The logo and the version heading stay: the
+! logo is compiled in and xscreensaver aborts without it, and the heading is a notice the
+! author explicitly asks not to be removed.
+*passwd.uname:	False
+*dateFormat:
+*newLoginCommand:
+*borderlessblack.Dialog.thermometer.width:	0
+! END ANSIBLE MANAGED BLOCK
