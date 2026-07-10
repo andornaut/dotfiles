@@ -4,7 +4,7 @@
 
 # Lock the screen
 super + ctrl + q
-	xscreensaver-command --lock
+	xset s activate
 
 super + p
 	~/.local/bin/toggletouchpad
