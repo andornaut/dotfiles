@@ -65,6 +65,6 @@ URxvt*termName: xterm-256color
 *dateFormat:
 *newLoginCommand:
 *borderlessblack.Dialog.thermometer.width:	0
-*borderlessblack.Dialog.logo.width:	64
-*borderlessblack.Dialog.logo.height:	64
+*borderlessblack.Dialog.logo.width:	32
+*borderlessblack.Dialog.logo.height:	32
 ! END ANSIBLE MANAGED BLOCK
