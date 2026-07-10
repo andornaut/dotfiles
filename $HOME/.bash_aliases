@@ -43,4 +43,6 @@ alias sr=tmuxrtorrent
 alias t='tmux attach || tmuxdefault'
 alias tmuxdefault='tmux new-session -As default -n main -c ~/'
 alias tmuxirssi='tmux new-session -As irssi -n irssi -c ~/ irssi'
-alias tmuxrtorrent='tmux new-session -As rtorrent -n rtorrent -c ~/ rtorrent'
+# rtorrent.service owns this session, on a private socket. Attach only: -A would start a
+# second rtorrent outside systemd, which then fights the service for the session lock.
+alias tmuxrtorrent='tmux -L rtorrent attach -t rtorrent'
