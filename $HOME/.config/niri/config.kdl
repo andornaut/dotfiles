@@ -371,7 +371,9 @@ binds {
     Mod+Ctrl+Space { spawn "dunstctl" "close-all"; }
     Mod+Ctrl+Backspace { spawn "dunstctl" "history-pop"; }
     Mod+Ctrl+Delete { spawn "dunstctl" "history-pop"; }
-    Mod+Ctrl+Q { spawn "hyprlock"; }
+    // hypridle owns the locker: loginctl's Lock signal runs its lock_cmd, so a second
+    // hyprlock cannot race the one hypridle starts on its own idle timeout.
+    Mod+Ctrl+Q { spawn "loginctl" "lock-session"; }
 
     F3 { toggle-overview; }
 

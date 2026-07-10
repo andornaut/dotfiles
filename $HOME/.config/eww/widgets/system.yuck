@@ -44,7 +44,7 @@
         :cursor "pointer"
         (button
           :class "system__logout button icon"
-          :onclick "loginctl lock-screen"
+          :onclick "loginctl lock-session"
           :tooltip "Lock screen"
           ""
         )
