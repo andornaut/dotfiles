@@ -9,9 +9,9 @@ header Desktop
 xrdb -merge ~/.Xresources
 ok Configured Xresources
 
-xset s 1200 # Time in seconds before screensaver activation
+xset s 600 # Time in seconds before screensaver activation
 xset +dpms
-xset dpms 1500 1800 2000 # Time in seconds before display: standby, suspend, off
+xset dpms 3600 3600 3600 # Time in seconds before display: standby, suspend, off
 ok Configured display power management
 
 # Outrun
