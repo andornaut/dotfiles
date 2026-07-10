@@ -59,12 +59,10 @@ URxvt*termName: xterm-256color
 ! ~/.xscreensaver.) Set individual resources, not the whole app-defaults file.
 !
 ! What is removed is everything but the prompt: hostname, clock, "New Login" button and
-! thermometer. The logo is shrunk (it cannot be removed: xscreensaver aborts without it) and
-! the version heading stays (the author asks that it not be removed).
+! thermometer. The logo and version heading stay (xscreensaver aborts without the logo, and
+! the author asks that the heading not be removed).
 *passwd.uname:	False
 *dateFormat:
 *newLoginCommand:
 *borderlessblack.Dialog.thermometer.width:	0
-*borderlessblack.Dialog.logo.width:	32
-*borderlessblack.Dialog.logo.height:	32
 ! END ANSIBLE MANAGED BLOCK
