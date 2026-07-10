@@ -34,15 +34,16 @@ ok Set pointer
 # Managed by the desktop role (tasks/idle.yml). Timeouts come from
 # desktop_screen_blank_minutes, desktop_screen_lock_minutes and desktop_screen_off_minutes.
 #
-# xss-lock runs the locker the moment the X screensaver activates, so `xset s` sets the
-# LOCK timeout, not the blank timeout. Its manual page says the locker starts after the
-# first screensaver cycle when a notifier is configured, but 0.4.0 fires at the timeout
-# regardless of the cycle, the notifier, or `xset s noblank`, so the cycle is set to 0.
+# The X screensaver blanks at its timeout and emits a Cycle event one cycle later. xss-lock
+# runs the notifier on the first event and the locker on the second, so `xset s` carries the
+# blank timeout and the cycle carries the blank-to-lock grace period, exactly as GNOME's
+# lock-delay does. It only takes that path when a notifier is set and the cycle is non-zero;
+# otherwise it locks at the timeout, which is why the autostart entry passes --notifier. A
+# forced activation (`xset s activate`) locks at once regardless.
 #
-# Blanking is therefore DPMS standby rather than the X screensaver, and power-off is DPMS
-# off. DPMS requires standby <= suspend <= off, and suspend has no separate policy here,
-# so it shares the blank timeout.
+# Blanking therefore leaves the monitor powered. DPMS only powers it down: standby and
+# suspend are disabled so that the panel does not go dark at the blank timeout.
 xset s blank
-xset s 1200 0
-xset dpms 600 600 3600
+xset s 600 600
+xset dpms 0 0 3600
 # END ANSIBLE MANAGED BLOCK
