@@ -17,14 +17,13 @@
 )
 
 ;; System monitoring
-;; EWW_BATTERY reports per-battery status but no mains state, so a fully charged
-;; laptop on AC reports "Full" rather than "Charging". :run-while keeps the poll off
-;; hosts with no battery, where the widget is hidden and the value is never read.
+;; :run-while keeps the poll off hosts with no battery, where the battery widget is
+;; hidden and the value is never read.
 (defpoll ac_online
   :initial "false"
   :interval "5s"
   :run-while {EWW_BATTERY != ''}
-  `for f in /sys/class/power_supply/*/; do [ -r "$f/type" ] && [ -r "$f/online" ] || continue; read -r t < "$f/type"; [ "$t" = Battery ] && continue; read -r o < "$f/online"; [ "$o" = 1 ] && { echo true; exit 0; }; done; echo false`
+  "bin/ac-online"
 )
 
 (deflisten volume

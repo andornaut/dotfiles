@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -eu -o pipefail
+
+# Print "true" when the machine is on external power, else "false".
+#
+# EWW_BATTERY reports per-battery status but no mains state, so a fully charged laptop on
+# AC reports "Full" rather than "Charging". Consumed by the ac_online defpoll in eww.yuck.
+#
+# Any supply that is not a battery counts, not just type=Mains, so a laptop charging over
+# USB-C is reported as on external power.
+for supply in /sys/class/power_supply/*/; do
+    # An unmatched glob leaves the pattern itself, which fails both tests.
+    [[ -r "${supply}/type" && -r "${supply}/online" ]] || continue
+
+    read -r supply_type <"${supply}/type"
+    if [[ "${supply_type}" == "Battery" ]]; then
+        continue
+    fi
+
+    read -r online <"${supply}/online"
+    if [[ "${online}" == "1" ]]; then
+        echo true
+        exit 0
+    fi
+done
+
+echo false
