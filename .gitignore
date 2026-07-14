@@ -3,3 +3,5 @@
 *.private.*
 $HOME/.claude/projects/
 $HOME/.claude/CLAUDE.md
+$HOME/.claude/settings.json
+$HOME/.claude/settings.local.json
