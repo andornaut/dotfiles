@@ -1,7 +1,20 @@
 *private
 *.private
 *.private.*
+# AI assistant settings and state. Never sync these: they carry
+# permission rules, MCP server configs, per-project transcripts and
+# memory. $HOME/.claude/statusline.sh is the one deliberate exception.
 $HOME/.claude/projects/
 $HOME/.claude/CLAUDE.md
 $HOME/.claude/settings.json
 $HOME/.claude/settings.local.json
+$HOME/.claude.json
+$HOME/.config/claude-code/
+$HOME/.gemini/
+$HOME/.antigravity/
+$HOME/.config/Antigravity/
+$HOME/.cursor/
+$HOME/.continue/
+$HOME/.config/opencode/
+$HOME/AGENTS.md
+$HOME/.config/kilo/AGENTS.md

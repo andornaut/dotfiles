@@ -119,12 +119,27 @@ out/
 
 build.*/
 
-# Claude Code
+# AI assistant settings and state: never commit, they leak paths,
+# transcripts and credentials. Applies to project dirs too, since
+# several tools keep per-project state under $HOME.
 CLAUDE.md
 .claude/
+.claude.json
+.mcp.json
 
-# Gemini
 GEMINI.md
 .gemini/
+
+.antigravity/
+Antigravity/
+
+.cursor/
+.continue/
+.codeium/
+.windsurf/
+.aider*
+.opencode/
+opencode.json
+opencode.jsonc
 
 AGENTS.md
