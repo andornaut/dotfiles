@@ -21,7 +21,7 @@ run_bg() {
 }
 
 nice_bg() {
-	run_bg 19 $@
+	run_bg 19 "$@"
 }
 
 wait_wid() {
@@ -37,18 +37,18 @@ wait_wid() {
 }
 
 kill_() {
-    for name in $@; do
+    for name in "$@"; do
         if pkill --exact "${name}" >/dev/null; then
             ok "Killed ${name}"
         else
-            warn "Error killing ${name}"
+            warn "${name} was not running. Skipping."
         fi
     done
 }
 
-# Kill tray applets (insync), so that they're adopted by the new instance of Stalonetray
-# when they're restarted below. Kill processes in the reverse order than they were
-# started in
+# Kill tray applets (insync), so that they're re-adopted by the tray when they're
+# restarted below. Kill processes in the reverse order than they were started in
+
 kill_ insync
 
 eww open bar

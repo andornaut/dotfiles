@@ -39,7 +39,7 @@ function buttons {
         if isModified ${name} "${urgent}"; then
             classes+=" ${buttonClass}--urgent"
         fi
-        echo -n "(button :onclick \"bspc desktop -f ${name}\" :class \"desktops_desktop button ${classes}\" "${name}")"
+        echo -n "(button :onclick \"bspc desktop -f ${name}\" :class \"button ${classes}\" "${name}")"
     done
 }
 

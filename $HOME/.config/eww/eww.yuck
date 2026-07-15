@@ -33,13 +33,14 @@
 
 ;; Time updates
 (defpoll date
+  :initial ""
   :interval "1m"
   "date '+%a %d'"
 )
 
-(defpoll time
-  :interval "5s"
-  "date '+%H:%M'"
+(deflisten time
+  :initial ""
+  "bin/clock"
 )
 
 ;; Widget imports

@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -eu -o pipefail
+
+# Print the current time as HH:MM, once per minute, aligned to the top of each
+# minute. Consumed by the `time` deflisten in eww.yuck.
+#
+# A fixed-interval defpoll drifts: its timer has no relation to the wall clock,
+# so the display can lag most of a minute and the offset wanders. Re-reading the
+# clock each cycle and sleeping only the remaining seconds re-anchors to the
+# minute boundary every iteration, so the value updates within a fraction of a
+# second of each change and never accumulates drift.
+#
+# `%-S` (GNU date) yields the seconds without a leading zero. A padded value like
+# "08" would otherwise be parsed as invalid octal by bash arithmetic.
+while true; do
+    date '+%H:%M'
+    sleep "$(( 60 - $(date +%-S) ))"
+done

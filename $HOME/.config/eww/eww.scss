@@ -74,7 +74,8 @@ button {
     color: inherit;
     padding: $spacing;
 
-    &--occupied {
+    &--occupied,
+    &--active {
         background: $active-color;
     }
 
