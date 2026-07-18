@@ -23,7 +23,6 @@ alias xreset='~/.config/bspwm/bspwmrc'
 # Flatpak
 alias cb='flatpak run --user app.getclipboard.Clipboard'
 alias gimp='flatpak run --user org.gimp.GIMP'
-alias flameshot='flatpak run --user org.flameshot.Flameshot'
 alias steam='flatpak run com.valvesoftware.Steam'
 alias vlc='flatpak run --user org.videolan.VLC'
 

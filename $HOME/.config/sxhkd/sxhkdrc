@@ -45,6 +45,16 @@ super + g
 super + b
     bspc node @/ --balance
 
+# main window left (full height, 2/3 width), other windows stacked in the right 1/3
+super + shift + b
+    bash -c 'm=$(bspc query -N -n focused.window); [ -z "$m" ] && exit 0; \
+    bspc desktop -l tiled; bspc node "$m" -t tiled; p=""; \
+    for n in $(bspc query -N -d focused -n .tiled); do \
+    [ "$n" = "$m" ] && continue; bspc node "$n" -t tiled; \
+    if [ -z "$p" ]; then bspc node "$m" -p east; bspc node "$n" -n "$m"; \
+    else bspc node "$p" -p south; bspc node "$n" -n "$p"; fi; p="$n"; done; \
+    bspc node @/ -r 0.6667'
+
 #
 # state/flags
 #
