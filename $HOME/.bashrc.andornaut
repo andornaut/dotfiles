@@ -10,7 +10,7 @@ export MRS_HIDE_EDITOR_INSTRUCTIONS=any-value-is-true
 export PATH="${PATH}:${HOME}/bin:${HOME}/.local/bin:/usr/local/go/bin"
 #export PIPENV_VENV_IN_PROJECT=1
 export SYSTEMD_EDITOR=$EDITOR
-export XDG_DATA_DIRS="${XDG_DATA_DIRS}:/var/lib/flatpak/exports/share:/home/andornaut/.local/share/flatpak/exports/share"
+export XDG_DATA_DIRS="${XDG_DATA_DIRS}:/var/lib/flatpak/exports/share:${HOME}/.local/share/flatpak/exports/share"
 
 # Fix vscode and cursor editor on Wayland
 # https://wiki.archlinux.org/title/Wayland#Environment_variable
@@ -21,13 +21,12 @@ function runCached {
     if command -v cache-command >/dev/null; then
         cache-command -e 86400 -b /tmp/cache-command -- "${command[@]}"
     else
-        # Use `eval` to avoid a "command not found" error when using zsh
-        eval "${command[*]}"
+        "${command[@]}"
     fi
 }
 
 function httptunnel {
-    [[ "$#" -gt 1 && "$#" -lt 5 ]] || { echo 'Usage: http-tunnel jumpHost targetHost [remotePort] [localPort]' >&2 ; return; }
+    [[ "$#" -gt 1 && "$#" -lt 5 ]] || { echo 'Usage: http-tunnel jumpHost targetHost [remotePort] [localPort]' >&2 ; return 1; }
     local jumpHost=$1
     local targetHost=$2
     local remotePort=${3-80}
@@ -35,8 +34,8 @@ function httptunnel {
     local protocol="$([[ ${remotePort} == "80" ]] && echo http || echo https)"
     echo "Make sure that 'AllowTCPForwarding yes' is set in ${jumpHost}:/etc/ssh/sshd_config"
 
-    ( sleep 3 ; xdg-open ${protocol}://localhost:${localPort} ;) &
-    ssh -vL ${localPort}:${targetHost}:${remotePort} -Nf ${jumpHost} 
+    ( sleep 3 ; xdg-open "${protocol}://localhost:${localPort}" ;) &
+    ssh -vL "${localPort}:${targetHost}:${remotePort}" -Nf "${jumpHost}"
 }
 
 function p {
@@ -74,7 +73,6 @@ function p {
         fi
         # JavaScript
         if [[ -n $NVM_DIR && -d $NVM_DIR ]]; then
-            source ${NVM_DIR}/nvm.sh
             if [[ -f ~/.nvmrc ]]; then
                 # Change default node version with:
                 #   nvm ls
