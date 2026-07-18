@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd $(cd "$(dirname "$0")" && pwd)/
+cd "$(dirname "$0")" || exit 1
 source ./helpers
 
 header Applications
@@ -15,25 +15,13 @@ run_bg() {
 	elif pgrep -x "$(basename "${command}")" >/dev/null 2>&1 ; then
         warn "${command} is already running. Skipping."
     else
-        nice -n ${niceness} "$@" >/dev/null 2>&1 &
+        nice -n "${niceness}" "$@" >/dev/null 2>&1 &
 		ok "Started: ${command}"
     fi
 }
 
 nice_bg() {
 	run_bg 19 "$@"
-}
-
-wait_wid() {
-    # `xdo id -m -a ${1}` would also work, but there's no way to set a timeout.
-	local wm_name="${1}"
-    local i=0
-	local wid
-    while [[ "${i}" -lt 10 ]] && ! wid="$(xdo id -a "${wm_name}")"; do
-		let i=i+1
-        sleep 0.2
-    done
-	echo ${wid}
 }
 
 kill_() {
@@ -46,9 +34,7 @@ kill_() {
     done
 }
 
-# Kill tray applets (insync), so that they're re-adopted by the tray when they're
-# restarted below. Kill processes in the reverse order than they were started in
-
+# Kill insync so the tray re-adopts it when dex autostarts it below.
 kill_ insync
 
 eww open bar

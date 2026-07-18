@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd $(cd "$(dirname "$0")" && pwd)/
+cd "$(dirname "$0")" || exit 1
 source ./helpers
 
 header Screens
@@ -19,9 +19,9 @@ is_connected() {
 max_monitors() {
     local number=$1
     #for id in $(bspc query -M|tail -n+$((1+${number}))); do
-    for id in $(bspc query -M|head -n-${number}); do
-        warn Removing monitor ${id}
-        bspc monitor ${id} --remove
+    for id in $(bspc query -M|head -n-"${number}"); do
+        warn Removing monitor "${id}"
+        bspc monitor "${id}" --remove
     done
 }
 
@@ -57,9 +57,7 @@ elif is_connected eDP && ( is_connected DP-1 || is_connected HDMI-1 ) ; then
 elif is_connected eDP ; then
     ok 'Laptop: 1 screen'
     max_monitors 1
-    xrandr \
-        --output eDP-1 --auto --pos 0x0 --primary ${laptopScale} \
-        --output eDP-1 --auto --pos 0x0 --primary --scale-from 1920x1080
+    xrandr --output eDP-1 --auto --pos 0x0 --primary ${laptopScale}
     bspc wm --reorder-monitors eDP-1
     bspc monitor ^1 --reset-desktops 1 2 3 4 5
 else
