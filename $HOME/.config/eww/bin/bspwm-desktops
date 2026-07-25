@@ -65,13 +65,13 @@ function desktopsJson() {
 # The dedup guard drops re-renders of unchanged state (report lines fire for
 # many events that do not change desktop state).
 function main() {
-    local current last=""
+    local current previous=""
     while true; do
         while read -r _; do
             current="$(desktopsJson)"
-            if [[ -n "${current}" && "${current}" != "${last}" ]]; then
+            if [[ -n "${current}" && "${current}" != "${previous}" ]]; then
                 echo "${current}"
-                last="${current}"
+                previous="${current}"
             fi
         done < <(bspc subscribe report || true)
         sleep 1
