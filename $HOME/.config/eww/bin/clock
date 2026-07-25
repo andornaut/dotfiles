@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -eu -o pipefail
 
-# Print the current time as HH:MM, once per minute, aligned to the top of each
-# minute. Consumed by the `time` deflisten in eww.yuck.
+# Print the date and time as JSON, once per minute, aligned to the top of each
+# minute. Consumed by the `datetime-json` deflisten in eww.yuck.
 #
 # A fixed-interval defpoll drifts: its timer has no relation to the wall clock,
 # so the display can lag most of a minute and the offset wanders. Re-reading the
@@ -10,9 +10,24 @@ set -eu -o pipefail
 # minute boundary every iteration, so the value updates within a fraction of a
 # second of each change and never accumulates drift.
 #
-# `%-S` (GNU date) yields the seconds without a leading zero. A padded value like
-# "08" would otherwise be parsed as invalid octal by bash arithmetic.
+# Read all fields from a single `date` call: separate calls can straddle a
+# minute boundary, printing a minute that is already stale. The fields are
+# `|`-delimited so that whitespace in a locale's day name cannot shift them.
+#
+# `%-S` (GNU date) yields the seconds without a leading zero, which bash
+# arithmetic would otherwise parse as invalid octal.
+#
+# eww never restarts a deflisten whose script exits, so tolerate transient
+# failures (falling back to a plain one-minute sleep) instead of dying, which
+# would freeze the displayed date and time.
 while true; do
-    date '+%H:%M'
-    sleep "$(( 60 - $(date +%-S) ))"
+    if IFS='|' read -r date_part time_part secs < <(date '+%a %d|%H:%M|%-S') \
+        && [[ -n "${date_part}" && -n "${time_part}" ]]; then
+        echo "{\"date\": \"${date_part}\", \"time\": \"${time_part}\"}"
+    fi
+    if [[ "${secs-}" =~ ^[0-9]+$ ]] && ((secs < 60)); then
+        sleep "$((60 - secs))" || true
+    else
+        sleep 60 || true
+    fi
 done

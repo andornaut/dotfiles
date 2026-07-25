@@ -3,6 +3,17 @@
   (eventbox
     :cursor "pointer"
     :visible show_bspwm
-    (literal :content bspwm-desktops-yuck)
+    (box
+      :class "desktops"
+      :space-evenly false
+      :orientation "v"
+      (for desktop in bspwm-desktops-json
+        (button
+          :class "desktops__desktop button ${desktop.occupied ? "desktops__desktop--occupied" : ""} ${desktop.focused ? "desktops__desktop--focused" : ""} ${desktop.urgent ? "desktops__desktop--urgent" : ""}"
+          :onclick `bspc desktop -f ${desktop.id}`
+          {desktop.name}
+        )
+      )
+    )
   )
 )

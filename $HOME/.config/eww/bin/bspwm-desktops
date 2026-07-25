@@ -1,56 +1,80 @@
 #!/usr/bin/env bash
 set -eu -o pipefail
 
-# Exit with empty array if not running in a bspwm session
+# Emit the desktops of the first monitor as a JSON array, one line per state
+# change. Consumed by the `bspwm-desktops-json` deflisten in eww.yuck and
+# rendered by widgets/bspwm-desktops.yuck.
+
+# Exit early if not running in a bspwm session
 # `lemurs` (login manager) doesn't set XDG_SESSION_DESKTOP, but does set XDG_SESSION_TYPE. ly sets both.
-if [[ "${XDG_SESSION_TYPE}" != "x11" ]]; then
+if [[ "${XDG_SESSION_TYPE-}" != "x11" ]]; then
     echo "[]"
     exit 0
 fi
 
-boxAttributes="$@"
-buttonClass="desktops__desktop"
-names=(1 2 3 4 5)
-queryCmd="bspc query --names -D -d"
-
-function isModified() {
-    local name=$1
-    local array=$2
-    for line in ${array}; do
-        if [[ "${line}" = "${name}" ]]; then
-            return 0
-        fi
-    done
-    return 1
+# `bspc query` exits non-zero when nothing matches (e.g. no urgent desktops),
+# which is a valid empty result, not an error.
+function query() {
+    bspc query "$@" || true
 }
 
-function buttons {
-    local focused="$(${queryCmd} focused)"
-    local occupied="$(${queryCmd} .occupied)"
-    local urgent="$(${queryCmd} .urgent)"
-    for name in ${names[@]}; do
-        classes="${buttonClass}"
-        if isModified ${name} "${focused}"; then
-            classes+=" ${buttonClass}--focused"
-        fi
-        if isModified ${name} "${occupied}"; then
-            classes+=" ${buttonClass}--occupied"
-        fi
-        if isModified ${name} "${urgent}"; then
-            classes+=" ${buttonClass}--urgent"
-        fi
-        echo -n "(button :onclick \"bspc desktop -f ${name}\" :class \"button ${classes}\" "${name}")"
-    done
+# Desktops are identified by ID, not name: names are user-controlled, can
+# collide across monitors, and can be misparsed as bspc selectors (a desktop
+# named "next" or "web.dev" is not a valid literal DESKTOP_SEL).
+function desktopsJson() {
+    local monitor ids names focused occupied urgent
+    # The first bspwm monitor corresponds to the bar's ":monitor 0".
+    monitor="$(query -M --names | head -n 1)"
+    ids="$(query -D -m "${monitor}")"
+    names="$(query -D -m "${monitor}" --names)"
+    focused="$(query -D -d focused)"
+    occupied="$(query -D -m "${monitor}" -d .occupied)"
+    urgent="$(query -D -m "${monitor}" -d .urgent)"
+    jq -Mcn \
+        --arg ids "${ids}" \
+        --arg names "${names}" \
+        --arg focused "${focused}" \
+        --arg occupied "${occupied}" \
+        --arg urgent "${urgent}" \
+        '
+        def lines: split("\n") | map(select(. != ""));
+        ($focused | lines) as $f
+        | ($occupied | lines) as $o
+        | ($urgent | lines) as $u
+        | [($ids | lines), ($names | lines)]
+        | transpose
+        | map(
+            select(.[0] != null and .[1] != null)
+            | .[0] as $id
+            | {
+                id: $id,
+                name: .[1],
+                focused: (($f | index($id)) != null),
+                occupied: (($o | index($id)) != null),
+                urgent: (($u | index($id)) != null)
+            }
+        )
+        '
 }
 
-# `desktop node_transfer`` misses changes to urgent status; use `report` to get these too.
+# `desktop node_transfer` misses changes to urgent status; use `report` to get these too.
+#
+# eww never restarts a deflisten whose script exits, so reconnect forever
+# instead of dying when bspwm is not yet up or restarts. `bspc subscribe`
+# emits a report immediately on connect, which renders the current state.
+# The dedup guard drops re-renders of unchanged state (report lines fire for
+# many events that do not change desktop state).
 function main() {
-    # Initial state
-    echo "(box :class 'desktops' ${boxAttributes} $(buttons))"
-
-    # Watch for changes
-    bspc subscribe report | while read -r ; do
-        echo "(box :class 'desktops' ${boxAttributes} $(buttons))"
+    local current last=""
+    while true; do
+        while read -r _; do
+            current="$(desktopsJson)"
+            if [[ -n "${current}" && "${current}" != "${last}" ]]; then
+                echo "${current}"
+                last="${current}"
+            fi
+        done < <(bspc subscribe report || true)
+        sleep 1
     done
 }
 

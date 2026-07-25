@@ -1,26 +1,37 @@
 #!/usr/bin/env bash
 set -eu -o pipefail
 
-# Exit with empty array if not running in a niri session
+# Emit niri workspaces as a JSON array, one line per state change. Consumed by
+# the `niri-workspaces-json` deflisten in eww.yuck.
+
+# Exit early if not running in a niri session
 # `lemurs` (login manager) doesn't set XDG_SESSION_DESKTOP, but does set XDG_SESSION_TYPE. ly sets both.
-if [[ -n "${XDG_SESSION_TYPE}" && "${XDG_SESSION_TYPE}" != "wayland" ]]; then
+if [[ "${XDG_SESSION_TYPE-}" != "wayland" ]]; then
     echo '[]'
     exit 0
 fi
 
-# Get sorted workspace information in JSON format
+# Get sorted workspace information in JSON format. Emits nothing when niri is
+# unreachable, which leaves the deflisten value unchanged.
 get_workspaces() {
-    niri msg --json workspaces | jq -Mc 'sort_by(.idx)'
+    niri msg --json workspaces | jq -Mc 'sort_by(.idx)' || true
 }
 
-# Main loop - watch for niri events and update workspace info
+# eww never restarts a deflisten whose script exits, so reconnect forever
+# instead of dying when niri is not yet up or restarts. niri emits the full
+# initial state on connect; the seed `echo` guards the case where it does not,
+# and the dedup guard drops re-renders of unchanged state.
 main() {
-    # Initial workspace state
-    get_workspaces
-
-    # Watch for changes
-    niri msg event-stream | while read -r _; do
-        get_workspaces
+    local current last=""
+    while true; do
+        while read -r _; do
+            current="$(get_workspaces)"
+            if [[ -n "${current}" && "${current}" != "${last}" ]]; then
+                echo "${current}"
+                last="${current}"
+            fi
+        done < <({ echo; niri msg event-stream; } || true)
+        sleep 1
     done
 }
 

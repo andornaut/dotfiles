@@ -1,14 +1,13 @@
 
 ;; Display environment detection
 ;; `lemurs` (login manager) doesn't set XDG_SESSION_DESKTOP, but does set XDG_SESSION_TYPE. ly sets both.
-;; (defvar show_bspwm "${get_env("XDG_SESSION_DESKTOP") == "bspwm"}")
-;; (defvar show_niri "${get_env("XDG_SESSION_DESKTOP") == "niri"}")
 (defvar show_bspwm "${get_env("XDG_SESSION_TYPE") == "x11"}")
 (defvar show_niri "${get_env("XDG_SESSION_TYPE") == "wayland"}")
 
 ;; Workspace management
-(deflisten bspwm-desktops-yuck
-  `bin/bspwm-desktops :orientation \'"v"\'`
+(deflisten bspwm-desktops-json
+  :initial "[]"
+  "bin/bspwm-desktops"
 )
 
 (deflisten niri-workspaces-json
@@ -32,14 +31,8 @@
 )
 
 ;; Time updates
-(defpoll date
-  :initial ""
-  :interval "1m"
-  "date '+%a %d'"
-)
-
-(deflisten time
-  :initial ""
+(deflisten datetime-json
+  :initial '{"date": "", "time": ""}'
   "bin/clock"
 )
 

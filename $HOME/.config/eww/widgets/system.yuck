@@ -2,8 +2,8 @@
 
 (defwidget system [orientation]
   (eventbox
-    :onhover "eww update reveal_system=true"
-    :onhoverlost "eww update reveal_system=false"
+    :onhover "${EWW_CMD} update reveal_system=true"
+    :onhoverlost "${EWW_CMD} update reveal_system=false"
     (box
       :class "system widget"
       :orientation orientation

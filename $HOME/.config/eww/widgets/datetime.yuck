@@ -17,11 +17,11 @@
       )
       (label
         :class "datetime__date"
-        :text date
+        :text {datetime-json.date}
       )
       (label
         :class "datetime__time"
-        :text time
+        :text {datetime-json.time}
       )
     )
   )
