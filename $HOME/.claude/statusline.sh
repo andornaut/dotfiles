@@ -26,6 +26,20 @@ IFS=$'\t' read -r model pct in_tokens out_tokens cost lines_added lines_removed 
   '
 )
 
+# jq failing or being absent leaves every field empty, which is distinct from the
+# "-" sentinel jq itself emits. Collapse the two so the numeric fields always
+# hold a number and "-" always means "optional field absent" below.
+: "${model:=?}"
+: "${pct:=0}"
+: "${in_tokens:=0}"
+: "${out_tokens:=0}"
+: "${cost:=0}"
+: "${lines_added:=0}"
+: "${lines_removed:=0}"
+: "${quota_5h:=-}"
+: "${quota_7d:=-}"
+: "${cwd:=-}"
+
 # Integer-only formatting: no bc fork. printf -v keeps these fork-free.
 fmt_tokens() {
   local n=$2 unit div frac
@@ -75,8 +89,17 @@ while [ -n "$d" ] && [ "$d" != "/" ]; do
     if [ -f "$gitdir" ]; then
       read -r gitdir_line < "$gitdir"
       gitdir=${gitdir_line#gitdir: }
+      if [ "$gitdir" = "$gitdir_line" ]; then
+        # No "gitdir: " prefix means the file is empty or not a git pointer.
+        # Blank it so a working-tree file named HEAD is never mistaken for a ref.
+        gitdir=""
+      elif [ "${gitdir#/}" = "$gitdir" ]; then
+        # Submodules record a relative path. Resolve it against the repo dir,
+        # not against the pwd of whoever spawned this script.
+        gitdir=$d/$gitdir
+      fi
     fi
-    if [ -r "$gitdir/HEAD" ]; then
+    if [ -n "$gitdir" ] && [ -r "$gitdir/HEAD" ]; then
       read -r head < "$gitdir/HEAD"
       if [ "${head#ref: }" != "$head" ]; then
         # Strip only the refs/heads/ prefix: a "##*/" strip would turn
@@ -89,7 +112,11 @@ while [ -n "$d" ] && [ "$d" != "/" ]; do
     fi
     break
   fi
-  d=${d%/*}
+  # A relative cwd with no slash left would strip to itself and spin forever.
+  case $d in
+    */*) d=${d%/*} ;;
+    *) break ;;
+  esac
 done
 
 hostname_short=${HOSTNAME:-$(hostname -s)}
