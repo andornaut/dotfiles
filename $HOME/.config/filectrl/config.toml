@@ -1,0 +1,8 @@
+# Programs to use to open files or directories:
+# %s will be replaced by the relevant path
+[openers.linux]
+open_directory = "alacritty --working-directory %s"
+open_file = "xdg-open %s"
+open_filectrl_window = "alacritty --command filectrl %s"
+# %s is replaced by a command line rather than by a path
+run_in_terminal = "alacritty --command %s"
