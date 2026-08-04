@@ -24,19 +24,6 @@ nice_bg() {
 	run_bg 19 "$@"
 }
 
-kill_() {
-    for name in "$@"; do
-        if pkill --exact "${name}" >/dev/null; then
-            ok "Killed ${name}"
-        else
-            warn "${name} was not running. Skipping."
-        fi
-    done
-}
-
-# Kill insync so the tray re-adopts it when dex autostarts it below.
-kill_ insync
-
 eww open bar
 
 nice_bg dex --autostart --environment bspwm

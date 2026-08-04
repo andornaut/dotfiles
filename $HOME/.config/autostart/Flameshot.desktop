@@ -5,3 +5,10 @@ Exec=flameshot
 Terminal=false
 Type=Application
 X-GNOME-Autostart-enabled=true
+# Under bspwm the tray is eww's systray widget, which is StatusNotifierItem-only, and flameshot
+# registers its icon once at startup and never again, so a restarted eww leaves it icon-less.
+# /usr/local/lib/systemd/user/flameshot.service owns flameshot there and is PartOf=eww.service,
+# which makes systemd restart it along with eww. NotShowIn keeps `dex --autostart --environment
+# bspwm` from starting a second copy alongside the unit; GNOME has no unit and starts flameshot
+# from this entry.
+NotShowIn=bspwm;
