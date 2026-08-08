@@ -1,6 +1,11 @@
 alias agyyolo='agy --dangerously-skip-permissions'
 alias allstop="pkill -f 'play .*whitenoise'"
 alias bc='bc -l'
+# Claude in the confined agent account: its own uid and its own ~/.claude, with no
+# read access to the vault password, the age key or the operator's ssh key, so
+# credentials reach playbooks only through faramir. Installed there by `make
+# faramir` in ansible-ctrl; authenticate it once as the agent on first run.
+alias claude-agent='sudo -u agent -H /usr/bin/env --chdir=/home/agent/work/ansible-ctrl /home/agent/.local/bin/claude'
 alias claudeyolo='claude --dangerously-skip-permissions'
 alias commit='claudeyolo -p "Run \`git start\` to pull changes, Git add and commit with a good but succint message, then Git push. Never force push. Never delete files."'
 alias engage='nohup play -n -c1 -t alsa synth whitenoise lowpass -1 120 lowpass -1 120 lowpass -1 120 gain +20 >/dev/null &'
