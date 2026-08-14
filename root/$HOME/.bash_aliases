@@ -1,3 +1,7 @@
+# shellcheck shell=bash
+# Sourced by .bashrc rather than executed, so it carries no shebang and names
+# its shell here instead.
+
 alias agyyolo='agy --dangerously-skip-permissions'
 alias allstop="pkill -f 'play .*whitenoise'"
 alias bc='bc -l'

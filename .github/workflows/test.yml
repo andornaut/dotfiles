@@ -1,0 +1,46 @@
+name: Test
+
+# Every branch, not just main and pull requests: work lands on main directly as
+# often as it arrives through one, so a check that only runs on main is a check
+# that runs after the fact.
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Keyed on the branch rather than the ref, so a re-push to one branch cancels
+# its own earlier run and not another branch's. Keyed by the event as well: a
+# cancelled run leaves its check runs on the head commit, and GitHub counts
+# those against the required checks, so a push and its pull request cancelling
+# each other would block the merge.
+# Qualified by the repository the branch lives in, since a fork names its
+# branches itself: two pull requests from different forks would otherwise share
+# a group whenever they pick the same branch name.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.head.repo.full_name || github.repository }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7.0.1
+
+      # The bspwm scripts source ./helpers through a relative path, which
+      # shellcheck cannot resolve on its own: -x follows the source and
+      # -P SCRIPTDIR tells it to look beside the script doing the sourcing.
+      # The vendored vim bundle needs no exclusion: it carries no shell.
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@2.0.0
+        env:
+          SHELLCHECK_OPTS: -x -P SCRIPTDIR
+        with:
+          scandir: "."

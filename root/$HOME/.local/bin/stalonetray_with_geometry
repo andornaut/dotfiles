@@ -7,5 +7,5 @@ if [[ "$(ls -A /sys/class/power_supply)" ]]; then
    batteryOffset=62
 fi 
 height="$(xdotool getdisplaygeometry|awk '{ print $NF }')"
-yOffset=$((${height}-${batteryOffset}-390))
+yOffset=$((height-batteryOffset-390))
 /usr/bin/stalonetray --geometry 1x1+12+${yOffset}

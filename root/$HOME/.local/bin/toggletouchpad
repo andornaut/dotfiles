@@ -9,8 +9,10 @@ fi
 
 function toggleDevices {
     local IFS=$'\n'
+    # shellcheck disable=SC2206 # IFS is a newline here: one device per line.
     local deviceArray=($1)
-	local isEnabled="$(xinput list-props "${deviceArray[0]}"|grep 'Device Enabled'|awk '{print $4}')"
+	local isEnabled
+	isEnabled="$(xinput list-props "${deviceArray[0]}"|grep 'Device Enabled'|awk '{print $4}')"
     local device, i
 
     for (( i=0; i<${#deviceArray[@]}; i++ )) ; do

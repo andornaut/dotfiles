@@ -17,9 +17,11 @@ ok Set background colour
 
 # Set wallpaper with: feh --xinerama-index 0 --bg-fill ${file}
 if [[ -e ~/.fehbg ]]; then
-    ~/.fehbg \
-        && ok Set wallpaper \
-        || warn Error setting wallpaper
+    if ~/.fehbg; then
+        ok Set wallpaper
+    else
+        warn Error setting wallpaper
+    fi
 fi
 
 device='Logitech Unifying Device. Wireless PID:101a'
