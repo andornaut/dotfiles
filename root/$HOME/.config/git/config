@@ -40,7 +40,7 @@
     autocrlf = input
     editor = vim
     whitespace = fix,space-before-tab,tab-in-indent,trailing-space
-    excludesfile = ~/.config/git/gitignore
+    # No excludesfile: git reads ~/.config/git/ignore by default.
     # https://stackoverflow.com/a/49862151
     #pager = less -FR
 	# Delta
