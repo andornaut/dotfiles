@@ -149,6 +149,8 @@ GEMINI.md
 
 .antigravity/
 Antigravity/
+.agents/
+.agent/
 
 .cursor/
 .continue/
@@ -158,5 +160,11 @@ Antigravity/
 .opencode/
 opencode.json
 opencode.jsonc
+
+.kilo/
+.kilocode/
+kilo.json
+
+.pi/
 
 AGENTS.md
