@@ -1,5 +1,8 @@
 # dotfiles
 
+[![CI](https://github.com/andornaut/dotfiles/actions/workflows/ai-attributions.yml/badge.svg)](https://github.com/andornaut/dotfiles/actions/workflows/ai-attributions.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Personal dotfiles
 
 ![ibm-dark-theme](https://github.com/andornaut/ibm1970-desktop-theme/blob/main/screenshot.png)
