@@ -17,4 +17,9 @@ $HOME/.cursor/
 $HOME/.continue/
 $HOME/.config/opencode/
 $HOME/.config/kilo/
-$HOME/AGENTS.md
+# Unanchored, so one written anywhere in the tree is caught and not only the
+# copy under root/$HOME. A session working from a fresh clone has no global
+# ignore to fall back on.
+AGENTS.md
+CLAUDE.md
+GEMINI.md
