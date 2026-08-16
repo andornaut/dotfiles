@@ -34,13 +34,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v7.0.1
 
-      # The bspwm scripts source ./helpers through a relative path, which
-      # shellcheck cannot resolve on its own: -x follows the source and
-      # -P SCRIPTDIR tells it to look beside the script doing the sourcing.
-      # The vendored vim bundle needs no exclusion: it carries no shell.
+      # -x follows a `source` into the file it names and -P SCRIPTDIR looks for
+      # it beside the script doing the sourcing, which shellcheck cannot resolve
+      # on its own. Set everywhere rather than only where something sources
+      # today, so a script that starts to is already covered.
+      #
+      # node_modules is skipped because a Lint job that installs dependencies
+      # would otherwise answer for shell a dependency ships.
       - name: Run ShellCheck
         uses: ludeeus/action-shellcheck@2.0.0
         env:
           SHELLCHECK_OPTS: -x -P SCRIPTDIR
         with:
+          ignore_paths: node_modules
           scandir: "."
