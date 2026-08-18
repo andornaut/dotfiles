@@ -30,7 +30,7 @@ EOF
 
 ## Links
 
-* [ansible-workstation](https://github.com/andornaut/ansible-workstation)
+* [ansible-ctrl](https://github.com/andornaut/ansible-ctrl)
 * [bbs](https://github.com/andornaut/bbs)
 * [gog](https://github.com/andornaut/gog)
 * [ibm1970-desktop-theme](https://github.com/andornaut/ibm1970-desktop-theme)
