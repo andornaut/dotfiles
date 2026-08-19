@@ -5,7 +5,7 @@
 
 Personal dotfiles
 
-![ibm-dark-theme](https://github.com/andornaut/ibm1970-desktop-theme/blob/main/screenshot.png)
+![ibm-dark-theme](https://raw.githubusercontent.com/andornaut/ibm1970-desktop-theme/main/screenshot.png)
 
 ## Installation
 
