@@ -168,3 +168,14 @@ kilo.json
 .pi/
 
 AGENTS.md
+AGENT.md
+QWEN.md
+
+# The single-file rule formats. The directory entries above do not cover
+# these: .cursor/ does not match .cursorrules, nor .windsurf/ .windsurfrules.
+.clinerules
+.cursorrules
+.roorules
+.windsurfrules
+.junie/
+.github/copilot-instructions.md
