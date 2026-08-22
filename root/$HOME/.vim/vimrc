@@ -62,6 +62,17 @@ else
     set noundofile
 endif
 
+" Registers and command history, so the text of whatever was last yanked or
+" deleted and not only the name of the file it came from. Under .vim/tmp so
+" everything vim persists is in one directory, which is easier to name in an
+" ignore rule than in $HOME and is where undo falls back to. It keeps the file
+" across reboots, unlike undo, marks and history being most of what it is for.
+let s:viminfodir = $HOME . '/.vim/tmp'
+if !isdirectory(s:viminfodir)
+    call mkdir(s:viminfodir, 'p', 0700)
+endif
+let &viminfofile = s:viminfodir . '/viminfo'
+
 "Show column in status bar
 set ruler
 

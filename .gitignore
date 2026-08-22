@@ -38,6 +38,10 @@ GEMINI.md
 # `**/` because a pattern holding a slash anchors to this file's own directory,
 # and the tree it has to match is under root/.
 **/.vim/tmp/
+# The same for what vim keeps between sessions. `.vim/tmp/` above is where this
+# repo's vimrc puts it; this is the location every other vim uses, which a host
+# with a different vimrc still writes.
+**/.viminfo
 # Unanchored for the reason the three above are: a sops file is named for what
 # it holds wherever it lands, including a copy made outside root/$HOME.
 *.sops.yml
