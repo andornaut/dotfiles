@@ -279,7 +279,7 @@ environment {
 
     // Fix Flameshot
     // Only `flameshot gui` works, not bare `flameshot`
-    // https://github.com/flameshot-org/flameshot/blob/master/docs/Sway%20and%20wlroots%20support.md
+    // https://github.com/flameshot-org/flameshot/blob/master/docs/UsageHyprlandSwayWlroots.md
     QT_QPA_PLATFORM "wayland"
     XDG_CURRENT_DESKTOP "sway"
 }
