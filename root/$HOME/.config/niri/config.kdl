@@ -530,5 +530,5 @@ window-rule {
 }
 
 // Add rules for flowing prompts/dialogs:
-// https://github.com/HyDE-Project/HyDE/blob/master/Configs/.config/hypr/windowrules.conf
+// https://github.com/niri-wm/niri/wiki/Configuration:-Window-Rules
 
