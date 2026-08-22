@@ -4,22 +4,42 @@
 # AI assistant settings and state. Never sync these: they carry
 # permission rules, MCP server configs, per-project transcripts and
 # memory. $HOME/.claude/statusline.sh is the one deliberate exception.
-$HOME/.claude/projects/
-$HOME/.claude/CLAUDE.md
-$HOME/.claude/settings.json
-$HOME/.claude/settings.local.json
-$HOME/.claude.json
-$HOME/.config/claude-code/
-$HOME/.gemini/
-$HOME/.antigravity/
-$HOME/.config/Antigravity/
-$HOME/.cursor/
-$HOME/.continue/
-$HOME/.config/opencode/
-$HOME/.config/kilo/
+#
+# `**/` on each: a pattern holding a slash anchors to this file's own directory,
+# so `$HOME/.claude/settings.json` looks for one directly beside .gitignore and
+# matches nothing under root/. These read as covered while covering nothing, and
+# what actually ignores them on a configured machine is the operator's global
+# ignore, which a fresh clone does not have.
+**/.claude/projects/
+**/.claude/CLAUDE.md
+**/.claude/settings.json
+**/.claude/settings.local.json
+**/.claude.json
+**/.config/claude-code/
+**/.gemini/
+**/.antigravity/
+**/.config/Antigravity/
+**/.cursor/
+**/.continue/
+**/.config/opencode/
+**/.config/kilo/
 # Unanchored, so one written anywhere in the tree is caught and not only the
 # copy under root/$HOME. A session working from a fresh clone has no global
 # ignore to fall back on.
 AGENTS.md
 CLAUDE.md
 GEMINI.md
+# Editor state, which carries the text of a file and not only its name. `sops
+# edit` decrypts into a tempfile and the editor writes an undo history for it,
+# so a synced undo directory takes plaintext out of the store and into a public
+# repository. The directory rather than the sops names: an undo file is named
+# after the path it belongs to, and every file edited has one.
+#
+# `**/` because a pattern holding a slash anchors to this file's own directory,
+# and the tree it has to match is under root/.
+**/.vim/tmp/
+# Unanchored for the reason the three above are: a sops file is named for what
+# it holds wherever it lands, including a copy made outside root/$HOME.
+*.sops.yml
+*.sops.yaml
+*.sops.json

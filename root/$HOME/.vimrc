@@ -42,8 +42,21 @@ set noswapfile
 set nowritebackup
 
 if has('persistent_undo')
-    " Persistent Undo will be disabled if this directory doesn't exist
-    set undodir=$HOME/.vim/tmp/undo
+    " On tmpfs rather than under $HOME: an undo file holds the text of the
+    " buffer and not only its name, so one written for a file an editor was
+    " handed a decrypted copy of leaves that plaintext on disk. $XDG_RUNTIME_DIR
+    " is 0700 and emptied at logout. It is unset outside a login session, where
+    " $HOME is what is left.
+    let s:undodir = $XDG_RUNTIME_DIR . '/vim/undo'
+    if empty($XDG_RUNTIME_DIR)
+        let s:undodir = $HOME . '/.vim/tmp/undo'
+    endif
+    " Persistent Undo will be disabled if this directory doesn't exist, and this
+    " one does not survive a logout.
+    if !isdirectory(s:undodir)
+        call mkdir(s:undodir, 'p', 0700)
+    endif
+    let &undodir = s:undodir
     set undofile
 else
     set noundofile
