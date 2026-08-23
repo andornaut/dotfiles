@@ -10,7 +10,10 @@
   :monitor 0
   :reserve (struts :distance "49px" :side "left")
   :stacking "bg"
-  :windowtype "dock"
+  ;; X11 only, and "desktop" rather than "dock" so that bspwm lowers the bar at map
+  ;; time: it never stacks a managed window above an unmanaged one, so a dock stays
+  ;; over fullscreen windows. The strut is read regardless of the type.
+  :windowtype "desktop"
   (box
     :class "bar"
     :halign "fill"
