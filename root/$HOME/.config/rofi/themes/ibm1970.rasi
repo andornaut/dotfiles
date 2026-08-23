@@ -45,4 +45,16 @@ inputbar {
 
 element {
     padding: 20px;
+    spacing: 1ch;
+}
+
+element-text {
+    vertical-align: 0.5;
+}
+
+/* Unset, an icon is drawn at the height of the row's text, and both children are
+   drawn at the top of a row the taller of them sizes. */
+element-icon {
+    size:           1.2em;
+    vertical-align: 0.5;
 }

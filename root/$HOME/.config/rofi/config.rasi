@@ -12,6 +12,7 @@ configuration {
     normalize-match: true;
     font: "DejaVu Sans 18";
     modi: [ drun, window ];
+    show-icons: true;
     sort: true;
 
 /*  modi: "window,run,ssh";*/
