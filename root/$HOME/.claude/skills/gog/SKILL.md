@@ -37,11 +37,12 @@ other time.
 
    ```bash
    inventory=$(ls ~/src/github.com/*/ansible-ctrl/hosts)
-   hosts=$(awk '!/^[[#]/ && NF {print $1}' "$inventory" | sort -u)
+   # `$1 !~ /=/` drops the [all:vars] lines, whose first field is a setting
+   hosts=$(awk '!/^[[#]/ && NF && $1 !~ /=/ {print $1}' "$inventory" | sort -u)
+   local_host=$(awk '/ansible_connection=local/ {print $1}' "$inventory" | head -1)
    ```
 
-   - The entry marked `ansible_connection=local` is this machine: run the loop directly,
-     without SSH.
+   - `local_host` is this machine: run the loop directly, without SSH.
    - Every other host over SSH. Desktops may be offline, so tolerate failure with
      `ssh -o BatchMode=yes -o ConnectTimeout=<n>` and report which hosts synced and which
      were skipped.
