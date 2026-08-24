@@ -1,5 +1,4 @@
 export EDITOR=/usr/bin/vim
-export GOG_DEFAULT_REPOSITORY_NAME=andornaut
 export GOPATH="${HOME}"
 export HISTSIZE=10000
 export HISTFILESIZE=100000
