@@ -13,7 +13,7 @@ description: Sync dotfiles with the gog dotfiles manager. Invoke whenever the us
 ```bash
 gog add <path>          # move a file into the repository and symlink it back
 gog apply               # link a repository's contents to the filesystem
-gog repository list     # name the repositories
+gog repository ls       # name the repositories
 gog git status          # run any git command inside a repository
 gog git add -f '<$HOME/path/to/file>'
 gog git commit -m "message"
@@ -51,7 +51,7 @@ other time.
      non-interactive shell. Run pull and apply directly:
 
      ```bash
-     ssh <host> 'for r in $(gog repository list); do gog -r "$r" git pull -q --autostash && gog -r "$r" apply; done'
+     ssh <host> 'for r in $(gog repository ls); do gog -r "$r" git pull -q --autostash && gog -r "$r" apply; done'
      ```
 
 ## Repository layout
