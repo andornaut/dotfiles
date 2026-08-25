@@ -1,33 +1,39 @@
 *private
 *.private
 *.private.*
-# AI assistant settings and state. Never sync these: they carry
-# permission rules, MCP server configs, per-project transcripts and
-# memory. Two deliberate exceptions, both authored content rather than state:
-# $HOME/.claude/statusline.sh and the hand-written skills under
-# $HOME/.claude/skills/.
+# AI assistant settings and state. Never sync these: they carry permission
+# rules, MCP server configs, per-project transcripts and memory. What is
+# authored rather than accumulated is synced, and is named here: the
+# hand-written skills under $HOME/.claude/skills/, the symlinks under
+# $HOME/.cursor/skills/ that name them, so that both tools read one SKILL.md and
+# a skill cannot drift between them, and $HOME/.claude/statusline.sh.
 #
-# skills/ is ignored so that a vendored bundle dropped in there cannot sweep
-# into a public repository. Already-tracked skills are unaffected, since an
-# ignore rule does not apply to a tracked file; adding a new one is a
-# deliberate `gog git add -f`.
+# Each directory is reopened before anything in it can be admitted, because
+# nothing under an excluded directory can be re-included and both are excluded
+# by the operator's global ignore as well as here. So the first line reopens the
+# directory for git to descend into, the second closes it again, and what
+# follows names what to keep. Everything unnamed stays ignored: settings.json,
+# CLAUDE.md, the transcripts under projects/, Cursor's mcp.json and
+# cli-config.json, and the skills Cursor vendors into skills-cursor/. A bundle
+# dropped into skills/ itself would now be staged rather than ignored, but it
+# arrives as untracked files that `git status` names before a commit can take
+# them.
 #
-# `**/` on each: a pattern holding a slash anchors to this file's own directory,
-# so `$HOME/.claude/settings.json` looks for one directly beside .gitignore and
-# matches nothing under root/. These read as covered while covering nothing, and
-# what actually ignores them on a configured machine is the operator's global
-# ignore, which a fresh clone does not have.
-**/.claude/projects/
-**/.claude/skills/
-**/.claude/CLAUDE.md
-**/.claude/settings.json
-**/.claude/settings.local.json
+# `**/`: a pattern holding a slash anchors to this file's own directory, so a
+# bare `.claude/settings.json` would look for one beside .gitignore and match
+# nothing under root/.
+!**/.claude/
+**/.claude/*
+!**/.claude/skills/
+!**/.claude/statusline.sh
+!**/.cursor/
+**/.cursor/*
+!**/.cursor/skills/
 **/.claude.json
 **/.config/claude-code/
 **/.gemini/
 **/.antigravity/
 **/.config/Antigravity/
-**/.cursor/
 **/.continue/
 **/.config/opencode/
 **/.config/kilo/
