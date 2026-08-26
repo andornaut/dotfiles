@@ -35,12 +35,29 @@ other time.
 3. Sync every host. Read the host list from the ansible-ctrl inventory; never hard-code
    one here:
 
+   The first field is an alias, not an address: a host that carries
+   `ansible_host=` is reachable at that value and at nothing else, so SSH to the
+   alias fails to resolve. The `[routers]` group runs no gog and is dropped.
+
    ```bash
    inventory=$(ls ~/src/github.com/*/ansible-ctrl/hosts)
-   # `$1 !~ /=/` drops the [all:vars] lines, whose first field is a setting
-   hosts=$(awk '!/^[[#]/ && NF && $1 !~ /=/ {print $1}' "$inventory" | sort -u)
-   local_host=$(awk '/ansible_connection=local/ {print $1}' "$inventory" | head -1)
+   # Emits one address per gog host, and `local` emits the local one alone.
+   parse() { awk -v want="$1" '
+     /^\[/ { group = substr($0, 2, index($0,"]")-2); next }
+     /^#/ || !NF || $1 ~ /=/ { next }            # comments, blanks, [all:vars] settings
+     { if (group == "routers") { skip[$1]=1; next }
+       for (i=2;i<=NF;i++) if ($i ~ /^ansible_host=/) { split($i,a,"="); addr[$1]=a[2] }
+       if ($0 ~ /ansible_connection=local/) local_alias=$1
+       seen[$1]=1 }
+     END { if (want=="local") { print (local_alias in addr ? addr[local_alias] : local_alias); exit }
+           for (h in seen) if (!(h in skip)) print (h in addr ? addr[h] : h) }
+   ' "$2"; }
+   hosts=$(parse hosts "$inventory" | sort)
+   local_host=$(parse local "$inventory")
    ```
+
+   A host is listed twice, once with its settings and again bare under a group
+   heading, so the addresses are collected before anything is printed.
 
    - `local_host` is this machine: run the loop directly, without SSH.
    - Every other host over SSH. Desktops may be offline, so tolerate failure with
