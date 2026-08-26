@@ -59,6 +59,23 @@ other time.
 - Repositories live at `~/.local/share/gog/<repository>/`.
 - Inside one, the home directory is the literal string `$HOME`, unexpanded.
 
+## Keeping the global skills in sync
+
+A global skill is written once and read by both tools. The file lives at
+`~/.claude/skills/<name>/SKILL.md`, and `~/.cursor/skills/<name>` is a relative
+symlink to it:
+
+```bash
+ln -s ../../.claude/skills/<name> ~/.cursor/skills/<name>
+gog add "$HOME/.claude/skills/<name>/SKILL.md"
+gog add "$HOME/.cursor/skills/<name>"
+```
+
+A symlink rather than a copy, so a skill cannot say one thing to one tool and
+something else to the other. Adding a skill on one side only leaves the other
+tool without it, which is silent: nothing reports a skill that is merely absent.
+So add both, and when checking, compare the two listings rather than either one.
+
 ## Never commit
 
 The dotfiles repository is public. Nothing that identifies a host, a private path or a
@@ -67,6 +84,7 @@ credential belongs in it.
 - **Never write a host name** into this file or any other durable file. Read hosts from
   the inventory each time.
 - Files matching `*private`, `*.private` or `*.private.*` are gitignored.
-- Of `~/.claude`, only `statusline.sh` and `skills/` sync. `CLAUDE.md`, `settings.json`,
-  `settings.local.json` and `projects/` are gitignored, because they carry permission
-  rules, MCP configs, transcripts and memory.
+- Of `~/.claude`, only `statusline.sh` and `skills/` sync, plus the symlinks under
+  `~/.cursor/skills/`. `CLAUDE.md`, `settings.json`, `settings.local.json` and
+  `projects/` are gitignored, because they carry permission rules, MCP configs,
+  transcripts and memory.
