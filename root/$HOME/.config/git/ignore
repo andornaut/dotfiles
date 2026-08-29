@@ -167,6 +167,8 @@ kilo.json
 
 .pi/
 
+.codex/
+
 AGENTS.md
 AGENT.md
 QWEN.md

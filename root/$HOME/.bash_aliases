@@ -6,7 +6,9 @@ alias agyyolo='agy --dangerously-skip-permissions'
 alias allstop="pkill -f 'play .*whitenoise'"
 alias bc='bc -l'
 alias claudeyolo='claude --dangerously-skip-permissions'
+alias codexyolo='codex --dangerously-bypass-approvals-and-sandbox'
 alias commit='claudeyolo -p "Run \`git start\` to pull changes, Git add and commit with a good but succint message, then Git push. Never force push. Never delete files."'
+alias cursoryolo='cursor-agent --yolo'
 alias engage='nohup play -n -c1 -t alsa synth whitenoise lowpass -1 120 lowpass -1 120 lowpass -1 120 gain +20 >/dev/null &'
 alias f='filectrl'
 alias gogclaude='gogstart && claudeyolo -p gog'
@@ -15,6 +17,9 @@ alias halt=poweroff
 alias koff='keylight --host keylight --power off'
 alias kon='keylight --host keylight --power on'
 alias o='xdg-open'
+# opencode registers --dangerously-skip-permissions on `run` only, not on the
+# bare TUI, so this goes through `run -i` for an interactive session.
+alias opencodeyolo='opencode run -i --dangerously-skip-permissions'
 alias pipeclip='xclip -selection c'
 alias scratch='code --new-window ~/scratch.md'
 alias serve='echo "Serving ${PWD}" && docker run --network host --volume ${PWD}:/var/www/html:ro joshix/caddy'
