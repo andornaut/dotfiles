@@ -4,8 +4,9 @@
 ;; Widgets
 (defwidget datetime [orientation]
   (eventbox
-    :onhover "${EWW_CMD} open calendar; ${EWW_CMD} update reveal_calendar=true"
-    :onhoverlost "${EWW_CMD} update reveal_calendar=false; ${EWW_CMD} close calendar"
+    :onclick {reveal_calendar
+      ? "${EWW_CMD} update reveal_calendar=false; ${EWW_CMD} close calendar"
+      : "${EWW_CMD} open calendar; ${EWW_CMD} update reveal_calendar=true"}
     (box
       :class "datetime widget"
       :orientation orientation
@@ -41,6 +42,6 @@
     :duration "250ms"
     :reveal reveal_calendar
     :transition "slideright"
-    (calendar :class "calendar widget")
+    (calendar :class "calendar__month")
   )
 )

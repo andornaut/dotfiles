@@ -76,6 +76,10 @@ super + f
 super + ctrl + {x,y,z}
 	bspc node -g {locked,sticky,private}
 
+# toggle always-on-top (above layer) for the focused window
+super + shift + o
+	bspc node -l "$(bspc query -T -n focused | grep -q '\"layer\":\"above\"' && echo normal || echo above)"
+
 #
 # focus/swap
 #

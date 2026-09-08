@@ -3,6 +3,7 @@ $active-color: #9c9977;
 $focused-color: #7c7755;
 $normal-color: #ccc8b0;
 $text-color: #423f2e;
+$text-color-strong: #24201a;
 $urgent-color: #33a999;
 
 // Layout
@@ -115,9 +116,54 @@ button {
 }
 
 // Calendar styles
+/* eww puts a window's name on its window node as a class, so this rule styles
+ * the calendar window itself: a band around the calendar's frame, matching the
+ * active-desktop fill in the workspace switcher. */
 .calendar {
-    background: $normal-color;
-    border: 1px solid $focused-color;
-    border-radius: 4px;
-    padding: 8px;
+    background: $active-color;
+    padding: 10px;
+
+    &__month {
+        background: $normal-color;
+        border: 1px solid $focused-color;
+        border-radius: 4px;
+        color: $text-color-strong;
+        /* GTK adds this padding to every row rather than to the widget, so the
+         * inset between the frame and the grid is the inner-border instead. */
+        padding: 4px 8px;
+        -GtkCalendar-inner-border: 6;
+
+        /* Month/year header and its navigation arrows. GTK re-renders this
+         * node once per section, so the frame above has to be cleared here or
+         * it is drawn around the header too. */
+        &.header,
+        &.button {
+            border: none;
+            color: $text-color-strong;
+        }
+
+        /* Day-of-week column labels */
+        &.highlight {
+            color: $text-color;
+            font-weight: bold;
+        }
+
+        /* Days from the adjacent months, deliberately de-emphasized */
+        &:indeterminate {
+            color: $focused-color;
+        }
+
+        &:selected {
+            /* GTK keeps the day number at the top edge of its padded cell, so
+             * paint a band of one line height there rather than filling the
+             * cell, which would leave the number sitting high in the fill. */
+            background-color: transparent;
+            background-image: linear-gradient($active-color, $active-color);
+            background-position: top;
+            background-repeat: no-repeat;
+            background-size: 100% 1.2em;
+            border-radius: 3px;
+            color: $text-color-strong;
+        }
+    }
 }
