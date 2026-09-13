@@ -148,6 +148,7 @@ GEMINI.md
 .gemini/
 
 .antigravity/
+.antigravity-ide/
 Antigravity/
 .agents/
 .agent/
@@ -164,6 +165,7 @@ opencode.jsonc
 .kilo/
 .kilocode/
 kilo.json
+kilo.jsonc
 
 .pi/
 

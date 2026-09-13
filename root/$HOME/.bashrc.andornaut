@@ -120,7 +120,7 @@ function p {
                 # entry by entry: a substitution over the whole string leaves
                 # the second of two adjacent duplicates in place, and a
                 # trailing slash on VIRTUAL_ENV matches nothing at all.
-                local venvBin="${VIRTUAL_ENV%/}/bin" cleanPath= entry
+                local venvBin="${VIRTUAL_ENV%/}/bin" cleanPath='' entry
                 local -a pathEntries
                 IFS=: read -ra pathEntries <<<"${PATH}"
                 for entry in "${pathEntries[@]}"; do
