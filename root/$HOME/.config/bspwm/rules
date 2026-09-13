@@ -1,0 +1,31 @@
+#!/bin/bash
+
+cd "$(dirname "$0")" || exit 1
+source ./helpers
+
+header Rules
+
+# Layers Discord's video popout above everything, fullscreen windows included.
+#
+# bspwm's own rules cannot select it: the popout shares its class, instance and window
+# role with Discord's main window, and its title is the name of whoever is in the call.
+# The minimum size in WM_NORMAL_HINTS is the only thing that tells them apart. A layer
+# set from external_rules_command does not survive the map, so it is set on node_add,
+# where the popout is still tiled; Discord floats it itself about two seconds later.
+discord_popout_above() {
+    local node min_size
+
+    bspc subscribe node_add | while read -r _ _ _ _ node; do
+        min_size=$(xprop -id "${node}" WM_NORMAL_HINTS 2>/dev/null |
+            sed -n 's/.*minimum size: \([0-9]\+\) by \([0-9]\+\).*/\1x\2/p')
+        [[ ${min_size} == 320x180 ]] || continue
+        [[ $(xprop -id "${node}" WM_CLASS 2>/dev/null) == *'"discord"'* ]] || continue
+        # bspc node abandons the rest of the line on a consequence that is already
+        # true, so the layer is set on its own.
+        bspc node "${node}" -l above
+    done
+}
+
+pkill -x -f 'bspc subscribe node_add' 2>/dev/null
+discord_popout_above &
+ok Watching for Discord popouts

@@ -59,3 +59,4 @@ ok Configured BSPWM
 ./desktop
 # Must follow "bspc config ...", because it executes $(bspc config normal_border_color)
 ./applications
+./rules

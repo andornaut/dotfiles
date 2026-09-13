@@ -2,14 +2,26 @@ export EDITOR=/usr/bin/vim
 export GOPATH="${HOME}"
 export HISTSIZE=10000
 export HISTFILESIZE=100000
-export PATH="${PATH}:${HOME}/bin:${HOME}/.local/bin:/usr/local/go/bin"
-#export PIPENV_VENV_IN_PROJECT=1
 export SYSTEMD_EDITOR=$EDITOR
-export XDG_DATA_DIRS="${XDG_DATA_DIRS}:/var/lib/flatpak/exports/share:${HOME}/.local/share/flatpak/exports/share"
 
-# Fix vscode and cursor editor on Wayland
-# https://wiki.archlinux.org/title/Wayland#Environment_variable
-#export ELECTRON_OZONE_PLATFORM_HINT=auto
+# Guard each entry on its own: this file runs per interactive shell, and a
+# nested one inherits the exported value, so an unguarded append adds a
+# duplicate per level of nesting. One sentinel for the whole list would let
+# any other source of a single entry suppress the rest.
+for d in "${HOME}/bin" "${HOME}/.local/bin" /usr/local/go/bin; do
+    case ":${PATH}:" in
+        *":${d}:"*) ;;
+        *) PATH="${PATH}:${d}" ;;
+    esac
+done
+export PATH
+unset d
+# /etc/X11/Xsession.d/20flatpak adds these to a graphical session; the guard
+# covers a shell started outside one, such as a tty login.
+case ":${XDG_DATA_DIRS}:" in
+    *":/var/lib/flatpak/exports/share:"*) ;;
+    *) export XDG_DATA_DIRS="${XDG_DATA_DIRS:-/usr/local/share:/usr/share}:/var/lib/flatpak/exports/share:${HOME}/.local/share/flatpak/exports/share" ;;
+esac
 
 function runCached {
     local -a command=("$@")
@@ -26,7 +38,8 @@ function httptunnel {
     local targetHost=$2
     local remotePort=${3-80}
     local localPort=${4-1111}
-    local protocol="$([[ ${remotePort} == "80" ]] && echo http || echo https)"
+    local protocol
+    protocol="$([[ ${remotePort} == "80" ]] && echo http || echo https)"
     echo "Make sure that 'AllowTCPForwarding yes' is set in ${jumpHost}:/etc/ssh/sshd_config"
 
     ( sleep 3 ; xdg-open "${protocol}://localhost:${localPort}" ;) &
@@ -46,22 +59,25 @@ function p {
     while [[ ${globPattern} == */ ]]; do
         globPattern=${globPattern%/}
     done
-    local searchPaths=("${HOME}/src/github.com/andornaut" "${HOME}/src/github.com/[Ss]*" "${HOME}/src/github.com/*" "${HOME}/src" "${HOME}/src/*")
+    # The globs must expand here: quoting one makes it a literal string that
+    # never matches a directory, which leaves only the two plain paths live.
+    local searchPaths=("${HOME}/src/github.com/andornaut" "${HOME}"/src/github.com/[Ss]* \
+        "${HOME}"/src/github.com/* "${HOME}/src" "${HOME}"/src/*)
     local projectPath root
     for root in "${searchPaths[@]}"; do
         if [[ ! -d "${root}" ]]; then
             continue
         fi
         if [[ "${globPattern}" =~ .*"/".* ]]; then
-            projectPath="$(find "${root}" -maxdepth 2 -mindepth 1 -type d -ipath '*'${globPattern}'*'|sort|head -n1)"
+            projectPath="$(find "${root}" -maxdepth 2 -mindepth 1 -type d -ipath '*'"${globPattern}"'*'|sort|head -n1)"
         else
-            projectPath="$(find "${root}" -maxdepth 1 -mindepth 1 -type d -iname ${globPattern}'*'|sort|head -n1)"
+            projectPath="$(find "${root}" -maxdepth 1 -mindepth 1 -type d -iname "${globPattern}"'*'|sort|head -n1)"
         fi
         if [[ ! -d "${projectPath}" ]]; then
             continue
         fi
 
-        cd "${projectPath}"
+        cd "${projectPath}" || return 1
         echo "${projectPath}"
 
         # Git
@@ -73,26 +89,64 @@ function p {
             echo "git: ${branch}"
         fi
         # JavaScript
-        if [[ -n $NVM_DIR && -d $NVM_DIR ]]; then
-            if [[ -f ~/.nvmrc ]]; then
-                # Change default node version with:
-                #   nvm ls
-                #   nvm use stable
-                # .nvmrc will be save to your cwd, so make sure you're in ~/
-                #   nvm use $(nvm current) --save
-                nvm use
+        # Change the default node version with:
+        #   nvm ls
+        #   nvm use stable
+        #   nvm alias default $(nvm current)
+        # `nvm use` walks up from the current directory for an .nvmrc, reaching
+        # ~/.nvmrc for a project that has none, so the version the previous
+        # project selected is not kept. Fall back to the default only when no
+        # .nvmrc is found anywhere; every other failure, such as a pinned
+        # version that is not installed, has to stay visible.
+        if [[ -n ${NVM_DIR} && -d ${NVM_DIR} ]] && declare -F nvm >/dev/null; then
+            local nvmOutput
+            if nvmOutput="$(nvm use 2>&1)"; then
+                echo "${nvmOutput}"
+            elif [[ ${nvmOutput} == *"No .nvmrc file found"* ]]; then
+                nvm use default
+            else
+                echo "${nvmOutput}" >&2
             fi
         fi
         # Python
-        if poetry env info &>/dev/null; then
-            poetry shell
-        elif [[ -f Pipfile ]] && pipenv --venv &>/dev/null; then
-            pipenv shell
-        elif [[ -d .venv ]]; then
+        # Drop a venv carried in from a previous project, so a project without
+        # one is entered with no venv active.
+        if [[ -n ${VIRTUAL_ENV} ]]; then
+            if declare -F deactivate >/dev/null; then
+                deactivate
+            else
+                # Inherited from a parent process: VIRTUAL_ENV is exported but
+                # the deactivate function is not, so undo it by hand. Compare
+                # entry by entry: a substitution over the whole string leaves
+                # the second of two adjacent duplicates in place, and a
+                # trailing slash on VIRTUAL_ENV matches nothing at all.
+                local venvBin="${VIRTUAL_ENV%/}/bin" cleanPath= entry
+                local -a pathEntries
+                IFS=: read -ra pathEntries <<<"${PATH}"
+                for entry in "${pathEntries[@]}"; do
+                    [[ ${entry} == "${venvBin}" ]] && continue
+                    cleanPath="${cleanPath:+${cleanPath}:}${entry}"
+                done
+                # Keep PATH populated: it held nothing but the venv otherwise.
+                export PATH="${cleanPath:-/usr/local/bin:/usr/bin:/bin}"
+                unset VIRTUAL_ENV VIRTUAL_ENV_PROMPT
+            fi
+        fi
+        # Activate in this shell: `poetry shell` and `pipenv shell` spawn a
+        # subshell, which stacks one level per call and which `deactivate`
+        # cannot undo.
+        local venv
+        if venv="$(poetry env info --path 2>/dev/null)" && [[ -f ${venv}/bin/activate ]]; then
+            source "${venv}/bin/activate"
+        elif [[ -f Pipfile ]] && venv="$(pipenv --venv 2>/dev/null)" && [[ -f ${venv}/bin/activate ]]; then
+            source "${venv}/bin/activate"
+        elif [[ -f .venv/bin/activate ]]; then
             source .venv/bin/activate
         fi
-        break
+        return 0
     done
+    echo "No project matches: ${globPattern}" >&2
+    return 1
 }
 
 xresize() {
@@ -143,18 +197,11 @@ if command -v kubectl >/dev/null; then
     source <(runCached kubectl completion bash)
 fi
 
-# JavaScript
-# nvm is initialized in ~/.bashrc
-#if which npm >/dev/null; then
-    #export PATH=${PATH}:$(runCached npm config --no-update-notifier --silent get prefix)/bin
-    #export PATH=${PATH}:$(nvm which --silent)/bin
-#fi
-
 # Ruby
 for f in /usr/local/share/chruby /opt/homebrew/Cellar/chruby/*/share/chruby; do
     if [[ -d ${f} ]]; then
-        source ${f}/chruby.sh
-        source ${f}/auto.sh
+        source "${f}"/chruby.sh
+        source "${f}"/auto.sh
         break
     fi
 done
