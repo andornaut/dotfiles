@@ -47,7 +47,7 @@ function httptunnel {
 }
 
 function p {
-    if [[ $# -ne 1 ]]; then 
+    if [[ $# -ne 1 ]]; then
         echo 'Usage: p directoryPrefix';
         return 1
     fi
@@ -172,7 +172,7 @@ xresize() {
 
 gogstart() {
     local r rev ok failed=0
-    for r in $(gog repository list); do
+    for r in $(gog repository ls); do
         ok=1
         # Apply even when the pull fails: an unreachable or unauthenticated
         # remote shouldn't leave the repo's symlinks unapplied.
@@ -205,6 +205,7 @@ for f in /usr/local/share/chruby /opt/homebrew/Cellar/chruby/*/share/chruby; do
         break
     fi
 done
+unset f
 
 # Rust
 if [[ -f "${HOME}/.cargo/env" ]]; then

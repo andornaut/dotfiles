@@ -15,6 +15,10 @@ super + Return
 super + space
 	rofi -show drun
 
+# Application grid, resident under nwg-drawer.service; the signal toggles it
+super + a
+	pkill -USR1 -x nwg-drawer
+
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd

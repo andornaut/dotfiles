@@ -51,6 +51,8 @@ bspc config window_gap 0
 #bspc rule -a CrossOver state=floating
 bspc rule -a origin.exe state=floating
 bspc rule -a libreoffice state=tiled
+# The application grid opens an undecorated maximized window on X11; fullscreen keeps it off the tiling tree
+bspc rule -a Nwg-drawer state=fullscreen
 ok Configured BSPWM
 
 # Should precede ./applications
