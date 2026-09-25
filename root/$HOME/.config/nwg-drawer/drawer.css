@@ -1,0 +1,100 @@
+/* IBM1970 theme: https://github.com/andornaut/ibm1970-desktop-theme
+   Palette shared with the rofi, dunst, eww and alacritty dotfiles:
+   background #423f2e, sunken #373424, text #ccc8b0, border #7c7755,
+   active #9c9977, hover #006b6b, selected #33a999. Square corners throughout. */
+
+* {
+    font-family: "Source Code Pro", monospace;
+    border-radius: 0;
+}
+
+window {
+    background-color: #423f2e;
+    color: #ccc8b0;
+}
+
+label {
+    color: #ccc8b0;
+}
+
+/* search entry */
+entry {
+    background-color: #373424;
+    color: #ccc8b0;
+    caret-color: #ccc8b0;
+    border: 2px solid #7c7755;
+    box-shadow: none;
+    padding: 8px 14px;
+    font-size: 18px;
+}
+
+entry:focus {
+    border-color: #33a999;
+}
+
+entry selection {
+    background-color: #006b6b;
+    color: #ccc8b0;
+}
+
+button, image {
+    background: none;
+    border: none;
+    box-shadow: none;
+    text-shadow: none;
+    color: #ccc8b0;
+}
+
+button:hover {
+    background-color: #006b6b;
+    color: #ccc8b0;
+}
+
+button:focus, button:active, button:checked {
+    background-color: #33a999;
+    color: #423f2e;
+}
+
+button:focus label, button:active label, button:checked label {
+    color: #423f2e;
+}
+
+/* category buttons */
+#category-button {
+    margin: 0 10px 0 10px;
+    padding: 6px 16px;
+    border: 2px solid #7c7755;
+}
+
+#category-button:hover {
+    border-color: #9c9977;
+}
+
+#pinned-box {
+    padding-bottom: 5px;
+    border-bottom: 2px solid #7c7755;
+}
+
+#files-box {
+    padding: 5px;
+    border: 2px solid #7c7755;
+}
+
+/* math operation result label */
+#math-label {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+scrollbar {
+    background-color: #373424;
+}
+
+scrollbar slider {
+    background-color: #7c7755;
+    min-width: 10px;
+}
+
+scrollbar slider:hover {
+    background-color: #9c9977;
+}

@@ -1,6 +1,8 @@
 ---
 name: docs
 description: Audit and rewrite a project's documentation so it is concise, accurate and well organized. Invoke whenever the user prompts with exactly "docs", or asks to update, review, tidy, or fix the docs, README, AGENTS.md, or docs/ directory.
+context: fork
+agent: general-purpose
 ---
 
 # docs - Documentation audit

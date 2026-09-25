@@ -1,6 +1,8 @@
 ---
 name: tests
 description: Audit and optimize a project's test suite so every test is falsifiable, well named, at the right layer, and worth its cost. Invoke whenever the user prompts with exactly "tests", or asks to review, optimize, prune, or fix the tests or test suite.
+context: fork
+agent: general-purpose
 ---
 
 # tests - Test suite audit
