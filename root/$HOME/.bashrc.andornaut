@@ -192,6 +192,23 @@ gogstart() {
 PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
 PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
 
+# JavaScript
+# nvm's install script puts nvm.sh in ~/.nvm; Homebrew puts it in its prefix
+# and keeps only the installed versions in ~/.nvm.
+export NVM_DIR="${HOME}/.nvm"
+for f in "${NVM_DIR}" /opt/homebrew/opt/nvm; do
+    if [[ -s ${f}/nvm.sh ]]; then
+        source "${f}"/nvm.sh
+        for c in "${f}"/bash_completion "${f}"/etc/bash_completion.d/nvm; do
+            if [[ -s ${c} ]]; then
+                source "${c}"
+            fi
+        done
+        break
+    fi
+done
+unset c f
+
 # Kubernetes
 if command -v kubectl >/dev/null; then
     source <(runCached kubectl completion bash)
