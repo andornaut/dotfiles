@@ -9,8 +9,18 @@ agent: general-purpose
 
 Typing "tests" is the instruction to do this work. Do not ask whether to proceed.
 
+Always run in a subagent, never in the calling conversation. `context: fork` does that where
+the harness honours it; where it does not, delegate the whole tests audit to one subagent and
+relay its report. The audit reads and rewrites many files, and that work belongs out of the
+caller's context.
+
 ## Hard constraints
 
+- **Never run a test on the host.** Every suite, mutation run and harness runs in a
+  container with filesystem isolation: the repo mounted read-only and copied inside, nothing
+  else from the host mounted writable, no docker socket. A test that deletes, walks or copies
+  files can escape its temp directory (via `..`) and act on everything the user can write.
+  With no container setup for the project, ask before running anything.
 - **Never weaken a test to make it pass.** A failing test means the code is wrong
   or the expectation is wrong. Say which, and fix that.
 - **Never delete a failing test** to make the suite green.

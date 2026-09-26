@@ -9,6 +9,11 @@ agent: general-purpose
 
 Typing "docs" is the instruction to do this work. Do not ask whether to proceed.
 
+Always run in a subagent, never in the calling conversation. `context: fork` does that where
+the harness honours it; where it does not, delegate the whole docs audit to one subagent and
+relay its report. The audit reads and rewrites many files, and that work belongs out of the
+caller's context.
+
 ## Hard constraints
 
 - **Never use emdashes.** Use a colon, comma, parentheses, or two sentences.
