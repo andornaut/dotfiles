@@ -1,6 +1,8 @@
 ---
 name: ai-attributions
 description: Strip AI attributions out of a repository's git history with the ai-attributions tool. Invoke whenever the user prompts with exactly "ai-attributions", or asks to remove AI/agent attribution, co-author or session trailers, "generated with" footers, or agent identities from commits, or to rewrite a commit to meet ai-attribution expectations.
+context: fork
+agent: general-purpose
 ---
 
 # ai-attributions

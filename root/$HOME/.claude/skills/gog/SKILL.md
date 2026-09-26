@@ -1,6 +1,8 @@
 ---
 name: gog
 description: Sync dotfiles with the gog dotfiles manager. Invoke whenever the user prompts with exactly "gog", or asks to add/apply dotfiles, run gog git commands, or sync dotfiles across hosts.
+context: fork
+agent: general-purpose
 ---
 
 # gog - Dotfiles Manager
