@@ -76,6 +76,10 @@ super + f
     bspc desktop -l tiled || \
     bspc desktop -l monocle
 
+# toggle real fullscreen, covering the eww bar
+super + shift + f
+    bspc node -t ~fullscreen
+
 # set the node flags
 super + ctrl + {x,y,z}
 	bspc node -g {locked,sticky,private}
