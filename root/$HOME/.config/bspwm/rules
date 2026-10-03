@@ -13,9 +13,7 @@ header Rules
 # set from external_rules_command does not survive the map, so it is set on node_add,
 # where the popout is still tiled; Discord floats it itself about two seconds later.
 #
-# It is also sticky: bspwm unmaps the windows of a hidden desktop and marks them
-# Iconic, and Discord treats an Iconic popout as closed, pulling its content back into
-# the main window and leaving the popout empty.
+# It is also sticky, so it stays on whichever desktop is shown.
 discord_popout_above() {
     local node min_size
 
