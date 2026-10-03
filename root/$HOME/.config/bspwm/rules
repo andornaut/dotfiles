@@ -12,6 +12,10 @@ header Rules
 # The minimum size in WM_NORMAL_HINTS is the only thing that tells them apart. A layer
 # set from external_rules_command does not survive the map, so it is set on node_add,
 # where the popout is still tiled; Discord floats it itself about two seconds later.
+#
+# It is also sticky: bspwm unmaps the windows of a hidden desktop and marks them
+# Iconic, and Discord treats an Iconic popout as closed, pulling its content back into
+# the main window and leaving the popout empty.
 discord_popout_above() {
     local node min_size
 
@@ -21,8 +25,9 @@ discord_popout_above() {
         [[ ${min_size} == 320x180 ]] || continue
         [[ $(xprop -id "${node}" WM_CLASS 2>/dev/null) == *'"discord"'* ]] || continue
         # bspc node abandons the rest of the line on a consequence that is already
-        # true, so the layer is set on its own.
+        # true, so the layer and the flag are set on their own.
         bspc node "${node}" -l above
+        bspc node "${node}" -g sticky=on
     done
 }
 
