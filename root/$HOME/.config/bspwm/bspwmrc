@@ -51,6 +51,7 @@ bspc config window_gap 0
 #bspc rule -a CrossOver state=floating
 bspc rule -a origin.exe state=floating
 bspc rule -a libreoffice state=tiled
+bspc rule -a gnome-calculator state=floating
 # The application grid opens an undecorated maximized window on X11; fullscreen keeps it off the tiling tree
 bspc rule -a Nwg-drawer state=fullscreen
 # gamescope's -f sets no _NET_WM_STATE_FULLSCREEN under bspwm, so its window would map tiled beside the bar
