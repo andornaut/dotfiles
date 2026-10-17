@@ -1,0 +1,2 @@
+#!/bin/sh
+feh --no-fehbg --bg-fill --xinerama-index 0 '/home/andornaut/src/github.com/andornaut/ibm1970-desktop-theme/wallpaper/ibm1970-21x9.png' 
