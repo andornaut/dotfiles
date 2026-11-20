@@ -80,20 +80,23 @@ other time.
 
 ## Keeping the global skills in sync
 
-A global skill is written once and read by both tools. The file lives at
-`~/.claude/skills/<name>/SKILL.md`, and `~/.cursor/skills/<name>` is a relative
-symlink to it:
+A global skill is written once and read by every tool. The file lives at
+`~/.claude/skills/<name>/SKILL.md`; `~/.cursor/skills/<name>` and
+`~/.codex/skills/<name>` are relative symlinks to it. `gog add` refuses a symlink, so
+create it inside the repository and apply:
 
 ```bash
-ln -s ../../.claude/skills/<name> ~/.cursor/skills/<name>
 gog add "$HOME/.claude/skills/<name>/SKILL.md"
-gog add "$HOME/.cursor/skills/<name>"
+for tool in .cursor .codex; do
+  ln -s ../../.claude/skills/<name> ~/.local/share/gog/<repository>/root/\$HOME/$tool/skills/<name>
+done
+gog apply
 ```
 
 A symlink rather than a copy, so a skill cannot say one thing to one tool and
-something else to the other. Adding a skill on one side only leaves the other
-tool without it, which is silent: nothing reports a skill that is merely absent.
-So add both, and when checking, compare the two listings rather than either one.
+something else to the other. Adding a skill for one tool only leaves the others
+without it, which is silent: nothing reports a skill that is merely absent.
+So add all three, and when checking, compare the listings rather than any one.
 
 ## Never commit
 
@@ -104,6 +107,6 @@ credential belongs in it.
   the inventory each time.
 - Files matching `*private`, `*.private` or `*.private.*` are gitignored.
 - Of `~/.claude`, only `statusline.sh` and `skills/` sync, plus the symlinks under
-  `~/.cursor/skills/`. `CLAUDE.md`, `settings.json`, `settings.local.json` and
+  `~/.cursor/skills/` and `~/.codex/skills/`. `CLAUDE.md`, `settings.json`, `settings.local.json` and
   `projects/` are gitignored, because they carry permission rules, MCP configs,
   transcripts and memory.
